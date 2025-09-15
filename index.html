@@ -519,7 +519,7 @@
         </div>
 
         <div id="assetGrid" class="asset-grid" role="list">
-          <div class="asset-card selected locked" data-id="core-hero" data-url="public/models/Armature.glb" data-type="avatar" data-locked="true" role="listitem" aria-pressed="true" tabindex="0">
+          <div class="asset-card selected locked" data-id="core-hero" data-type="avatar" data-locked="true" data-zip="Assets.zip" data-entry="Assets/NakedFullBody.glb" role="listitem" aria-pressed="true" tabindex="0">
             <div class="card-visual" aria-hidden="true">
               <span class="card-badge">Core</span>
               <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
@@ -528,7 +528,7 @@
             <div class="card-body">
               <span class="card-eyebrow">Wardrobe · Base Layer</span>
               <h2 class="card-title">Hero Body Suit</h2>
-              <p class="card-text">Loads the bundled Armature.glb hero mesh.</p>
+              <p class="card-text">Streams the bundled NakedFullBody.glb hero mesh from Assets.zip.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-pin-angle-fill" aria-hidden="true"></i>
@@ -640,6 +640,7 @@
     }
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script type="module">
     import * as THREE from 'three';
     import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -649,6 +650,7 @@
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
+    const JSZipLib = window.JSZip;
 
     const viewerWrapper = document.getElementById('viewerWrapper');
     const viewer = document.getElementById('viewer');
@@ -684,6 +686,57 @@
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/libs/draco/');
     loader.setDRACOLoader(dracoLoader);
+
+    const zipFileCache = new Map();
+    const zipEntryCache = new Map();
+
+    async function getZipFile(zipPath) {
+      if (zipFileCache.has(zipPath)) {
+        return zipFileCache.get(zipPath);
+      }
+      const response = await fetch(zipPath);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${zipPath}: ${response.status} ${response.statusText}`);
+      }
+      if (!JSZipLib) {
+        throw new Error('JSZip failed to load');
+      }
+      const buffer = await response.arrayBuffer();
+      const zip = await JSZipLib.loadAsync(buffer);
+      zipFileCache.set(zipPath, zip);
+      return zip;
+    }
+
+    async function getZipEntryBuffer(zipPath, entryPath) {
+      const cacheKey = `${zipPath}::${entryPath}`;
+      if (zipEntryCache.has(cacheKey)) {
+        return zipEntryCache.get(cacheKey);
+      }
+      const zip = await getZipFile(zipPath);
+      const entry = zip.file(entryPath);
+      if (!entry) {
+        throw new Error(`Entry "${entryPath}" not found in ${zipPath}`);
+      }
+      const arrayBuffer = await entry.async('arraybuffer');
+      zipEntryCache.set(cacheKey, arrayBuffer);
+      return arrayBuffer;
+    }
+
+    async function loadGLTFAsset(source) {
+      const { url, zip, entry } = source;
+      if (zip && entry) {
+        const buffer = await getZipEntryBuffer(zip, entry);
+        return new Promise((resolve, reject) => {
+          loader.parse(buffer, '', resolve, reject);
+        });
+      }
+      if (url) {
+        return new Promise((resolve, reject) => {
+          loader.load(url, resolve, undefined, reject);
+        });
+      }
+      throw new Error('No asset source provided');
+    }
 
     function frame(object) {
       object.position.set(0, 0, 0);
@@ -725,8 +778,9 @@
       card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
     }
 
-    function loadAvatar(url) {
-      loader.load(url, (gltf) => {
+    async function loadAvatar(source) {
+      try {
+        const gltf = await loadGLTFAsset(source);
         if (avatar) {
           modelGroup.remove(avatar);
         }
@@ -734,14 +788,17 @@
         modelGroup.add(avatar);
         applyColor(avatar, currentColor);
         frame(modelGroup);
-      }, undefined, (err) => console.error(err));
+      } catch (error) {
+        console.error('Failed to load avatar', error);
+      }
     }
 
-    function loadExtra(url, key, card) {
+    async function loadExtra(source, key, card) {
       if (extras.has(key)) {
         return;
       }
-      loader.load(url, (gltf) => {
+      try {
+        const gltf = await loadGLTFAsset(source);
         if (!card.classList.contains('selected')) {
           return;
         }
@@ -749,7 +806,9 @@
         extras.set(key, obj);
         modelGroup.add(obj);
         frame(modelGroup);
-      }, undefined, (err) => console.error(err));
+      } catch (error) {
+        console.error(`Failed to load asset "${key}"`, error);
+      }
     }
 
     function removeExtra(key) {
@@ -765,8 +824,12 @@
     let currentColor = colorInput.value;
 
     document.querySelectorAll('#assetGrid .asset-card').forEach((card) => {
-      const url = card.dataset.url;
-      const cardId = card.dataset.id || url;
+      const assetSource = {
+        url: card.dataset.url || undefined,
+        zip: card.dataset.zip || undefined,
+        entry: card.dataset.entry || undefined,
+      };
+      const cardId = card.dataset.id || card.dataset.entry || card.dataset.url;
       const type = card.dataset.type || 'extra';
       const locked = card.dataset.locked === 'true';
       let isSelected = card.classList.contains('selected');
@@ -777,7 +840,7 @@
         if (type === 'avatar') {
           isSelected = true;
           setCardState(card, true);
-          loadAvatar(url);
+          loadAvatar(assetSource);
           return;
         }
 
@@ -788,7 +851,7 @@
         isSelected = !isSelected;
         setCardState(card, isSelected);
         if (isSelected) {
-          loadExtra(url, cardId, card);
+          loadExtra(assetSource, cardId, card);
         } else {
           removeExtra(cardId);
         }
@@ -804,9 +867,9 @@
 
       if (type === 'avatar') {
         setCardState(card, true);
-        loadAvatar(url);
+        loadAvatar(assetSource);
       } else if (isSelected) {
-        loadExtra(url, cardId, card);
+        loadExtra(assetSource, cardId, card);
       }
     });
 
