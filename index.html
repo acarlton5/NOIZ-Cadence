@@ -528,7 +528,7 @@
             <div class="card-body">
               <span class="card-eyebrow">Wardrobe · Base Layer</span>
               <h2 class="card-title">Hero Body Suit</h2>
-              <p class="card-text">Streams the bundled NakedFullBody.glb hero mesh from Assets.zip.</p>
+              <p class="card-text">Streams the NakedFullBody, head, face, eyes, brow, and nose pieces already bundled inside Assets.zip.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-pin-angle-fill" aria-hidden="true"></i>
@@ -680,8 +680,19 @@
     const modelGroup = new THREE.Group();
     scene.add(modelGroup);
 
+    const heroBodyPieces = [
+      { key: 'head', source: { zip: 'Assets.zip', entry: 'Assets/Head.001.glb' }, tint: true },
+      { key: 'face', source: { zip: 'Assets.zip', entry: 'Assets/Face.001.glb' }, tint: true },
+      { key: 'eyes', source: { zip: 'Assets.zip', entry: 'Assets/Eyes.001.glb' }, tint: false },
+      { key: 'brows', source: { zip: 'Assets.zip', entry: 'Assets/EyeBrow.001.glb' }, tint: false },
+      { key: 'nose', source: { zip: 'Assets.zip', entry: 'Assets/Nose.001.glb' }, tint: true },
+    ];
+
     let avatar;
+    const avatarAttachments = new Map();
     const extras = new Map();
+    const tintTargets = new Set();
+    let avatarLoadToken = 0;
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/libs/draco/');
@@ -740,6 +751,7 @@
 
     function frame(object) {
       object.position.set(0, 0, 0);
+      object.rotation.set(0, 0, 0);
       object.updateMatrixWorld(true);
       const box = new THREE.Box3().setFromObject(object);
       const size = box.getSize(new THREE.Vector3());
@@ -773,23 +785,62 @@
       });
     }
 
+    function clearAvatarAttachments() {
+      avatarAttachments.forEach((object) => {
+        modelGroup.remove(object);
+      });
+      avatarAttachments.clear();
+    }
+
     function setCardState(card, isSelected) {
       card.classList.toggle('selected', isSelected);
       card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
     }
 
     async function loadAvatar(source) {
+      const loadToken = ++avatarLoadToken;
       try {
         const gltf = await loadGLTFAsset(source);
+        if (loadToken !== avatarLoadToken) {
+          return;
+        }
         if (avatar) {
           modelGroup.remove(avatar);
         }
+        clearAvatarAttachments();
         avatar = gltf.scene;
         modelGroup.add(avatar);
+
+        tintTargets.clear();
+        tintTargets.add(avatar);
         applyColor(avatar, currentColor);
         frame(modelGroup);
+
+        for (const piece of heroBodyPieces) {
+          try {
+            const attachmentGltf = await loadGLTFAsset(piece.source);
+            if (loadToken !== avatarLoadToken) {
+              return;
+            }
+            const object = attachmentGltf.scene;
+            avatarAttachments.set(piece.key, object);
+            modelGroup.add(object);
+            if (piece.tint) {
+              tintTargets.add(object);
+              applyColor(object, currentColor);
+            }
+          } catch (pieceError) {
+            console.error(`Failed to load core body piece "${piece.key}"`, pieceError);
+          }
+        }
+
+        if (loadToken === avatarLoadToken) {
+          frame(modelGroup);
+        }
       } catch (error) {
-        console.error('Failed to load avatar', error);
+        if (loadToken === avatarLoadToken) {
+          console.error('Failed to load avatar', error);
+        }
       }
     }
 
@@ -875,14 +926,15 @@
 
     function animate() {
       requestAnimationFrame(animate);
-      modelGroup.rotation.y += 0.0045;
       renderer.render(scene, camera);
     }
     animate();
 
     colorInput.addEventListener('input', (event) => {
       currentColor = event.target.value;
-      applyColor(avatar, currentColor);
+      tintTargets.forEach((target) => {
+        applyColor(target, currentColor);
+      });
     });
 
     window.addEventListener('resize', resizeRenderer);

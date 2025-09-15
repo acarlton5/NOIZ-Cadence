@@ -4,8 +4,8 @@ A static avatar editor mock-up that mirrors the provided concept art while stayi
 
 ## Highlights
 - **Gradient shell:** A deep violet backdrop, blurred icon rail, and glowing viewer pane reproduce the two-panel hero layout from the reference.
-- **Wardrobe lineup:** The grid now opens with a pinned "Hero Body Suit" card that streams the existing `Assets/NakedFullBody.glb` model directly from `Assets.zip`, alongside wardrobe categories (cape, gauntlets, boots, pose pack) that reuse the bundled Teleporter Base and Poses assets—no new binaries required.
-- **Responsive color tooling:** The viewer keeps the hero rig in frame while extras toggle around it, and the floating “Primary Color” control recolors the avatar in real time.
+- **Wardrobe lineup:** The grid now opens with a pinned "Hero Body Suit" card that composites the existing `Assets/NakedFullBody.glb` body with the head, face, eyes, brow, and nose pieces stored in `Assets.zip`, while the other categories (cape, gauntlets, boots, pose pack) continue to reuse the bundled Teleporter Base and Poses assets—no new binaries required.
+- **Steady color tooling:** The viewer now holds a static hero pose without auto-rotation, keeps the rig framed while extras toggle around it, and the floating “Primary Color” control tints the assembled body pieces together in real time.
 
 Models remain Draco-compressed with the decoder fetched from the Three.js CDN at runtime, and the hero mesh is unpacked in-browser with JSZip so everything continues to work in a simple static environment.
 
