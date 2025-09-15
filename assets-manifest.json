@@ -1,0 +1,2421 @@
+[
+  {
+    "id": "core-hero",
+    "type": "avatar",
+    "title": "Hero Body Suit",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Base Layer",
+    "description": "Streams the bundled NakedFullBody mesh and facial attachments from Assets.zip.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/NakedFullBody.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": true,
+    "labels": {
+      "active": "Pinned in scene",
+      "inactive": "Pinned in scene"
+    },
+    "icons": {
+      "active": "bi-pin-angle-fill",
+      "inactive": "bi-pin-angle-fill"
+    },
+    "selected": true
+  },
+  {
+    "id": "bow-001",
+    "type": "extra",
+    "title": "Bow 1",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Props",
+    "description": "Loads the bow asset from Assets/Bow.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Bow.001.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "bow-002",
+    "type": "extra",
+    "title": "Bow 2",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Props",
+    "description": "Loads the bow asset from Assets/Bow.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Bow.002.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "wardrobe-bunny",
+    "type": "extra",
+    "title": "Bunny Ears",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Headwear",
+    "description": "Swaps in the playful bunny ear headpiece bundled as Hat.007.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hat.007.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/thumbnail_bunny.png"
+    },
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    }
+  },
+  {
+    "id": "wardrobe-crown",
+    "type": "extra",
+    "title": "Crown Halo",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Headwear",
+    "description": "Adds the golden crown from Assets/Hat.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hat.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/thumbnail_crown.png"
+    },
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    }
+  },
+  {
+    "id": "earring-001",
+    "type": "extra",
+    "title": "Earring 1",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Jewelry",
+    "description": "Loads the earring asset from Assets/Earring.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Earring.001.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "earring-002",
+    "type": "extra",
+    "title": "Earring 2",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Jewelry",
+    "description": "Loads the earring asset from Assets/Earring.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Earring.002.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "earring-003",
+    "type": "extra",
+    "title": "Earring 3",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Jewelry",
+    "description": "Loads the earring asset from Assets/Earring.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Earring.003.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "earring-004",
+    "type": "extra",
+    "title": "Earring 4",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Jewelry",
+    "description": "Loads the earring asset from Assets/Earring.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Earring.004.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "earring-005",
+    "type": "extra",
+    "title": "Earring 5",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Jewelry",
+    "description": "Loads the earring asset from Assets/Earring.005.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Earring.005.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "earring-006",
+    "type": "extra",
+    "title": "Earring 6",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Jewelry",
+    "description": "Loads the earring asset from Assets/Earring.006.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Earring.006.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facemask",
+    "type": "extra",
+    "title": "Face Mask",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Face",
+    "description": "Loads the face mask asset from Assets/FaceMask.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FaceMask.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facialhair-001",
+    "type": "extra",
+    "title": "Facial Hair 1",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Facial Hair",
+    "description": "Loads the facial hair asset from Assets/FacialHair.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FacialHair.001.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facialhair-002",
+    "type": "extra",
+    "title": "Facial Hair 2",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Facial Hair",
+    "description": "Loads the facial hair asset from Assets/FacialHair.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FacialHair.002.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facialhair-003",
+    "type": "extra",
+    "title": "Facial Hair 3",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Facial Hair",
+    "description": "Loads the facial hair asset from Assets/FacialHair.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FacialHair.003.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facialhair-004",
+    "type": "extra",
+    "title": "Facial Hair 4",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Facial Hair",
+    "description": "Loads the facial hair asset from Assets/FacialHair.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FacialHair.004.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facialhair-005",
+    "type": "extra",
+    "title": "Facial Hair 5",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Facial Hair",
+    "description": "Loads the facial hair asset from Assets/FacialHair.005.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FacialHair.005.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facialhair-006",
+    "type": "extra",
+    "title": "Facial Hair 6",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Facial Hair",
+    "description": "Loads the facial hair asset from Assets/FacialHair.006.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FacialHair.006.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "facialhair-007",
+    "type": "extra",
+    "title": "Facial Hair 7",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Facial Hair",
+    "description": "Loads the facial hair asset from Assets/FacialHair.007.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/FacialHair.007.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "glasses-001",
+    "type": "extra",
+    "title": "Glasses 1",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Eyewear",
+    "description": "Loads the glasses asset from Assets/Glasses.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Glasses.001.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "glasses-002",
+    "type": "extra",
+    "title": "Glasses 2",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Eyewear",
+    "description": "Loads the glasses asset from Assets/Glasses.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Glasses.002.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "glasses-003",
+    "type": "extra",
+    "title": "Glasses 3",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Eyewear",
+    "description": "Loads the glasses asset from Assets/Glasses.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Glasses.003.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "glasses-004",
+    "type": "extra",
+    "title": "Glasses 4",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Eyewear",
+    "description": "Loads the glasses asset from Assets/Glasses.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Glasses.004.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hat-002",
+    "type": "extra",
+    "title": "Hat 2",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Headwear",
+    "description": "Loads the hat asset from Assets/Hat.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hat.002.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hat-003",
+    "type": "extra",
+    "title": "Hat 3",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Headwear",
+    "description": "Loads the hat asset from Assets/Hat.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hat.003.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hat-004",
+    "type": "extra",
+    "title": "Hat 4",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Headwear",
+    "description": "Loads the hat asset from Assets/Hat.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hat.004.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hat-005",
+    "type": "extra",
+    "title": "Hat 5",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Headwear",
+    "description": "Loads the hat asset from Assets/Hat.005.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hat.005.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hat-006",
+    "type": "extra",
+    "title": "Hat 6",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Headwear",
+    "description": "Loads the hat asset from Assets/Hat.006.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hat.006.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "pumpkinhead",
+    "type": "extra",
+    "title": "Pumpkin Head",
+    "badge": "Accessory",
+    "eyebrow": "Accessories · Seasonal",
+    "description": "Loads the pumpkin head asset from Assets/PumpkinHead.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/PumpkinHead.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "armature",
+    "type": "extra",
+    "title": "Armature",
+    "badge": "Avatar",
+    "eyebrow": "Avatar · Rig",
+    "description": "Loads the armature asset from Assets/Armature.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Armature.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "avatar-armature",
+    "type": "avatar",
+    "title": "Armature Rig",
+    "badge": "Avatar",
+    "eyebrow": "Avatar · Rig",
+    "description": "Loads the Armature.glb rig from the public models.",
+    "source": {
+      "url": "public/models/Armature.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "labels": {
+      "active": "Loaded",
+      "inactive": "Tap to load"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    }
+  },
+  {
+    "id": "eyebrow-001",
+    "type": "attachment",
+    "title": "Eye Brow 1",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": true,
+    "labels": {
+      "active": "Bundled with hero",
+      "inactive": "Bundled with hero"
+    },
+    "icons": {
+      "active": "bi-pin-angle-fill",
+      "inactive": "bi-pin-angle-fill"
+    },
+    "selected": true
+  },
+  {
+    "id": "eyebrow-010",
+    "type": "extra",
+    "title": "Eye Brow 10",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.010.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.010.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-002",
+    "type": "extra",
+    "title": "Eye Brow 2",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-003",
+    "type": "extra",
+    "title": "Eye Brow 3",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-004",
+    "type": "extra",
+    "title": "Eye Brow 4",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.004.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-005",
+    "type": "extra",
+    "title": "Eye Brow 5",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.005.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.005.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-006",
+    "type": "extra",
+    "title": "Eye Brow 6",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.006.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.006.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-007",
+    "type": "extra",
+    "title": "Eye Brow 7",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.007.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.007.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-008",
+    "type": "extra",
+    "title": "Eye Brow 8",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.008.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.008.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyebrow-009",
+    "type": "extra",
+    "title": "Eye Brow 9",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Brow Variants",
+    "description": "Loads the eye brow asset from Assets/EyeBrow.009.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/EyeBrow.009.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/eyebrows.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-001",
+    "type": "attachment",
+    "title": "Eyes 1",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": true,
+    "labels": {
+      "active": "Bundled with hero",
+      "inactive": "Bundled with hero"
+    },
+    "icons": {
+      "active": "bi-pin-angle-fill",
+      "inactive": "bi-pin-angle-fill"
+    },
+    "selected": true
+  },
+  {
+    "id": "eyes-010",
+    "type": "extra",
+    "title": "Eyes 10",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.010.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.010.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-011",
+    "type": "extra",
+    "title": "Eyes 11",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.011.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.011.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-012",
+    "type": "extra",
+    "title": "Eyes 12",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.012.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.012.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-002",
+    "type": "extra",
+    "title": "Eyes 2",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-003",
+    "type": "extra",
+    "title": "Eyes 3",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-004",
+    "type": "extra",
+    "title": "Eyes 4",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.004.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-005",
+    "type": "extra",
+    "title": "Eyes 5",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.005.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.005.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-006",
+    "type": "extra",
+    "title": "Eyes 6",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.006.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.006.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-007",
+    "type": "extra",
+    "title": "Eyes 7",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.007.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.007.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-008",
+    "type": "extra",
+    "title": "Eyes 8",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.008.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.008.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "eyes-009",
+    "type": "extra",
+    "title": "Eyes 9",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Eye Variants",
+    "description": "Loads the eyes asset from Assets/Eyes.009.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Eyes.009.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "face-001",
+    "type": "attachment",
+    "title": "Face 1",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Face Variants",
+    "description": "Loads the face asset from Assets/Face.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Face.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": true,
+    "labels": {
+      "active": "Bundled with hero",
+      "inactive": "Bundled with hero"
+    },
+    "icons": {
+      "active": "bi-pin-angle-fill",
+      "inactive": "bi-pin-angle-fill"
+    },
+    "selected": true
+  },
+  {
+    "id": "face-002",
+    "type": "extra",
+    "title": "Face 2",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Face Variants",
+    "description": "Loads the face asset from Assets/Face.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Face.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "face-003",
+    "type": "extra",
+    "title": "Face 3",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Face Variants",
+    "description": "Loads the face asset from Assets/Face.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Face.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "face-004",
+    "type": "extra",
+    "title": "Face 4",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Face Variants",
+    "description": "Loads the face asset from Assets/Face.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Face.004.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "face-005",
+    "type": "extra",
+    "title": "Face 5",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Face Variants",
+    "description": "Loads the face asset from Assets/Face.005.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Face.005.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "face-006",
+    "type": "extra",
+    "title": "Face 6",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Face Variants",
+    "description": "Loads the face asset from Assets/Face.006.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Face.006.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "face-007",
+    "type": "extra",
+    "title": "Face 7",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Face Variants",
+    "description": "Loads the face asset from Assets/Face.007.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Face.007.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "head-001",
+    "type": "attachment",
+    "title": "Head 1",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Head Variants",
+    "description": "Loads the head asset from Assets/Head.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Head.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": true,
+    "labels": {
+      "active": "Bundled with hero",
+      "inactive": "Bundled with hero"
+    },
+    "icons": {
+      "active": "bi-pin-angle-fill",
+      "inactive": "bi-pin-angle-fill"
+    },
+    "selected": true
+  },
+  {
+    "id": "head-002",
+    "type": "extra",
+    "title": "Head 2",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Head Variants",
+    "description": "Loads the head asset from Assets/Head.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Head.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "head-003",
+    "type": "extra",
+    "title": "Head 3",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Head Variants",
+    "description": "Loads the head asset from Assets/Head.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Head.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "head-004",
+    "type": "extra",
+    "title": "Head 4",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Head Variants",
+    "description": "Loads the head asset from Assets/Head.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Head.004.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/head.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "nose-001",
+    "type": "attachment",
+    "title": "Nose 1",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Nose Variants",
+    "description": "Loads the nose asset from Assets/Nose.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Nose.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/nose.jpg"
+    },
+    "locked": true,
+    "labels": {
+      "active": "Bundled with hero",
+      "inactive": "Bundled with hero"
+    },
+    "icons": {
+      "active": "bi-pin-angle-fill",
+      "inactive": "bi-pin-angle-fill"
+    },
+    "selected": true
+  },
+  {
+    "id": "nose-002",
+    "type": "extra",
+    "title": "Nose 2",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Nose Variants",
+    "description": "Loads the nose asset from Assets/Nose.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Nose.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/nose.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "nose-003",
+    "type": "extra",
+    "title": "Nose 3",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Nose Variants",
+    "description": "Loads the nose asset from Assets/Nose.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Nose.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/nose.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "nose-004",
+    "type": "extra",
+    "title": "Nose 4",
+    "badge": "Core",
+    "eyebrow": "Wardrobe · Nose Variants",
+    "description": "Loads the nose asset from Assets/Nose.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Nose.004.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/nose.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "pose-idle",
+    "type": "pose",
+    "title": "Relaxed Idle",
+    "badge": "Pose",
+    "eyebrow": "Animation · Pose",
+    "description": "Applies the Idle clip from the bundled Poses.glb for a relaxed stance.",
+    "pose": "Idle",
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "labels": {
+      "active": "Applied",
+      "inactive": "Tap to apply"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    }
+  },
+  {
+    "id": "platform-teleporter",
+    "type": "extra",
+    "title": "Teleporter Base",
+    "badge": "Scene",
+    "eyebrow": "Environment · Platform",
+    "description": "Supplied pedestal from the original scene kit.",
+    "source": {
+      "url": "public/models/Teleporter Base.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": true
+  },
+  {
+    "id": "bottom-001",
+    "type": "extra",
+    "title": "Bottom 1",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Bottoms",
+    "description": "Loads the bottom asset from Assets/Bottom.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Bottom.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/bottom.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "bottom-002",
+    "type": "extra",
+    "title": "Bottom 2",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Bottoms",
+    "description": "Loads the bottom asset from Assets/Bottom.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Bottom.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/bottom.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "bottom-003",
+    "type": "extra",
+    "title": "Bottom 3",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Bottoms",
+    "description": "Loads the bottom asset from Assets/Bottom.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Bottom.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/bottom.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-001",
+    "type": "extra",
+    "title": "Hair 1",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-011",
+    "type": "extra",
+    "title": "Hair 11",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.011.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.011.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-002",
+    "type": "extra",
+    "title": "Hair 2",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-003",
+    "type": "extra",
+    "title": "Hair 3",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-004",
+    "type": "extra",
+    "title": "Hair 4",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.004.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-005",
+    "type": "extra",
+    "title": "Hair 5",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.005.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.005.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-006",
+    "type": "extra",
+    "title": "Hair 6",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.006.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.006.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-007",
+    "type": "extra",
+    "title": "Hair 7",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.007.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.007.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-008",
+    "type": "extra",
+    "title": "Hair 8",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.008.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.008.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "hair-009",
+    "type": "extra",
+    "title": "Hair 9",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads the hair asset from Assets/Hair.009.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.009.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "wardrobe-hair",
+    "type": "extra",
+    "title": "Layered Hair 10",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Hair",
+    "description": "Loads Hair.010.glb directly from Assets.zip.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Hair.010.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/hair.jpg"
+    },
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": true
+  },
+  {
+    "id": "outfit-001",
+    "type": "extra",
+    "title": "Outfit 1",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Full Outfits",
+    "description": "Loads the outfit asset from Assets/Outfit.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Outfit.001.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "outfit-002",
+    "type": "extra",
+    "title": "Outfit 2",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Full Outfits",
+    "description": "Loads the outfit asset from Assets/Outfit.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Outfit.002.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "outfit-003",
+    "type": "extra",
+    "title": "Outfit 3",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Full Outfits",
+    "description": "Loads the outfit asset from Assets/Outfit.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Outfit.003.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "outfit-004",
+    "type": "extra",
+    "title": "Outfit 4",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Full Outfits",
+    "description": "Loads the outfit asset from Assets/Outfit.004.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Outfit.004.glb"
+    },
+    "thumbnail": {
+      "url": "public/images/wawasensei-white.png"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "shoes-001",
+    "type": "extra",
+    "title": "Shoes 1",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Footwear",
+    "description": "Loads the shoes asset from Assets/Shoes.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Shoes.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/shoes.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "shoes-003",
+    "type": "extra",
+    "title": "Shoes 3",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Footwear",
+    "description": "Loads the shoes asset from Assets/Shoes.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Shoes.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/shoes.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "wardrobe-shoes",
+    "type": "extra",
+    "title": "Strider Boots 2",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Footwear",
+    "description": "Loads the stylised boot geometry from Assets/Shoes.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Shoes.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/shoes.jpg"
+    },
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": true
+  },
+  {
+    "id": "top-001",
+    "type": "extra",
+    "title": "Top 1",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Tops",
+    "description": "Loads the top asset from Assets/Top.001.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Top.001.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/top.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "top-002",
+    "type": "extra",
+    "title": "Top 2",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Tops",
+    "description": "Loads the top asset from Assets/Top.002.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Top.002.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/top.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "top-003",
+    "type": "extra",
+    "title": "Top 3",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Tops",
+    "description": "Loads the top asset from Assets/Top.003.glb.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/Top.003.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/top.jpg"
+    },
+    "locked": false,
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": false
+  },
+  {
+    "id": "wardrobe-dress",
+    "type": "extra",
+    "title": "Wawa Dress",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Dresses",
+    "description": "Loads the stylised WawaDress.glb from the asset pack.",
+    "source": {
+      "zip": "Assets.zip",
+      "entry": "Assets/WawaDress.glb"
+    },
+    "thumbnail": {
+      "zip": "Assets.zip",
+      "entry": "Assets/thumbnail_wawadress.png"
+    },
+    "labels": {
+      "active": "Equipped",
+      "inactive": "Tap to equip"
+    },
+    "icons": {
+      "active": "bi-check2-circle",
+      "inactive": "bi-plus-circle"
+    },
+    "selected": true
+  }
+]

@@ -4,10 +4,28 @@ A static avatar editor mock-up that mirrors the provided concept art while stayi
 
 ## Highlights
 - **Gradient shell:** A deep violet backdrop, blurred icon rail, and glowing viewer pane reproduce the two-panel hero layout from the reference.
-- **Wardrobe lineup:** The grid now opens with a pinned "Hero Body Suit" card that composites the existing `Assets/NakedFullBody.glb` body with the head, face, eyes, brow, and nose pieces stored in `Assets.zip`, while every optional item swaps in its own GLB—Hair.010, WawaDress, Hat.001 for the crown, Hat.007 for bunny ears, Shoes.002, and the Teleporter Base—so the previewer shows the real wardrobe set instead of repeated placeholders.
+- **Wardrobe lineup:** The selector now boots from `assets-manifest.json`, keeping the pinned "Hero Body Suit" card while automatically listing every GLB inside `Assets.zip` alongside the Teleporter Base so the previewer exposes the real wardrobe set instead of repeated placeholders.
 - **Thumbnail fidelity:** Card art is streamed straight out of `Assets.zip` (hair.jpg, shoes.jpg, thumbnail_wawadress.png, thumbnail_crown.png, etc.), giving each selector tile an accurate snapshot of the asset it toggles.
+- **Manifest driven:** Cards, source paths, and lock states are read from `assets-manifest.json`, so exposing new wardrobe pieces only requires editing data instead of hand-writing HTML tiles.
 - **Relaxed poses:** Selecting the "Relaxed Idle" pose card loads `public/models/Poses.glb` once and applies the Idle animation clip to the assembled body and clothing, delivering the chilled stance requested while keeping everything on the existing skeleton.
 - **Steady color tooling:** The viewer stays static, reframes automatically as items change, and the floating “Primary Color” control still tints the assembled body pieces together in real time.
+
+## Asset manifest
+The wardrobe selector fetches `assets-manifest.json` at startup and builds cards from its entries:
+
+```json
+{
+  "id": "wardrobe-hair",
+  "type": "extra",
+  "title": "Layered Hair 10",
+  "source": { "zip": "Assets.zip", "entry": "Assets/Hair.010.glb" },
+  "thumbnail": { "zip": "Assets.zip", "entry": "Assets/hair.jpg" },
+  "labels": { "active": "Equipped", "inactive": "Tap to equip" }
+}
+```
+
+- Entries describing core attachments are flagged with `"type": "attachment"` and `"locked": true` so they surface in the UI but stay pinned to the hero mesh that already loads them.
+- Append new objects to the array to expose more GLBs from `Assets.zip`; the viewer will generate cards, hook up toggles, and stream the geometry without touching `index.html`.
 
 Models remain Draco-compressed with the decoder fetched from the Three.js CDN at runtime, and the hero mesh is unpacked in-browser with JSZip so everything continues to work in a simple static environment.
 
