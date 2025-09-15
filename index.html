@@ -562,6 +562,9 @@
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     const JSZipLib = window.JSZip;
+    const assetsZipUrl = new URL('./Assets.zip', import.meta.url).href;
+    const assetManifestUrl = new URL('./assets-manifest.json', import.meta.url).href;
+    const zipUrlOverrides = new Map([['Assets.zip', assetsZipUrl]]);
 
     const viewerWrapper = document.getElementById('viewerWrapper');
     const viewer = document.getElementById('viewer');
@@ -664,7 +667,6 @@
     const tintTargets = new Set();
     const skinnedRoots = new Set();
     const assetRegistry = new Map();
-    const assetManifestUrl = 'assets-manifest.json';
     let assetManifestPromise = null;
     let activePoseName = null;
     let activePoseCard = null;
@@ -678,6 +680,13 @@
 
     const zipFileCache = new Map();
     const zipEntryCache = new Map();
+
+    function resolveZipPath(zipPath) {
+      if (!zipPath) {
+        return zipPath;
+      }
+      return zipUrlOverrides.get(zipPath) || zipPath;
+    }
     function createAssetCard(entry) {
       if (!entry || !entry.id) {
         return null;
@@ -821,7 +830,7 @@
       if (zipFileCache.has(zipPath)) {
         return zipFileCache.get(zipPath);
       }
-      const response = await fetch(zipPath);
+      const response = await fetch(resolveZipPath(zipPath));
       if (!response.ok) {
         throw new Error(`Failed to fetch ${zipPath}: ${response.status} ${response.statusText}`);
       }
