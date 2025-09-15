@@ -519,26 +519,54 @@
         </div>
 
         <div id="assetGrid" class="asset-grid" role="list">
-          <div class="asset-card selected locked" data-id="core-hero" data-type="avatar" data-locked="true" data-zip="Assets.zip" data-entry="Assets/NakedFullBody.glb" role="listitem" aria-pressed="true" tabindex="0">
+          <div
+            class="asset-card selected locked"
+            data-id="core-hero"
+            data-type="avatar"
+            data-locked="true"
+            data-zip="Assets.zip"
+            data-entry="Assets/NakedFullBody.glb"
+            data-thumb-zip="Assets.zip"
+            data-thumb-entry="Assets/head.jpg"
+            data-label-active="Pinned in scene"
+            data-label-inactive="Pinned in scene"
+            data-icon-active="bi-pin-angle-fill"
+            data-icon-inactive="bi-pin-angle-fill"
+            role="listitem"
+            aria-pressed="true"
+            tabindex="0"
+          >
             <div class="card-visual" aria-hidden="true">
               <span class="card-badge">Core</span>
-              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
+              <img src="public/images/wawasensei-white.png" alt="Hero body thumbnail" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
               <span class="card-eyebrow">Wardrobe · Base Layer</span>
               <h2 class="card-title">Hero Body Suit</h2>
-              <p class="card-text">Streams the NakedFullBody, head, face, eyes, brow, and nose pieces already bundled inside Assets.zip.</p>
+              <p class="card-text">Streams the bundled NakedFullBody mesh together with the matching facial pieces from Assets.zip.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-pin-angle-fill" aria-hidden="true"></i>
-              <span>Locked in loadout</span>
+              <span>Pinned in scene</span>
             </div>
           </div>
-          <div class="asset-card selected" data-id="platform-teleporter" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="true" tabindex="0">
+          <div
+            class="asset-card selected"
+            data-id="platform-teleporter"
+            data-url="public/models/Teleporter Base.glb"
+            data-thumb="public/images/wawasensei-white.png"
+            data-label-active="Equipped"
+            data-label-inactive="Tap to equip"
+            data-icon-active="bi-check2-circle"
+            data-icon-inactive="bi-plus-circle"
+            role="listitem"
+            aria-pressed="true"
+            tabindex="0"
+          >
             <div class="card-visual" aria-hidden="true">
               <span class="card-badge">Scene</span>
-              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
+              <img src="public/images/wawasensei-white.png" alt="Teleporter base thumbnail" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
@@ -548,71 +576,187 @@
             </div>
             <div class="card-meta">
               <i class="bi bi-check2-circle" aria-hidden="true"></i>
-              <span>Auto loaded</span>
+              <span>Equipped</span>
             </div>
           </div>
-          <div class="asset-card" data-id="wardrobe-cape" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="false" tabindex="0">
+          <div
+            class="asset-card selected"
+            data-id="wardrobe-hair"
+            data-zip="Assets.zip"
+            data-entry="Assets/Hair.010.glb"
+            data-thumb-zip="Assets.zip"
+            data-thumb-entry="Assets/hair.jpg"
+            data-label-active="Equipped"
+            data-label-inactive="Tap to equip"
+            data-icon-active="bi-check2-circle"
+            data-icon-inactive="bi-plus-circle"
+            role="listitem"
+            aria-pressed="true"
+            tabindex="0"
+          >
             <div class="card-visual" aria-hidden="true">
               <span class="card-badge">Wardrobe</span>
-              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
+              <img src="public/images/wawasensei-white.png" alt="Hair layer thumbnail" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Wardrobe · Shoulders</span>
-              <h2 class="card-title">Holo Cape</h2>
-              <p class="card-text">Dramatic shoulder cape placeholder.</p>
+              <span class="card-eyebrow">Wardrobe · Hair</span>
+              <h2 class="card-title">Layered Hair</h2>
+              <p class="card-text">Loads Hair.010.glb directly from Assets.zip to frame the hero with the bundled style.</p>
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-check2-circle" aria-hidden="true"></i>
+              <span>Equipped</span>
+            </div>
+          </div>
+          <div
+            class="asset-card selected"
+            data-id="wardrobe-dress"
+            data-zip="Assets.zip"
+            data-entry="Assets/WawaDress.glb"
+            data-thumb-zip="Assets.zip"
+            data-thumb-entry="Assets/thumbnail_wawadress.png"
+            data-label-active="Equipped"
+            data-label-inactive="Tap to equip"
+            data-icon-active="bi-check2-circle"
+            data-icon-inactive="bi-plus-circle"
+            role="listitem"
+            aria-pressed="true"
+            tabindex="0"
+          >
+            <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Wardrobe</span>
+              <img src="public/images/wawasensei-white.png" alt="Dress thumbnail" aria-hidden="true">
+              <span class="card-watermark" aria-hidden="true">SENSEI</span>
+            </div>
+            <div class="card-body">
+              <span class="card-eyebrow">Wardrobe · Outfit</span>
+              <h2 class="card-title">Wawa Dress</h2>
+              <p class="card-text">Streams the Draco-compressed WawaDress.glb from Assets.zip for a full-length outfit.</p>
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-check2-circle" aria-hidden="true"></i>
+              <span>Equipped</span>
+            </div>
+          </div>
+          <div
+            class="asset-card"
+            data-id="wardrobe-crown"
+            data-zip="Assets.zip"
+            data-entry="Assets/Hat.006.glb"
+            data-thumb-zip="Assets.zip"
+            data-thumb-entry="Assets/thumbnail_crown.png"
+            data-label-active="Equipped"
+            data-label-inactive="Tap to equip"
+            data-icon-active="bi-check2-circle"
+            data-icon-inactive="bi-plus-circle"
+            role="listitem"
+            aria-pressed="false"
+            tabindex="0"
+          >
+            <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Accessory</span>
+              <img src="public/images/wawasensei-white.png" alt="Crown accessory thumbnail" aria-hidden="true">
+              <span class="card-watermark" aria-hidden="true">SENSEI</span>
+            </div>
+            <div class="card-body">
+              <span class="card-eyebrow">Accessories · Head</span>
+              <h2 class="card-title">Crown Halo</h2>
+              <p class="card-text">Adds the halo crown from Assets/Hat.006.glb for a regal accent.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-plus-circle" aria-hidden="true"></i>
               <span>Tap to equip</span>
             </div>
           </div>
-          <div class="asset-card" data-id="wardrobe-gauntlets" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="false" tabindex="0">
+          <div
+            class="asset-card"
+            data-id="wardrobe-bunny"
+            data-zip="Assets.zip"
+            data-entry="Assets/Hat.007.glb"
+            data-thumb-zip="Assets.zip"
+            data-thumb-entry="Assets/thumbnail_bunny.png"
+            data-label-active="Equipped"
+            data-label-inactive="Tap to equip"
+            data-icon-active="bi-check2-circle"
+            data-icon-inactive="bi-plus-circle"
+            role="listitem"
+            aria-pressed="false"
+            tabindex="0"
+          >
             <div class="card-visual" aria-hidden="true">
-              <span class="card-badge">Wardrobe</span>
-              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
+              <span class="card-badge">Accessory</span>
+              <img src="public/images/wawasensei-white.png" alt="Bunny accessory thumbnail" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Wardrobe · Arms</span>
-              <h2 class="card-title">Pulse Gauntlets</h2>
-              <p class="card-text">Layered forearm armor accent.</p>
+              <span class="card-eyebrow">Accessories · Head</span>
+              <h2 class="card-title">Bunny Ears</h2>
+              <p class="card-text">Swaps in the playful bunny ear headpiece bundled as Hat.007.glb.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-plus-circle" aria-hidden="true"></i>
               <span>Tap to equip</span>
             </div>
           </div>
-          <div class="asset-card" data-id="wardrobe-boots" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="false" tabindex="0">
+          <div
+            class="asset-card"
+            data-id="wardrobe-shoes"
+            data-zip="Assets.zip"
+            data-entry="Assets/Shoes.002.glb"
+            data-thumb-zip="Assets.zip"
+            data-thumb-entry="Assets/shoes.jpg"
+            data-label-active="Equipped"
+            data-label-inactive="Tap to equip"
+            data-icon-active="bi-check2-circle"
+            data-icon-inactive="bi-plus-circle"
+            role="listitem"
+            aria-pressed="false"
+            tabindex="0"
+          >
             <div class="card-visual" aria-hidden="true">
               <span class="card-badge">Wardrobe</span>
-              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
+              <img src="public/images/wawasensei-white.png" alt="Shoes thumbnail" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
               <span class="card-eyebrow">Wardrobe · Footwear</span>
-              <h2 class="card-title">Neon Boots</h2>
-              <p class="card-text">High-grip tactical boot variant.</p>
+              <h2 class="card-title">Strider Boots</h2>
+              <p class="card-text">Loads the stylised boot geometry from Assets/Shoes.002.glb.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-plus-circle" aria-hidden="true"></i>
               <span>Tap to equip</span>
             </div>
           </div>
-          <div class="asset-card" data-id="wardrobe-poses" data-url="public/models/Poses.glb" role="listitem" aria-pressed="false" tabindex="0">
+          <div
+            class="asset-card"
+            data-id="pose-idle"
+            data-type="pose"
+            data-pose="Idle"
+            data-thumb-zip="Assets.zip"
+            data-thumb-entry="Assets/eyes.jpg"
+            data-label-active="Applied"
+            data-label-inactive="Tap to apply"
+            data-icon-active="bi-check2-circle"
+            data-icon-inactive="bi-plus-circle"
+            role="listitem"
+            aria-pressed="false"
+            tabindex="0"
+          >
             <div class="card-visual" aria-hidden="true">
               <span class="card-badge">Pose</span>
-              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
+              <img src="public/images/wawasensei-white.png" alt="Relaxed pose thumbnail" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Wardrobe · Stance</span>
-              <h2 class="card-title">Pose Pack</h2>
-              <p class="card-text">Toggles the bundled Poses.glb collection.</p>
+              <span class="card-eyebrow">Animation · Pose</span>
+              <h2 class="card-title">Relaxed Idle</h2>
+              <p class="card-text">Applies the Idle clip from the bundled Poses.glb for a relaxed stance.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-plus-circle" aria-hidden="true"></i>
-              <span>Tap to equip</span>
+              <span>Tap to apply</span>
             </div>
           </div>
         </div>
@@ -692,6 +836,11 @@
     const avatarAttachments = new Map();
     const extras = new Map();
     const tintTargets = new Set();
+    const skinnedRoots = new Set();
+    let activePoseName = null;
+    let activePoseCard = null;
+    let poseClipMapPromise = null;
+    const cardThumbnailUrlCache = new Map();
     let avatarLoadToken = 0;
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
@@ -749,6 +898,147 @@
       throw new Error('No asset source provided');
     }
 
+    function registerSkinnedRoot(object) {
+      if (!object) return;
+      let hasSkin = false;
+      object.traverse((child) => {
+        if (child.isSkinnedMesh) {
+          hasSkin = true;
+        }
+      });
+      if (hasSkin) {
+        skinnedRoots.add(object);
+      }
+    }
+
+    function unregisterSkinnedRoot(object) {
+      if (!object) return;
+      skinnedRoots.delete(object);
+    }
+
+    function resetSkinnedMeshPose(root) {
+      if (!root) return;
+      root.traverse((child) => {
+        if (child.isSkinnedMesh && child.skeleton) {
+          child.skeleton.pose();
+        }
+      });
+    }
+
+    function resetAllSkinnedMeshesPose() {
+      skinnedRoots.forEach((root) => {
+        resetSkinnedMeshPose(root);
+      });
+    }
+
+    async function ensurePoseClipMap() {
+      if (poseClipMapPromise) {
+        return poseClipMapPromise;
+      }
+      poseClipMapPromise = loadGLTFAsset({ url: 'public/models/Poses.glb' })
+        .then((gltf) => {
+          const clipMap = new Map();
+          (gltf.animations || []).forEach((clip) => {
+            clipMap.set(clip.name, clip);
+          });
+          return clipMap;
+        })
+        .catch((error) => {
+          console.error('Failed to load poses', error);
+          return new Map();
+        });
+      return poseClipMapPromise;
+    }
+
+    async function getPoseClip(poseName) {
+      const clipMap = await ensurePoseClipMap();
+      return clipMap.get(poseName);
+    }
+
+    async function applyPoseByName(poseName) {
+      if (!poseName) {
+        return;
+      }
+      const clip = await getPoseClip(poseName);
+      if (!clip) {
+        console.warn(`Pose "${poseName}" not found in poses set`);
+        return;
+      }
+      skinnedRoots.forEach((root) => {
+        const mixer = new THREE.AnimationMixer(root);
+        const action = mixer.clipAction(clip);
+        action.reset();
+        action.setLoop(THREE.LoopOnce, 0);
+        action.clampWhenFinished = true;
+        action.play();
+        mixer.update(Math.max(clip.duration, 0.0001));
+        mixer.stopAllAction();
+        mixer.uncacheClip(clip);
+        mixer.uncacheRoot(root);
+      });
+    }
+
+    async function reapplyActivePose() {
+      if (activePoseName) {
+        await applyPoseByName(activePoseName);
+      }
+    }
+
+    function clearActivePose() {
+      activePoseName = null;
+      resetAllSkinnedMeshesPose();
+    }
+
+    function getMimeTypeFromFilename(filename) {
+      if (!filename) return 'image/png';
+      const lower = filename.toLowerCase();
+      if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) {
+        return 'image/jpeg';
+      }
+      if (lower.endsWith('.png')) {
+        return 'image/png';
+      }
+      return 'application/octet-stream';
+    }
+
+    function assignThumbnailUrl(card, url, img) {
+      const existing = cardThumbnailUrlCache.get(card);
+      if (existing) {
+        URL.revokeObjectURL(existing);
+      }
+      cardThumbnailUrlCache.set(card, url);
+      img.src = url;
+    }
+
+    async function loadCardThumbnail(card) {
+      const img = card.querySelector('.card-visual img');
+      if (!img) {
+        return;
+      }
+      const thumbZip = card.dataset.thumbZip;
+      const thumbEntry = card.dataset.thumbEntry;
+      const thumbUrl = card.dataset.thumb;
+      if (thumbZip && thumbEntry) {
+        try {
+          const buffer = await getZipEntryBuffer(thumbZip, thumbEntry);
+          const blob = new Blob([buffer], { type: getMimeTypeFromFilename(thumbEntry) });
+          const objectUrl = URL.createObjectURL(blob);
+          assignThumbnailUrl(card, objectUrl, img);
+        } catch (error) {
+          console.error(`Failed to load thumbnail "${thumbEntry}" from ${thumbZip}`, error);
+        }
+        return;
+      }
+      if (thumbUrl) {
+        img.src = thumbUrl;
+      }
+    }
+
+    window.addEventListener('beforeunload', () => {
+      cardThumbnailUrlCache.forEach((url) => URL.revokeObjectURL(url));
+      cardThumbnailUrlCache.clear();
+    });
+
     function frame(object) {
       object.position.set(0, 0, 0);
       object.rotation.set(0, 0, 0);
@@ -788,6 +1078,7 @@
     function clearAvatarAttachments() {
       avatarAttachments.forEach((object) => {
         modelGroup.remove(object);
+        unregisterSkinnedRoot(object);
       });
       avatarAttachments.clear();
     }
@@ -795,6 +1086,27 @@
     function setCardState(card, isSelected) {
       card.classList.toggle('selected', isSelected);
       card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+      const meta = card.querySelector('.card-meta');
+      if (meta) {
+        const icon = meta.querySelector('i');
+        const label = meta.querySelector('span');
+        const activeText = card.dataset.labelActive || meta.dataset.labelActive;
+        const inactiveText = card.dataset.labelInactive || meta.dataset.labelInactive;
+        const activeIcon = card.dataset.iconActive || meta.dataset.iconActive;
+        const inactiveIcon = card.dataset.iconInactive || meta.dataset.iconInactive;
+        if (label) {
+          const text = isSelected ? activeText : inactiveText;
+          if (text) {
+            label.textContent = text;
+          }
+        }
+        if (icon) {
+          const iconClass = isSelected ? activeIcon : inactiveIcon;
+          if (iconClass) {
+            icon.className = `bi ${iconClass}`;
+          }
+        }
+      }
     }
 
     async function loadAvatar(source) {
@@ -805,16 +1117,16 @@
           return;
         }
         if (avatar) {
+          unregisterSkinnedRoot(avatar);
           modelGroup.remove(avatar);
         }
         clearAvatarAttachments();
         avatar = gltf.scene;
         modelGroup.add(avatar);
-
+        registerSkinnedRoot(avatar);
         tintTargets.clear();
         tintTargets.add(avatar);
         applyColor(avatar, currentColor);
-        frame(modelGroup);
 
         for (const piece of heroBodyPieces) {
           try {
@@ -825,6 +1137,7 @@
             const object = attachmentGltf.scene;
             avatarAttachments.set(piece.key, object);
             modelGroup.add(object);
+            registerSkinnedRoot(object);
             if (piece.tint) {
               tintTargets.add(object);
               applyColor(object, currentColor);
@@ -835,6 +1148,11 @@
         }
 
         if (loadToken === avatarLoadToken) {
+          if (activePoseName) {
+            await reapplyActivePose();
+          } else {
+            resetAllSkinnedMeshesPose();
+          }
           frame(modelGroup);
         }
       } catch (error) {
@@ -856,6 +1174,10 @@
         const obj = gltf.scene;
         extras.set(key, obj);
         modelGroup.add(obj);
+        registerSkinnedRoot(obj);
+        if (activePoseName) {
+          await applyPoseByName(activePoseName);
+        }
         frame(modelGroup);
       } catch (error) {
         console.error(`Failed to load asset "${key}"`, error);
@@ -867,6 +1189,12 @@
       if (obj) {
         modelGroup.remove(obj);
         extras.delete(key);
+        unregisterSkinnedRoot(obj);
+        if (activePoseName) {
+          reapplyActivePose();
+        } else {
+          resetAllSkinnedMeshesPose();
+        }
         frame(modelGroup);
       }
     }
@@ -885,13 +1213,37 @@
       const locked = card.dataset.locked === 'true';
       let isSelected = card.classList.contains('selected');
 
+      loadCardThumbnail(card);
       setCardState(card, isSelected);
 
-      const handleToggle = () => {
+      const handleToggle = async () => {
         if (type === 'avatar') {
           isSelected = true;
           setCardState(card, true);
-          loadAvatar(assetSource);
+          await loadAvatar(assetSource);
+          return;
+        }
+
+        if (type === 'pose') {
+          if (locked) {
+            return;
+          }
+          const poseName = card.dataset.pose || cardId;
+          if (activePoseCard === card) {
+            setCardState(card, false);
+            activePoseCard = null;
+            clearActivePose();
+            frame(modelGroup);
+          } else {
+            if (activePoseCard) {
+              setCardState(activePoseCard, false);
+            }
+            activePoseCard = card;
+            activePoseName = poseName;
+            setCardState(card, true);
+            await applyPoseByName(poseName);
+            frame(modelGroup);
+          }
           return;
         }
 
@@ -919,6 +1271,14 @@
       if (type === 'avatar') {
         setCardState(card, true);
         loadAvatar(assetSource);
+      } else if (type === 'pose') {
+        if (card.classList.contains('selected')) {
+          activePoseCard = card;
+          activePoseName = card.dataset.pose || cardId;
+          applyPoseByName(activePoseName).then(() => {
+            frame(modelGroup);
+          });
+        }
       } else if (isSelected) {
         loadExtra(assetSource, cardId, card);
       }
