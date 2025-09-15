@@ -39,22 +39,27 @@
     const viewer = document.getElementById('viewer');
     renderer.setSize(viewer.clientWidth, viewer.clientHeight);
     viewer.appendChild(renderer.domElement);
+    camera.aspect = viewer.clientWidth / viewer.clientHeight;
+    camera.updateProjectionMatrix();
 
     const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.0);
     scene.add(light);
 
     let mesh;
     const loader = new GLTFLoader();
-    loader.load('public/models/Armature.glb', (gltf) => {
+    loader.load('public/models/Teleporter Base.glb', (gltf) => {
       mesh = gltf.scene;
       scene.add(mesh);
-      animate();
-    });
+    }, undefined, (err) => console.error(err));
 
     function animate() {
       requestAnimationFrame(animate);
+      if (mesh) {
+        mesh.rotation.y += 0.005;
+      }
       renderer.render(scene, camera);
     }
+    animate();
 
     document.getElementById('colorInput').addEventListener('input', (e) => {
       if (!mesh) return;
