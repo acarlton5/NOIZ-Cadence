@@ -52,9 +52,23 @@
     dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/libs/draco/');
     loader.setDRACOLoader(dracoLoader);
 
+    // Center the model and frame it with the camera once loaded
     loader.load('public/models/Teleporter Base.glb', (gltf) => {
       mesh = gltf.scene;
       scene.add(mesh);
+
+      const box = new THREE.Box3().setFromObject(mesh);
+      const size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
+
+      mesh.position.sub(center); // center the model
+
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const fov = camera.fov * (Math.PI / 180);
+      let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+      cameraZ *= 1.5; // zoom out a little so it's not too tight
+      camera.position.set(0, size.y * 0.5, cameraZ);
+      camera.lookAt(0, 0, 0);
     }, undefined, (err) => console.error(err));
 
     function animate() {
