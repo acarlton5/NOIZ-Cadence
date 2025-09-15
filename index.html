@@ -643,7 +643,7 @@
             class="asset-card"
             data-id="wardrobe-crown"
             data-zip="Assets.zip"
-            data-entry="Assets/Hat.006.glb"
+            data-entry="Assets/Hat.001.glb"
             data-thumb-zip="Assets.zip"
             data-thumb-entry="Assets/thumbnail_crown.png"
             data-label-active="Equipped"
@@ -662,7 +662,7 @@
             <div class="card-body">
               <span class="card-eyebrow">Accessories · Head</span>
               <h2 class="card-title">Crown Halo</h2>
-              <p class="card-text">Adds the halo crown from Assets/Hat.006.glb for a regal accent.</p>
+              <p class="card-text">Adds the golden crown from Assets/Hat.001.glb for a regal accent.</p>
             </div>
             <div class="card-meta">
               <i class="bi bi-plus-circle" aria-hidden="true"></i>
@@ -837,6 +837,65 @@
     const extras = new Map();
     const tintTargets = new Set();
     const skinnedRoots = new Set();
+    const assetRegistry = new Map([
+      [
+        'core-hero',
+        {
+          type: 'avatar',
+          locked: true,
+          source: { zip: 'Assets.zip', entry: 'Assets/NakedFullBody.glb' },
+        },
+      ],
+      [
+        'platform-teleporter',
+        {
+          type: 'extra',
+          source: { url: 'public/models/Teleporter Base.glb' },
+        },
+      ],
+      [
+        'wardrobe-hair',
+        {
+          type: 'extra',
+          source: { zip: 'Assets.zip', entry: 'Assets/Hair.010.glb' },
+        },
+      ],
+      [
+        'wardrobe-dress',
+        {
+          type: 'extra',
+          source: { zip: 'Assets.zip', entry: 'Assets/WawaDress.glb' },
+        },
+      ],
+      [
+        'wardrobe-crown',
+        {
+          type: 'extra',
+          source: { zip: 'Assets.zip', entry: 'Assets/Hat.001.glb' },
+        },
+      ],
+      [
+        'wardrobe-bunny',
+        {
+          type: 'extra',
+          source: { zip: 'Assets.zip', entry: 'Assets/Hat.007.glb' },
+        },
+      ],
+      [
+        'wardrobe-shoes',
+        {
+          type: 'extra',
+          source: { zip: 'Assets.zip', entry: 'Assets/Shoes.002.glb' },
+        },
+      ],
+      [
+        'pose-idle',
+        {
+          type: 'pose',
+          pose: 'Idle',
+        },
+      ],
+    ]);
     let activePoseName = null;
     let activePoseCard = null;
     let poseClipMapPromise = null;
@@ -1110,6 +1169,10 @@
     }
 
     async function loadAvatar(source) {
+      if (!source || (!source.url && !(source.zip && source.entry))) {
+        console.warn('Avatar source missing or incomplete, skipping load.');
+        return;
+      }
       const loadToken = ++avatarLoadToken;
       try {
         const gltf = await loadGLTFAsset(source);
@@ -1163,6 +1226,10 @@
     }
 
     async function loadExtra(source, key, card) {
+      if (!source || (!source.url && !(source.zip && source.entry))) {
+        console.warn(`Skipping extra "${key}" because its source is undefined.`);
+        return;
+      }
       if (extras.has(key)) {
         return;
       }
@@ -1203,14 +1270,20 @@
     let currentColor = colorInput.value;
 
     document.querySelectorAll('#assetGrid .asset-card').forEach((card) => {
-      const assetSource = {
+      const cardId = card.dataset.id || card.dataset.entry || card.dataset.url;
+      const registry = cardId ? assetRegistry.get(cardId) : null;
+      const fallbackSource = {
         url: card.dataset.url || undefined,
         zip: card.dataset.zip || undefined,
         entry: card.dataset.entry || undefined,
       };
-      const cardId = card.dataset.id || card.dataset.entry || card.dataset.url;
-      const type = card.dataset.type || 'extra';
-      const locked = card.dataset.locked === 'true';
+      const resolvedSource = registry?.source || fallbackSource;
+      const assetSource = resolvedSource && (resolvedSource.url || (resolvedSource.zip && resolvedSource.entry))
+        ? resolvedSource
+        : null;
+      const type = registry?.type || card.dataset.type || 'extra';
+      const locked = registry?.locked ?? (card.dataset.locked === 'true');
+      const poseName = registry?.pose || card.dataset.pose || cardId;
       let isSelected = card.classList.contains('selected');
 
       loadCardThumbnail(card);
@@ -1218,6 +1291,10 @@
 
       const handleToggle = async () => {
         if (type === 'avatar') {
+          if (!assetSource) {
+            console.warn(`No asset source registered for avatar card "${cardId}"`);
+            return;
+          }
           isSelected = true;
           setCardState(card, true);
           await loadAvatar(assetSource);
@@ -1228,7 +1305,6 @@
           if (locked) {
             return;
           }
-          const poseName = card.dataset.pose || cardId;
           if (activePoseCard === card) {
             setCardState(card, false);
             activePoseCard = null;
@@ -1254,6 +1330,12 @@
         isSelected = !isSelected;
         setCardState(card, isSelected);
         if (isSelected) {
+          if (!assetSource) {
+            console.warn(`No asset source registered for card "${cardId}"`);
+            setCardState(card, false);
+            isSelected = false;
+            return;
+          }
           loadExtra(assetSource, cardId, card);
         } else {
           removeExtra(cardId);
