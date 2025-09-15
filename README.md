@@ -1,8 +1,11 @@
 # Bootstrap Avatar Preview
 
-A static avatar editor mock-up inspired by modern hero-customizer UIs, powered by [Three.js](https://threejs.org/) and [Bootstrap 5](https://getbootstrap.com/).
+A static avatar editor mock-up that mirrors the provided concept art while staying completely portable thanks to [Three.js](https://threejs.org/) and [Bootstrap 5](https://getbootstrap.com/).
 
-The page loads the bundled `Armature.glb` avatar beside a glossy asset browser. A blurred icon rail anchors the layout, while the left panel presents outfit cards that toggle optional models — for now every card reuses the existing `Teleporter Base.glb` so no extra binaries are needed. A floating color chip lets you tint the avatar, and the scene lighting/gradient backdrop match the polished concept art reference.
+## Highlights
+- **Gradient shell:** A deep violet backdrop, blurred icon rail, and glowing viewer pane reproduce the two-panel hero layout from the reference.
+- **Stylized library cards:** The outfit library is arranged as a soft, rounded grid with “SENSEI” watermarks and gradient swatches. Each entry still toggles the bundled `Teleporter Base.glb`, so the demo avoids introducing any new binary assets.
+- **Responsive color tooling:** The avatar preview loads `Armature.glb` by default, keeps rotating inside the neon frame, and exposes a floating “Primary Color” control for quick palette tweaks.
 
 Models remain Draco-compressed with the decoder fetched from the Three.js CDN at runtime, so everything continues to work in a simple static environment.
 
