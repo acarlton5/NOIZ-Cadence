@@ -2,7 +2,7 @@
 
 A minimal avatar viewer using [Three.js](https://threejs.org/) and [Bootstrap 5](https://getbootstrap.com/).
 
-It loads the existing `Teleporter Base.glb` asset and exposes a simple color picker to tweak its material color.
+It loads the existing `Teleporter Base.glb` asset (compressed with [Draco](https://google.github.io/draco/)) and exposes a simple color picker to tweak its material color. The decoder is fetched from the Three.js CDN at runtime so no build step is required.
 
 ## Run locally
 1. Install a static server such as [`live-server`](https://www.npmjs.com/package/live-server).
