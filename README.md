@@ -15,4 +15,4 @@ It loads the existing `Teleporter Base.glb` asset (compressed with [Draco](https
    ```
 3. Navigate to the address printed by the server (usually http://127.0.0.1:8080).
 
-The page uses vanilla ES modules from CDNs, so no build step is required.
+The page uses vanilla ES modules resolved via an import map to CDNs, so no build step is required.
