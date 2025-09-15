@@ -5,14 +5,12 @@
     "title": "Hero Body Suit",
     "badge": "Core",
     "eyebrow": "Wardrobe · Base Layer",
-    "description": "Streams the bundled NakedFullBody mesh and facial attachments from Assets.zip.",
+    "description": "Streams the bundled NakedFullBody mesh and facial attachments from the local asset bundle.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/NakedFullBody.glb"
+      "url": "NakedFullBody.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": true,
     "labels": {
@@ -31,10 +29,9 @@
     "title": "Bow 1",
     "badge": "Accessory",
     "eyebrow": "Accessories · Props",
-    "description": "Loads the bow asset from Assets/Bow.001.glb.",
+    "description": "Loads the bow asset from Bow.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Bow.001.glb"
+      "url": "Bow.001.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -56,10 +53,9 @@
     "title": "Bow 2",
     "badge": "Accessory",
     "eyebrow": "Accessories · Props",
-    "description": "Loads the bow asset from Assets/Bow.002.glb.",
+    "description": "Loads the bow asset from Bow.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Bow.002.glb"
+      "url": "Bow.002.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -83,12 +79,10 @@
     "eyebrow": "Accessories · Headwear",
     "description": "Swaps in the playful bunny ear headpiece bundled as Hat.007.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hat.007.glb"
+      "url": "Hat.007.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/thumbnail_bunny.png"
+      "url": "thumbnail_bunny.png"
     },
     "labels": {
       "active": "Equipped",
@@ -105,14 +99,12 @@
     "title": "Crown Halo",
     "badge": "Accessory",
     "eyebrow": "Accessories · Headwear",
-    "description": "Adds the golden crown from Assets/Hat.001.glb.",
+    "description": "Adds the golden crown from Hat.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hat.001.glb"
+      "url": "Hat.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/thumbnail_crown.png"
+      "url": "thumbnail_crown.png"
     },
     "labels": {
       "active": "Equipped",
@@ -129,10 +121,9 @@
     "title": "Earring 1",
     "badge": "Accessory",
     "eyebrow": "Accessories · Jewelry",
-    "description": "Loads the earring asset from Assets/Earring.001.glb.",
+    "description": "Loads the earring asset from Earring.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Earring.001.glb"
+      "url": "Earring.001.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -154,10 +145,9 @@
     "title": "Earring 2",
     "badge": "Accessory",
     "eyebrow": "Accessories · Jewelry",
-    "description": "Loads the earring asset from Assets/Earring.002.glb.",
+    "description": "Loads the earring asset from Earring.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Earring.002.glb"
+      "url": "Earring.002.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -179,10 +169,9 @@
     "title": "Earring 3",
     "badge": "Accessory",
     "eyebrow": "Accessories · Jewelry",
-    "description": "Loads the earring asset from Assets/Earring.003.glb.",
+    "description": "Loads the earring asset from Earring.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Earring.003.glb"
+      "url": "Earring.003.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -204,10 +193,9 @@
     "title": "Earring 4",
     "badge": "Accessory",
     "eyebrow": "Accessories · Jewelry",
-    "description": "Loads the earring asset from Assets/Earring.004.glb.",
+    "description": "Loads the earring asset from Earring.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Earring.004.glb"
+      "url": "Earring.004.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -229,10 +217,9 @@
     "title": "Earring 5",
     "badge": "Accessory",
     "eyebrow": "Accessories · Jewelry",
-    "description": "Loads the earring asset from Assets/Earring.005.glb.",
+    "description": "Loads the earring asset from Earring.005.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Earring.005.glb"
+      "url": "Earring.005.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -254,10 +241,9 @@
     "title": "Earring 6",
     "badge": "Accessory",
     "eyebrow": "Accessories · Jewelry",
-    "description": "Loads the earring asset from Assets/Earring.006.glb.",
+    "description": "Loads the earring asset from Earring.006.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Earring.006.glb"
+      "url": "Earring.006.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -279,10 +265,9 @@
     "title": "Face Mask",
     "badge": "Accessory",
     "eyebrow": "Accessories · Face",
-    "description": "Loads the face mask asset from Assets/FaceMask.glb.",
+    "description": "Loads the face mask asset from FaceMask.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FaceMask.glb"
+      "url": "FaceMask.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -304,10 +289,9 @@
     "title": "Facial Hair 1",
     "badge": "Accessory",
     "eyebrow": "Accessories · Facial Hair",
-    "description": "Loads the facial hair asset from Assets/FacialHair.001.glb.",
+    "description": "Loads the facial hair asset from FacialHair.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FacialHair.001.glb"
+      "url": "FacialHair.001.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -329,10 +313,9 @@
     "title": "Facial Hair 2",
     "badge": "Accessory",
     "eyebrow": "Accessories · Facial Hair",
-    "description": "Loads the facial hair asset from Assets/FacialHair.002.glb.",
+    "description": "Loads the facial hair asset from FacialHair.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FacialHair.002.glb"
+      "url": "FacialHair.002.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -354,10 +337,9 @@
     "title": "Facial Hair 3",
     "badge": "Accessory",
     "eyebrow": "Accessories · Facial Hair",
-    "description": "Loads the facial hair asset from Assets/FacialHair.003.glb.",
+    "description": "Loads the facial hair asset from FacialHair.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FacialHair.003.glb"
+      "url": "FacialHair.003.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -379,10 +361,9 @@
     "title": "Facial Hair 4",
     "badge": "Accessory",
     "eyebrow": "Accessories · Facial Hair",
-    "description": "Loads the facial hair asset from Assets/FacialHair.004.glb.",
+    "description": "Loads the facial hair asset from FacialHair.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FacialHair.004.glb"
+      "url": "FacialHair.004.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -404,10 +385,9 @@
     "title": "Facial Hair 5",
     "badge": "Accessory",
     "eyebrow": "Accessories · Facial Hair",
-    "description": "Loads the facial hair asset from Assets/FacialHair.005.glb.",
+    "description": "Loads the facial hair asset from FacialHair.005.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FacialHair.005.glb"
+      "url": "FacialHair.005.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -429,10 +409,9 @@
     "title": "Facial Hair 6",
     "badge": "Accessory",
     "eyebrow": "Accessories · Facial Hair",
-    "description": "Loads the facial hair asset from Assets/FacialHair.006.glb.",
+    "description": "Loads the facial hair asset from FacialHair.006.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FacialHair.006.glb"
+      "url": "FacialHair.006.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -454,10 +433,9 @@
     "title": "Facial Hair 7",
     "badge": "Accessory",
     "eyebrow": "Accessories · Facial Hair",
-    "description": "Loads the facial hair asset from Assets/FacialHair.007.glb.",
+    "description": "Loads the facial hair asset from FacialHair.007.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/FacialHair.007.glb"
+      "url": "FacialHair.007.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -479,10 +457,9 @@
     "title": "Glasses 1",
     "badge": "Accessory",
     "eyebrow": "Accessories · Eyewear",
-    "description": "Loads the glasses asset from Assets/Glasses.001.glb.",
+    "description": "Loads the glasses asset from Glasses.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Glasses.001.glb"
+      "url": "Glasses.001.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -504,10 +481,9 @@
     "title": "Glasses 2",
     "badge": "Accessory",
     "eyebrow": "Accessories · Eyewear",
-    "description": "Loads the glasses asset from Assets/Glasses.002.glb.",
+    "description": "Loads the glasses asset from Glasses.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Glasses.002.glb"
+      "url": "Glasses.002.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -529,10 +505,9 @@
     "title": "Glasses 3",
     "badge": "Accessory",
     "eyebrow": "Accessories · Eyewear",
-    "description": "Loads the glasses asset from Assets/Glasses.003.glb.",
+    "description": "Loads the glasses asset from Glasses.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Glasses.003.glb"
+      "url": "Glasses.003.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -554,10 +529,9 @@
     "title": "Glasses 4",
     "badge": "Accessory",
     "eyebrow": "Accessories · Eyewear",
-    "description": "Loads the glasses asset from Assets/Glasses.004.glb.",
+    "description": "Loads the glasses asset from Glasses.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Glasses.004.glb"
+      "url": "Glasses.004.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -579,10 +553,9 @@
     "title": "Hat 2",
     "badge": "Accessory",
     "eyebrow": "Accessories · Headwear",
-    "description": "Loads the hat asset from Assets/Hat.002.glb.",
+    "description": "Loads the hat asset from Hat.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hat.002.glb"
+      "url": "Hat.002.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -604,10 +577,9 @@
     "title": "Hat 3",
     "badge": "Accessory",
     "eyebrow": "Accessories · Headwear",
-    "description": "Loads the hat asset from Assets/Hat.003.glb.",
+    "description": "Loads the hat asset from Hat.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hat.003.glb"
+      "url": "Hat.003.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -629,10 +601,9 @@
     "title": "Hat 4",
     "badge": "Accessory",
     "eyebrow": "Accessories · Headwear",
-    "description": "Loads the hat asset from Assets/Hat.004.glb.",
+    "description": "Loads the hat asset from Hat.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hat.004.glb"
+      "url": "Hat.004.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -654,10 +625,9 @@
     "title": "Hat 5",
     "badge": "Accessory",
     "eyebrow": "Accessories · Headwear",
-    "description": "Loads the hat asset from Assets/Hat.005.glb.",
+    "description": "Loads the hat asset from Hat.005.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hat.005.glb"
+      "url": "Hat.005.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -679,10 +649,9 @@
     "title": "Hat 6",
     "badge": "Accessory",
     "eyebrow": "Accessories · Headwear",
-    "description": "Loads the hat asset from Assets/Hat.006.glb.",
+    "description": "Loads the hat asset from Hat.006.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hat.006.glb"
+      "url": "Hat.006.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -704,10 +673,9 @@
     "title": "Pumpkin Head",
     "badge": "Accessory",
     "eyebrow": "Accessories · Seasonal",
-    "description": "Loads the pumpkin head asset from Assets/PumpkinHead.glb.",
+    "description": "Loads the pumpkin head asset from PumpkinHead.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/PumpkinHead.glb"
+      "url": "PumpkinHead.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -729,10 +697,9 @@
     "title": "Armature",
     "badge": "Avatar",
     "eyebrow": "Avatar · Rig",
-    "description": "Loads the armature asset from Assets/Armature.glb.",
+    "description": "Loads the armature asset from Armature.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Armature.glb"
+      "url": "Armature.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -776,14 +743,12 @@
     "title": "Eye Brow 1",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.001.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.001.glb"
+      "url": "EyeBrow.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": true,
     "labels": {
@@ -802,14 +767,12 @@
     "title": "Eye Brow 10",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.010.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.010.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.010.glb"
+      "url": "EyeBrow.010.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -828,14 +791,12 @@
     "title": "Eye Brow 2",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.002.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.002.glb"
+      "url": "EyeBrow.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -854,14 +815,12 @@
     "title": "Eye Brow 3",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.003.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.003.glb"
+      "url": "EyeBrow.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -880,14 +839,12 @@
     "title": "Eye Brow 4",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.004.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.004.glb"
+      "url": "EyeBrow.004.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -906,14 +863,12 @@
     "title": "Eye Brow 5",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.005.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.005.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.005.glb"
+      "url": "EyeBrow.005.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -932,14 +887,12 @@
     "title": "Eye Brow 6",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.006.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.006.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.006.glb"
+      "url": "EyeBrow.006.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -958,14 +911,12 @@
     "title": "Eye Brow 7",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.007.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.007.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.007.glb"
+      "url": "EyeBrow.007.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -984,14 +935,12 @@
     "title": "Eye Brow 8",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.008.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.008.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.008.glb"
+      "url": "EyeBrow.008.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -1010,14 +959,12 @@
     "title": "Eye Brow 9",
     "badge": "Core",
     "eyebrow": "Wardrobe · Brow Variants",
-    "description": "Loads the eye brow asset from Assets/EyeBrow.009.glb.",
+    "description": "Loads the eye brow asset from EyeBrow.009.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/EyeBrow.009.glb"
+      "url": "EyeBrow.009.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/eyebrows.jpg"
+      "url": "eyebrows.jpg"
     },
     "locked": false,
     "labels": {
@@ -1036,14 +983,12 @@
     "title": "Eyes 1",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.001.glb.",
+    "description": "Loads the eyes asset from Eyes.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.001.glb"
+      "url": "Eyes.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": true,
     "labels": {
@@ -1062,14 +1007,12 @@
     "title": "Eyes 10",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.010.glb.",
+    "description": "Loads the eyes asset from Eyes.010.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.010.glb"
+      "url": "Eyes.010.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1088,14 +1031,12 @@
     "title": "Eyes 11",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.011.glb.",
+    "description": "Loads the eyes asset from Eyes.011.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.011.glb"
+      "url": "Eyes.011.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1114,14 +1055,12 @@
     "title": "Eyes 12",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.012.glb.",
+    "description": "Loads the eyes asset from Eyes.012.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.012.glb"
+      "url": "Eyes.012.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1140,14 +1079,12 @@
     "title": "Eyes 2",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.002.glb.",
+    "description": "Loads the eyes asset from Eyes.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.002.glb"
+      "url": "Eyes.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1166,14 +1103,12 @@
     "title": "Eyes 3",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.003.glb.",
+    "description": "Loads the eyes asset from Eyes.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.003.glb"
+      "url": "Eyes.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1192,14 +1127,12 @@
     "title": "Eyes 4",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.004.glb.",
+    "description": "Loads the eyes asset from Eyes.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.004.glb"
+      "url": "Eyes.004.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1218,14 +1151,12 @@
     "title": "Eyes 5",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.005.glb.",
+    "description": "Loads the eyes asset from Eyes.005.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.005.glb"
+      "url": "Eyes.005.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1244,14 +1175,12 @@
     "title": "Eyes 6",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.006.glb.",
+    "description": "Loads the eyes asset from Eyes.006.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.006.glb"
+      "url": "Eyes.006.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1270,14 +1199,12 @@
     "title": "Eyes 7",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.007.glb.",
+    "description": "Loads the eyes asset from Eyes.007.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.007.glb"
+      "url": "Eyes.007.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1296,14 +1223,12 @@
     "title": "Eyes 8",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.008.glb.",
+    "description": "Loads the eyes asset from Eyes.008.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.008.glb"
+      "url": "Eyes.008.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1322,14 +1247,12 @@
     "title": "Eyes 9",
     "badge": "Core",
     "eyebrow": "Wardrobe · Eye Variants",
-    "description": "Loads the eyes asset from Assets/Eyes.009.glb.",
+    "description": "Loads the eyes asset from Eyes.009.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Eyes.009.glb"
+      "url": "Eyes.009.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1348,14 +1271,12 @@
     "title": "Face 1",
     "badge": "Core",
     "eyebrow": "Wardrobe · Face Variants",
-    "description": "Loads the face asset from Assets/Face.001.glb.",
+    "description": "Loads the face asset from Face.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Face.001.glb"
+      "url": "Face.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": true,
     "labels": {
@@ -1374,14 +1295,12 @@
     "title": "Face 2",
     "badge": "Core",
     "eyebrow": "Wardrobe · Face Variants",
-    "description": "Loads the face asset from Assets/Face.002.glb.",
+    "description": "Loads the face asset from Face.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Face.002.glb"
+      "url": "Face.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1400,14 +1319,12 @@
     "title": "Face 3",
     "badge": "Core",
     "eyebrow": "Wardrobe · Face Variants",
-    "description": "Loads the face asset from Assets/Face.003.glb.",
+    "description": "Loads the face asset from Face.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Face.003.glb"
+      "url": "Face.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1426,14 +1343,12 @@
     "title": "Face 4",
     "badge": "Core",
     "eyebrow": "Wardrobe · Face Variants",
-    "description": "Loads the face asset from Assets/Face.004.glb.",
+    "description": "Loads the face asset from Face.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Face.004.glb"
+      "url": "Face.004.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1452,14 +1367,12 @@
     "title": "Face 5",
     "badge": "Core",
     "eyebrow": "Wardrobe · Face Variants",
-    "description": "Loads the face asset from Assets/Face.005.glb.",
+    "description": "Loads the face asset from Face.005.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Face.005.glb"
+      "url": "Face.005.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1478,14 +1391,12 @@
     "title": "Face 6",
     "badge": "Core",
     "eyebrow": "Wardrobe · Face Variants",
-    "description": "Loads the face asset from Assets/Face.006.glb.",
+    "description": "Loads the face asset from Face.006.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Face.006.glb"
+      "url": "Face.006.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1504,14 +1415,12 @@
     "title": "Face 7",
     "badge": "Core",
     "eyebrow": "Wardrobe · Face Variants",
-    "description": "Loads the face asset from Assets/Face.007.glb.",
+    "description": "Loads the face asset from Face.007.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Face.007.glb"
+      "url": "Face.007.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1530,14 +1439,12 @@
     "title": "Head 1",
     "badge": "Core",
     "eyebrow": "Wardrobe · Head Variants",
-    "description": "Loads the head asset from Assets/Head.001.glb.",
+    "description": "Loads the head asset from Head.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Head.001.glb"
+      "url": "Head.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": true,
     "labels": {
@@ -1556,14 +1463,12 @@
     "title": "Head 2",
     "badge": "Core",
     "eyebrow": "Wardrobe · Head Variants",
-    "description": "Loads the head asset from Assets/Head.002.glb.",
+    "description": "Loads the head asset from Head.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Head.002.glb"
+      "url": "Head.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1582,14 +1487,12 @@
     "title": "Head 3",
     "badge": "Core",
     "eyebrow": "Wardrobe · Head Variants",
-    "description": "Loads the head asset from Assets/Head.003.glb.",
+    "description": "Loads the head asset from Head.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Head.003.glb"
+      "url": "Head.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1608,14 +1511,12 @@
     "title": "Head 4",
     "badge": "Core",
     "eyebrow": "Wardrobe · Head Variants",
-    "description": "Loads the head asset from Assets/Head.004.glb.",
+    "description": "Loads the head asset from Head.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Head.004.glb"
+      "url": "Head.004.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/head.jpg"
+      "url": "head.jpg"
     },
     "locked": false,
     "labels": {
@@ -1634,14 +1535,12 @@
     "title": "Nose 1",
     "badge": "Core",
     "eyebrow": "Wardrobe · Nose Variants",
-    "description": "Loads the nose asset from Assets/Nose.001.glb.",
+    "description": "Loads the nose asset from Nose.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Nose.001.glb"
+      "url": "Nose.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/nose.jpg"
+      "url": "nose.jpg"
     },
     "locked": true,
     "labels": {
@@ -1660,14 +1559,12 @@
     "title": "Nose 2",
     "badge": "Core",
     "eyebrow": "Wardrobe · Nose Variants",
-    "description": "Loads the nose asset from Assets/Nose.002.glb.",
+    "description": "Loads the nose asset from Nose.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Nose.002.glb"
+      "url": "Nose.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/nose.jpg"
+      "url": "nose.jpg"
     },
     "locked": false,
     "labels": {
@@ -1686,14 +1583,12 @@
     "title": "Nose 3",
     "badge": "Core",
     "eyebrow": "Wardrobe · Nose Variants",
-    "description": "Loads the nose asset from Assets/Nose.003.glb.",
+    "description": "Loads the nose asset from Nose.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Nose.003.glb"
+      "url": "Nose.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/nose.jpg"
+      "url": "nose.jpg"
     },
     "locked": false,
     "labels": {
@@ -1712,14 +1607,12 @@
     "title": "Nose 4",
     "badge": "Core",
     "eyebrow": "Wardrobe · Nose Variants",
-    "description": "Loads the nose asset from Assets/Nose.004.glb.",
+    "description": "Loads the nose asset from Nose.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Nose.004.glb"
+      "url": "Nose.004.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/nose.jpg"
+      "url": "nose.jpg"
     },
     "locked": false,
     "labels": {
@@ -1781,14 +1674,12 @@
     "title": "Bottom 1",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Bottoms",
-    "description": "Loads the bottom asset from Assets/Bottom.001.glb.",
+    "description": "Loads the bottom asset from Bottom.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Bottom.001.glb"
+      "url": "Bottom.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/bottom.jpg"
+      "url": "bottom.jpg"
     },
     "locked": false,
     "labels": {
@@ -1807,14 +1698,12 @@
     "title": "Bottom 2",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Bottoms",
-    "description": "Loads the bottom asset from Assets/Bottom.002.glb.",
+    "description": "Loads the bottom asset from Bottom.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Bottom.002.glb"
+      "url": "Bottom.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/bottom.jpg"
+      "url": "bottom.jpg"
     },
     "locked": false,
     "labels": {
@@ -1833,14 +1722,12 @@
     "title": "Bottom 3",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Bottoms",
-    "description": "Loads the bottom asset from Assets/Bottom.003.glb.",
+    "description": "Loads the bottom asset from Bottom.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Bottom.003.glb"
+      "url": "Bottom.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/bottom.jpg"
+      "url": "bottom.jpg"
     },
     "locked": false,
     "labels": {
@@ -1859,14 +1746,12 @@
     "title": "Hair 1",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.001.glb.",
+    "description": "Loads the hair asset from Hair.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.001.glb"
+      "url": "Hair.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -1885,14 +1770,12 @@
     "title": "Hair 11",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.011.glb.",
+    "description": "Loads the hair asset from Hair.011.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.011.glb"
+      "url": "Hair.011.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -1911,14 +1794,12 @@
     "title": "Hair 2",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.002.glb.",
+    "description": "Loads the hair asset from Hair.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.002.glb"
+      "url": "Hair.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -1937,14 +1818,12 @@
     "title": "Hair 3",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.003.glb.",
+    "description": "Loads the hair asset from Hair.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.003.glb"
+      "url": "Hair.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -1963,14 +1842,12 @@
     "title": "Hair 4",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.004.glb.",
+    "description": "Loads the hair asset from Hair.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.004.glb"
+      "url": "Hair.004.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -1989,14 +1866,12 @@
     "title": "Hair 5",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.005.glb.",
+    "description": "Loads the hair asset from Hair.005.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.005.glb"
+      "url": "Hair.005.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -2015,14 +1890,12 @@
     "title": "Hair 6",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.006.glb.",
+    "description": "Loads the hair asset from Hair.006.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.006.glb"
+      "url": "Hair.006.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -2041,14 +1914,12 @@
     "title": "Hair 7",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.007.glb.",
+    "description": "Loads the hair asset from Hair.007.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.007.glb"
+      "url": "Hair.007.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -2067,14 +1938,12 @@
     "title": "Hair 8",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.008.glb.",
+    "description": "Loads the hair asset from Hair.008.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.008.glb"
+      "url": "Hair.008.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -2093,14 +1962,12 @@
     "title": "Hair 9",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads the hair asset from Assets/Hair.009.glb.",
+    "description": "Loads the hair asset from Hair.009.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.009.glb"
+      "url": "Hair.009.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "locked": false,
     "labels": {
@@ -2119,14 +1986,12 @@
     "title": "Layered Hair 10",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Hair",
-    "description": "Loads Hair.010.glb directly from Assets.zip.",
+    "description": "Loads Hair.010.glb directly from the local asset bundle.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Hair.010.glb"
+      "url": "Hair.010.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/hair.jpg"
+      "url": "hair.jpg"
     },
     "labels": {
       "active": "Equipped",
@@ -2144,10 +2009,9 @@
     "title": "Outfit 1",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Full Outfits",
-    "description": "Loads the outfit asset from Assets/Outfit.001.glb.",
+    "description": "Loads the outfit asset from Outfit.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Outfit.001.glb"
+      "url": "Outfit.001.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -2169,10 +2033,9 @@
     "title": "Outfit 2",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Full Outfits",
-    "description": "Loads the outfit asset from Assets/Outfit.002.glb.",
+    "description": "Loads the outfit asset from Outfit.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Outfit.002.glb"
+      "url": "Outfit.002.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -2194,10 +2057,9 @@
     "title": "Outfit 3",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Full Outfits",
-    "description": "Loads the outfit asset from Assets/Outfit.003.glb.",
+    "description": "Loads the outfit asset from Outfit.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Outfit.003.glb"
+      "url": "Outfit.003.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -2219,10 +2081,9 @@
     "title": "Outfit 4",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Full Outfits",
-    "description": "Loads the outfit asset from Assets/Outfit.004.glb.",
+    "description": "Loads the outfit asset from Outfit.004.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Outfit.004.glb"
+      "url": "Outfit.004.glb"
     },
     "thumbnail": {
       "url": "public/images/wawasensei-white.png"
@@ -2244,14 +2105,12 @@
     "title": "Shoes 1",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Footwear",
-    "description": "Loads the shoes asset from Assets/Shoes.001.glb.",
+    "description": "Loads the shoes asset from Shoes.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Shoes.001.glb"
+      "url": "Shoes.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/shoes.jpg"
+      "url": "shoes.jpg"
     },
     "locked": false,
     "labels": {
@@ -2270,14 +2129,12 @@
     "title": "Shoes 3",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Footwear",
-    "description": "Loads the shoes asset from Assets/Shoes.003.glb.",
+    "description": "Loads the shoes asset from Shoes.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Shoes.003.glb"
+      "url": "Shoes.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/shoes.jpg"
+      "url": "shoes.jpg"
     },
     "locked": false,
     "labels": {
@@ -2296,14 +2153,12 @@
     "title": "Strider Boots 2",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Footwear",
-    "description": "Loads the stylised boot geometry from Assets/Shoes.002.glb.",
+    "description": "Loads the stylised boot geometry from Shoes.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Shoes.002.glb"
+      "url": "Shoes.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/shoes.jpg"
+      "url": "shoes.jpg"
     },
     "labels": {
       "active": "Equipped",
@@ -2321,14 +2176,12 @@
     "title": "Top 1",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Tops",
-    "description": "Loads the top asset from Assets/Top.001.glb.",
+    "description": "Loads the top asset from Top.001.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Top.001.glb"
+      "url": "Top.001.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/top.jpg"
+      "url": "top.jpg"
     },
     "locked": false,
     "labels": {
@@ -2347,14 +2200,12 @@
     "title": "Top 2",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Tops",
-    "description": "Loads the top asset from Assets/Top.002.glb.",
+    "description": "Loads the top asset from Top.002.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Top.002.glb"
+      "url": "Top.002.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/top.jpg"
+      "url": "top.jpg"
     },
     "locked": false,
     "labels": {
@@ -2373,14 +2224,12 @@
     "title": "Top 3",
     "badge": "Wardrobe",
     "eyebrow": "Wardrobe · Tops",
-    "description": "Loads the top asset from Assets/Top.003.glb.",
+    "description": "Loads the top asset from Top.003.glb.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/Top.003.glb"
+      "url": "Top.003.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/top.jpg"
+      "url": "top.jpg"
     },
     "locked": false,
     "labels": {
@@ -2401,12 +2250,10 @@
     "eyebrow": "Wardrobe · Dresses",
     "description": "Loads the stylised WawaDress.glb from the asset pack.",
     "source": {
-      "zip": "Assets.zip",
-      "entry": "Assets/WawaDress.glb"
+      "url": "WawaDress.glb"
     },
     "thumbnail": {
-      "zip": "Assets.zip",
-      "entry": "Assets/thumbnail_wawadress.png"
+      "url": "thumbnail_wawadress.png"
     },
     "labels": {
       "active": "Equipped",
