@@ -3,60 +3,438 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap Avatar Preview</title>
+  <title>Avatar Outfit Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <style>
-    body { margin: 0; }
-    canvas { width: 100%; height: 100%; display: block; }
-    .sidebar { width: 4rem; }
-    .asset-card { cursor: pointer; }
-    .asset-card.selected { outline: 2px solid #0d6efd; }
+    :root {
+      --sidebar-bg: rgba(15, 11, 53, 0.55);
+      --sidebar-border: rgba(255, 255, 255, 0.12);
+      --panel-bg: rgba(255, 255, 255, 0.96);
+      --panel-text: #171836;
+      --accent: #6257ff;
+      --accent-dark: #3529ff;
+      --accent-soft: #ebe8ff;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Manrope', sans-serif;
+      background: radial-gradient(circle at top left, #5a1bff 0%, #1f0061 38%, #080020 100%);
+      color: #f3f4ff;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 88px;
+      background: var(--sidebar-bg);
+      backdrop-filter: blur(18px);
+      border-right: 1px solid var(--sidebar-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      gap: 1rem;
+    }
+
+    .sidebar .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+
+    .sidebar .nav-link {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.6);
+      background: transparent;
+      border: 1px solid transparent;
+      transition: 0.25s ease;
+      font-size: 1.3rem;
+    }
+
+    .sidebar .nav-link:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar .nav-link.active {
+      background: linear-gradient(135deg, #725fff 0%, #4c2fff 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 32px rgba(68, 52, 255, 0.45);
+    }
+
+    .content-layout {
+      flex: 1;
+      display: flex;
+      gap: 2.5rem;
+      padding: 2.5rem 3rem;
+    }
+
+    .customizer-panel {
+      width: 100%;
+      max-width: 520px;
+      background: var(--panel-bg);
+      color: var(--panel-text);
+      border-radius: 32px;
+      padding: 2.5rem;
+      box-shadow: 0 25px 60px rgba(10, 10, 60, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .panel-eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: #8a8bb5;
+    }
+
+    .panel-title {
+      font-weight: 700;
+      color: var(--panel-text);
+    }
+
+    .section-tabs {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-tab {
+      border-radius: 999px !important;
+      border: 1px solid transparent;
+      background: #ececff;
+      color: var(--accent);
+      font-weight: 600;
+      padding: 0.55rem 1.6rem;
+      box-shadow: none;
+      transition: 0.2s ease;
+    }
+
+    .btn-tab:hover {
+      border-color: rgba(98, 87, 255, 0.35);
+    }
+
+    .btn-tab.active {
+      background: linear-gradient(135deg, #7365ff 0%, #4331ff 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 32px rgba(68, 52, 255, 0.35);
+    }
+
+    .panel-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .panel-actions .btn {
+      border-radius: 999px;
+      padding-inline: 1.6rem;
+      font-weight: 600;
+    }
+
+    .panel-actions .btn-outline-secondary {
+      border-color: rgba(16, 14, 65, 0.12);
+      color: var(--panel-text);
+    }
+
+    .panel-actions .btn-outline-secondary:hover {
+      background: rgba(16, 14, 65, 0.08);
+      color: var(--panel-text);
+    }
+
+    .panel-actions .btn-primary {
+      background: linear-gradient(135deg, #7d6fff 0%, #4c37ff 100%);
+      border: none;
+      box-shadow: 0 18px 40px rgba(76, 55, 255, 0.35);
+    }
+
+    .panel-actions .btn-primary:hover {
+      filter: brightness(1.05);
+    }
+
+    .asset-grid {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 0.35rem;
+    }
+
+    .asset-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .asset-grid::-webkit-scrollbar-thumb {
+      background: rgba(12, 12, 60, 0.14);
+      border-radius: 3px;
+    }
+
+    .asset-card {
+      border: none;
+      border-radius: 24px;
+      background: #f4f5ff;
+      transition: 0.2s ease;
+      height: 100%;
+      box-shadow: 0 12px 30px rgba(19, 15, 78, 0.08);
+      cursor: pointer;
+    }
+
+    .asset-card img {
+      border-radius: 20px 20px 12px 12px;
+      object-fit: cover;
+    }
+
+    .asset-card .card-body {
+      padding: 1rem 1.2rem 1.2rem;
+    }
+
+    .asset-card .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .asset-card .card-text {
+      font-size: 0.8rem;
+      color: #7a7ba5;
+    }
+
+    .asset-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 45px rgba(25, 21, 95, 0.16);
+    }
+
+    .asset-card.selected {
+      background: var(--accent-soft);
+      box-shadow: 0 0 0 3px rgba(98, 87, 255, 0.9), 0 24px 48px rgba(66, 55, 255, 0.35);
+    }
+
+    .viewer-pane {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .viewer-wrapper {
+      position: relative;
+      flex: 1;
+      border-radius: 42px;
+      background: linear-gradient(155deg, #6732ff 0%, #2b0a73 50%, #0a0229 100%);
+      box-shadow: 0 30px 80px rgba(18, 10, 60, 0.65);
+      overflow: hidden;
+      min-height: 520px;
+    }
+
+    #viewer {
+      position: absolute;
+      inset: 0;
+    }
+
+    .viewer-overlay {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1rem 1.25rem;
+      backdrop-filter: blur(18px);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 160px;
+    }
+
+    .viewer-overlay label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+      font-weight: 600;
+    }
+
+    .viewer-overlay input[type="color"] {
+      width: 64px;
+      height: 36px;
+      border: none;
+      border-radius: 12px;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1199.98px) {
+      .content-layout {
+        padding: 2rem;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      .app-shell {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        border-right: none;
+        border-bottom: 1px solid var(--sidebar-border);
+        padding: 1rem;
+      }
+
+      .content-layout {
+        flex-direction: column;
+      }
+
+      .customizer-panel {
+        max-width: none;
+      }
+
+      .viewer-wrapper {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .content-layout {
+        padding: 1.5rem 1.25rem 2.5rem;
+      }
+
+      .customizer-panel {
+        padding: 1.75rem;
+      }
+
+      .panel-actions {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="row">
-      <nav class="sidebar col-auto bg-dark min-vh-100 d-flex flex-column align-items-center py-3 text-white">
-        <button class="btn btn-dark mb-3 active"><i class="bi bi-person"></i></button>
-        <button class="btn btn-dark"><i class="bi bi-tshirt"></i></button>
-      </nav>
-      <main class="col-md-7 py-3">
-        <h1 class="h4 mb-3">Assets</h1>
-        <div id="assetGrid" class="row row-cols-2 row-cols-md-3 g-3">
-          <div class="col">
-            <div class="card asset-card selected" data-url="public/models/Teleporter Base.glb">
-              <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Teleporter Base">
-              <div class="card-body p-2 text-center">
-                <p class="card-text small mb-0">Teleporter Base</p>
+  <div class="app-shell">
+    <nav class="sidebar">
+      <div class="logo">N</div>
+      <a class="nav-link active" href="#" aria-label="Appearance"><i class="bi bi-person"></i></a>
+      <a class="nav-link" href="#" aria-label="Wardrobe"><i class="bi bi-tshirt"></i></a>
+      <a class="nav-link" href="#" aria-label="Accessories"><i class="bi bi-sunglasses"></i></a>
+      <a class="nav-link" href="#" aria-label="Settings"><i class="bi bi-sliders"></i></a>
+    </nav>
+
+    <div class="content-layout">
+      <section class="customizer-panel">
+        <div class="d-flex align-items-start justify-content-between gap-3">
+          <div>
+            <p class="panel-eyebrow mb-1">Outfit</p>
+            <h1 class="panel-title h3 mb-0">Asset Library</h1>
+            <p class="text-muted small mb-0">Toggle modular pieces to build the perfect hero look.</p>
+          </div>
+          <div class="panel-actions d-none d-md-flex">
+            <button type="button" class="btn btn-outline-secondary">Discard</button>
+            <button type="button" class="btn btn-primary">Save &amp; Load</button>
+          </div>
+        </div>
+
+        <div class="section-tabs">
+          <button type="button" class="btn btn-tab active">Appearance</button>
+          <button type="button" class="btn btn-tab">Outfit</button>
+          <button type="button" class="btn btn-tab">Extras</button>
+        </div>
+
+        <div class="asset-grid" role="list">
+          <div id="assetGrid" class="row row-cols-2 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card asset-card selected" data-url="public/models/Teleporter Base.glb">
+                <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Teleporter Base">
+                <div class="card-body">
+                  <h2 class="card-title">Teleporter Base</h2>
+                  <p class="card-text">Foundation platform</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="card asset-card" data-url="public/models/Teleporter Base.glb">
-              <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Hair">
-              <div class="card-body p-2 text-center">
-                <p class="card-text small mb-0">Hair</p>
+            <div class="col">
+              <div class="card asset-card" data-url="public/models/Teleporter Base.glb">
+                <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Arm Cuffs">
+                <div class="card-body">
+                  <h2 class="card-title">Arm Cuffs</h2>
+                  <p class="card-text">Layered accessory</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="card asset-card" data-url="public/models/Teleporter Base.glb">
-              <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Top">
-              <div class="card-body p-2 text-center">
-                <p class="card-text small mb-0">Top</p>
+            <div class="col">
+              <div class="card asset-card" data-url="public/models/Teleporter Base.glb">
+                <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Outer Jacket">
+                <div class="card-body">
+                  <h2 class="card-title">Outer Jacket</h2>
+                  <p class="card-text">Add bold color blocking</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card asset-card" data-url="public/models/Teleporter Base.glb">
+                <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Sneakers">
+                <div class="card-body">
+                  <h2 class="card-title">Sneakers</h2>
+                  <p class="card-text">High-top option</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card asset-card" data-url="public/models/Teleporter Base.glb">
+                <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Visor">
+                <div class="card-body">
+                  <h2 class="card-title">Visor</h2>
+                  <p class="card-text">Futuristic eyewear</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card asset-card" data-url="public/models/Teleporter Base.glb">
+                <img src="public/images/wawasensei-white.png" class="card-img-top" alt="Backpack">
+                <div class="card-body">
+                  <h2 class="card-title">Backpack</h2>
+                  <p class="card-text">Utility ready</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </main>
-      <aside class="col-md-5 py-3 d-flex flex-column">
-        <div id="viewer" class="border rounded mb-3 flex-grow-1" style="min-height:400px"></div>
-        <div class="mb-3">
-          <label for="colorInput" class="form-label">Body Color</label>
-          <input type="color" class="form-control form-control-color" id="colorInput" value="#ffccaa">
+      </section>
+
+      <section class="viewer-pane">
+        <div class="viewer-wrapper" id="viewerWrapper">
+          <div id="viewer"></div>
+          <div class="viewer-overlay">
+            <label for="colorInput">Primary Color</label>
+            <input type="color" id="colorInput" value="#9c7bff" aria-label="Choose avatar color">
+          </div>
         </div>
-      </aside>
+      </section>
     </div>
   </div>
 
@@ -77,15 +455,33 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    const viewer = document.getElementById('viewer');
-    renderer.setSize(viewer.clientWidth, viewer.clientHeight);
-    viewer.appendChild(renderer.domElement);
-    camera.aspect = viewer.clientWidth / viewer.clientHeight;
-    camera.updateProjectionMatrix();
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
 
-    const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.0);
-    scene.add(light);
+    const viewerWrapper = document.getElementById('viewerWrapper');
+    const viewer = document.getElementById('viewer');
+    viewer.appendChild(renderer.domElement);
+
+    function resizeRenderer() {
+      const width = viewerWrapper.clientWidth;
+      const height = viewerWrapper.clientHeight;
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    }
+
+    resizeRenderer();
+
+    const hemisphere = new THREE.HemisphereLight(0xffffff, 0x2b1a63, 1.05);
+    scene.add(hemisphere);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    keyLight.position.set(4, 6, 6);
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0x7c5bff, 0.9);
+    rimLight.position.set(-4, 5, -6);
+    scene.add(rimLight);
 
     const modelGroup = new THREE.Group();
     scene.add(modelGroup);
@@ -105,9 +501,9 @@
       const maxDim = Math.max(size.x, size.y, size.z);
       const fov = camera.fov * (Math.PI / 180);
       let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-      cameraZ *= 1.5;
-      camera.position.set(0, size.y * 0.5, cameraZ);
-      camera.lookAt(0, 0, 0);
+      cameraZ *= 1.6;
+      camera.position.set(0, size.y * 0.45, cameraZ);
+      camera.lookAt(0, 0.6, 0);
     }
 
     loader.load('public/models/Armature.glb', (gltf) => {
@@ -149,26 +545,21 @@
 
     function animate() {
       requestAnimationFrame(animate);
-      modelGroup.rotation.y += 0.005;
+      modelGroup.rotation.y += 0.0045;
       renderer.render(scene, camera);
     }
     animate();
 
-    document.getElementById('colorInput').addEventListener('input', (e) => {
+    document.getElementById('colorInput').addEventListener('input', (event) => {
       if (!avatar) return;
       avatar.traverse((child) => {
         if (child.isMesh && child.material && child.material.color) {
-          child.material.color.set(e.target.value);
+          child.material.color.set(event.target.value);
         }
       });
     });
 
-    window.addEventListener('resize', () => {
-      const { clientWidth, clientHeight } = viewer;
-      renderer.setSize(clientWidth, clientHeight);
-      camera.aspect = clientWidth / clientHeight;
-      camera.updateProjectionMatrix();
-    });
+    window.addEventListener('resize', resizeRenderer);
   </script>
 </body>
 </html>
