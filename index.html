@@ -312,6 +312,51 @@
       margin-bottom: 0;
     }
 
+    .asset-card.locked {
+      cursor: default;
+    }
+
+    .asset-card.locked:hover {
+      transform: none;
+      box-shadow: 0 18px 46px rgba(22, 15, 70, 0.12);
+    }
+
+    .card-visual .card-badge {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.28);
+      color: rgba(20, 16, 78, 0.78);
+    }
+
+    .asset-card.locked .card-badge {
+      background: rgba(18, 13, 68, 0.7);
+      color: #f4f3ff;
+    }
+
+    .card-meta {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7a74bb;
+      font-weight: 600;
+    }
+
+    .card-meta .bi {
+      font-size: 0.85rem;
+      color: #9084ff;
+    }
+
     .viewer-pane {
       flex: 1;
       display: flex;
@@ -474,70 +519,100 @@
         </div>
 
         <div id="assetGrid" class="asset-grid" role="list">
-          <div class="asset-card selected" data-url="public/models/Teleporter Base.glb" role="listitem">
+          <div class="asset-card selected locked" data-id="core-hero" data-url="public/models/Armature.glb" data-type="avatar" data-locked="true" role="listitem" aria-pressed="true" tabindex="0">
             <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Core</span>
               <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Platform</span>
+              <span class="card-eyebrow">Wardrobe · Base Layer</span>
+              <h2 class="card-title">Hero Body Suit</h2>
+              <p class="card-text">Loads the bundled Armature.glb hero mesh.</p>
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-pin-angle-fill" aria-hidden="true"></i>
+              <span>Locked in loadout</span>
+            </div>
+          </div>
+          <div class="asset-card selected" data-id="platform-teleporter" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="true" tabindex="0">
+            <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Scene</span>
+              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
+              <span class="card-watermark" aria-hidden="true">SENSEI</span>
+            </div>
+            <div class="card-body">
+              <span class="card-eyebrow">Environment · Platform</span>
               <h2 class="card-title">Teleporter Base</h2>
-              <p class="card-text">Foundation platform</p>
+              <p class="card-text">Supplied pedestal from the original scene kit.</p>
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-check2-circle" aria-hidden="true"></i>
+              <span>Auto loaded</span>
             </div>
           </div>
-          <div class="asset-card" data-url="public/models/Teleporter Base.glb" role="listitem">
+          <div class="asset-card" data-id="wardrobe-cape" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="false" tabindex="0">
             <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Wardrobe</span>
               <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Accessory</span>
-              <h2 class="card-title">Arm Cuffs</h2>
-              <p class="card-text">Layered accessory</p>
+              <span class="card-eyebrow">Wardrobe · Shoulders</span>
+              <h2 class="card-title">Holo Cape</h2>
+              <p class="card-text">Dramatic shoulder cape placeholder.</p>
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-plus-circle" aria-hidden="true"></i>
+              <span>Tap to equip</span>
             </div>
           </div>
-          <div class="asset-card" data-url="public/models/Teleporter Base.glb" role="listitem">
+          <div class="asset-card" data-id="wardrobe-gauntlets" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="false" tabindex="0">
             <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Wardrobe</span>
               <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Outerwear</span>
-              <h2 class="card-title">Outer Jacket</h2>
-              <p class="card-text">Add bold color blocking</p>
+              <span class="card-eyebrow">Wardrobe · Arms</span>
+              <h2 class="card-title">Pulse Gauntlets</h2>
+              <p class="card-text">Layered forearm armor accent.</p>
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-plus-circle" aria-hidden="true"></i>
+              <span>Tap to equip</span>
             </div>
           </div>
-          <div class="asset-card" data-url="public/models/Teleporter Base.glb" role="listitem">
+          <div class="asset-card" data-id="wardrobe-boots" data-url="public/models/Teleporter Base.glb" role="listitem" aria-pressed="false" tabindex="0">
             <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Wardrobe</span>
               <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Footwear</span>
-              <h2 class="card-title">Sneakers</h2>
-              <p class="card-text">High-top option</p>
+              <span class="card-eyebrow">Wardrobe · Footwear</span>
+              <h2 class="card-title">Neon Boots</h2>
+              <p class="card-text">High-grip tactical boot variant.</p>
+            </div>
+            <div class="card-meta">
+              <i class="bi bi-plus-circle" aria-hidden="true"></i>
+              <span>Tap to equip</span>
             </div>
           </div>
-          <div class="asset-card" data-url="public/models/Teleporter Base.glb" role="listitem">
+          <div class="asset-card" data-id="wardrobe-poses" data-url="public/models/Poses.glb" role="listitem" aria-pressed="false" tabindex="0">
             <div class="card-visual" aria-hidden="true">
+              <span class="card-badge">Pose</span>
               <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
               <span class="card-watermark" aria-hidden="true">SENSEI</span>
             </div>
             <div class="card-body">
-              <span class="card-eyebrow">Headgear</span>
-              <h2 class="card-title">Visor</h2>
-              <p class="card-text">Futuristic eyewear</p>
+              <span class="card-eyebrow">Wardrobe · Stance</span>
+              <h2 class="card-title">Pose Pack</h2>
+              <p class="card-text">Toggles the bundled Poses.glb collection.</p>
             </div>
-          </div>
-          <div class="asset-card" data-url="public/models/Teleporter Base.glb" role="listitem">
-            <div class="card-visual" aria-hidden="true">
-              <img src="public/images/wawasensei-white.png" alt="" aria-hidden="true">
-              <span class="card-watermark" aria-hidden="true">SENSEI</span>
-            </div>
-            <div class="card-body">
-              <span class="card-eyebrow">Utility</span>
-              <h2 class="card-title">Backpack</h2>
-              <p class="card-text">Utility ready</p>
+            <div class="card-meta">
+              <i class="bi bi-plus-circle" aria-hidden="true"></i>
+              <span>Tap to equip</span>
             </div>
           </div>
         </div>
@@ -611,10 +686,15 @@
     loader.setDRACOLoader(dracoLoader);
 
     function frame(object) {
+      object.position.set(0, 0, 0);
+      object.updateMatrixWorld(true);
       const box = new THREE.Box3().setFromObject(object);
       const size = box.getSize(new THREE.Vector3());
+      if (size.lengthSq() === 0) {
+        return;
+      }
       const center = box.getCenter(new THREE.Vector3());
-      object.position.sub(center);
+      object.position.set(-center.x, -center.y, -center.z);
       const maxDim = Math.max(size.x, size.y, size.z);
       const fov = camera.fov * (Math.PI / 180);
       let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
@@ -623,40 +703,110 @@
       camera.lookAt(0, 0.6, 0);
     }
 
-    loader.load('public/models/Armature.glb', (gltf) => {
-      avatar = gltf.scene;
-      modelGroup.add(avatar);
-      frame(modelGroup);
-    }, undefined, (err) => console.error(err));
+    function applyColor(target, color) {
+      if (!target) return;
+      target.traverse((child) => {
+        if (child.isMesh && child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach((material) => {
+              if (material && material.color) {
+                material.color.set(color);
+              }
+            });
+          } else if (child.material.color) {
+            child.material.color.set(color);
+          }
+        }
+      });
+    }
 
-    function loadExtra(url) {
+    function setCardState(card, isSelected) {
+      card.classList.toggle('selected', isSelected);
+      card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+    }
+
+    function loadAvatar(url) {
       loader.load(url, (gltf) => {
-        const obj = gltf.scene;
-        modelGroup.add(obj);
-        extras.set(url, obj);
+        if (avatar) {
+          modelGroup.remove(avatar);
+        }
+        avatar = gltf.scene;
+        modelGroup.add(avatar);
+        applyColor(avatar, currentColor);
+        frame(modelGroup);
       }, undefined, (err) => console.error(err));
     }
 
-    function removeExtra(url) {
-      const obj = extras.get(url);
+    function loadExtra(url, key, card) {
+      if (extras.has(key)) {
+        return;
+      }
+      loader.load(url, (gltf) => {
+        if (!card.classList.contains('selected')) {
+          return;
+        }
+        const obj = gltf.scene;
+        extras.set(key, obj);
+        modelGroup.add(obj);
+        frame(modelGroup);
+      }, undefined, (err) => console.error(err));
+    }
+
+    function removeExtra(key) {
+      const obj = extras.get(key);
       if (obj) {
         modelGroup.remove(obj);
-        extras.delete(url);
+        extras.delete(key);
+        frame(modelGroup);
       }
     }
 
+    const colorInput = document.getElementById('colorInput');
+    let currentColor = colorInput.value;
+
     document.querySelectorAll('#assetGrid .asset-card').forEach((card) => {
       const url = card.dataset.url;
-      card.addEventListener('click', () => {
-        card.classList.toggle('selected');
-        if (card.classList.contains('selected')) {
-          loadExtra(url);
+      const cardId = card.dataset.id || url;
+      const type = card.dataset.type || 'extra';
+      const locked = card.dataset.locked === 'true';
+      let isSelected = card.classList.contains('selected');
+
+      setCardState(card, isSelected);
+
+      const handleToggle = () => {
+        if (type === 'avatar') {
+          isSelected = true;
+          setCardState(card, true);
+          loadAvatar(url);
+          return;
+        }
+
+        if (locked) {
+          return;
+        }
+
+        isSelected = !isSelected;
+        setCardState(card, isSelected);
+        if (isSelected) {
+          loadExtra(url, cardId, card);
         } else {
-          removeExtra(url);
+          removeExtra(cardId);
+        }
+      };
+
+      card.addEventListener('click', handleToggle);
+      card.addEventListener('keydown', (event) => {
+        if (event.key === ' ' || event.key === 'Enter') {
+          event.preventDefault();
+          handleToggle();
         }
       });
-      if (card.classList.contains('selected')) {
-        loadExtra(url);
+
+      if (type === 'avatar') {
+        setCardState(card, true);
+        loadAvatar(url);
+      } else if (isSelected) {
+        loadExtra(url, cardId, card);
       }
     });
 
@@ -667,13 +817,9 @@
     }
     animate();
 
-    document.getElementById('colorInput').addEventListener('input', (event) => {
-      if (!avatar) return;
-      avatar.traverse((child) => {
-        if (child.isMesh && child.material && child.material.color) {
-          child.material.color.set(event.target.value);
-        }
-      });
+    colorInput.addEventListener('input', (event) => {
+      currentColor = event.target.value;
+      applyColor(avatar, currentColor);
     });
 
     window.addEventListener('resize', resizeRenderer);

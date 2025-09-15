@@ -4,8 +4,8 @@ A static avatar editor mock-up that mirrors the provided concept art while stayi
 
 ## Highlights
 - **Gradient shell:** A deep violet backdrop, blurred icon rail, and glowing viewer pane reproduce the two-panel hero layout from the reference.
-- **Stylized library cards:** The outfit library is arranged as a soft, rounded grid with “SENSEI” watermarks and gradient swatches. Each entry still toggles the bundled `Teleporter Base.glb`, so the demo avoids introducing any new binary assets.
-- **Responsive color tooling:** The avatar preview loads `Armature.glb` by default, keeps rotating inside the neon frame, and exposes a floating “Primary Color” control for quick palette tweaks.
+- **Wardrobe lineup:** The grid now opens with a pinned "Hero Body Suit" card that loads `Armature.glb` and reorganized wardrobe categories (cape, gauntlets, boots, pose pack) that reuse the existing Teleporter Base and Poses assets—no new binaries required.
+- **Responsive color tooling:** The viewer keeps the hero rig in frame while extras toggle around it, and the floating “Primary Color” control recolors the avatar in real time.
 
 Models remain Draco-compressed with the decoder fetched from the Three.js CDN at runtime, so everything continues to work in a simple static environment.
 
