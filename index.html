@@ -591,6 +591,60 @@
     const modelGroup = new THREE.Group();
     scene.add(modelGroup);
 
+    function slugify(value) {
+      if (!value && value !== 0) {
+        return null;
+      }
+      return String(value)
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '') || null;
+    }
+
+    function deriveSlotFromSource(source) {
+      if (!source) {
+        return null;
+      }
+      const path = source.entry || source.url;
+      if (!path) {
+        return null;
+      }
+      const filename = path.split('/').pop() || '';
+      if (!filename) {
+        return null;
+      }
+      const withoutExt = filename.replace(/\.[^/.]+$/, '');
+      const base = withoutExt.replace(/[._-]?\d+$/i, '');
+      return slugify(base);
+    }
+
+    function resolveSlotId(entry) {
+      if (!entry) {
+        return null;
+      }
+      if (entry.slot) {
+        return slugify(entry.slot);
+      }
+      if (entry.group) {
+        return slugify(entry.group);
+      }
+      if (entry.category) {
+        return slugify(entry.category);
+      }
+      const fromSource = deriveSlotFromSource(entry.source || {});
+      if (fromSource) {
+        return fromSource;
+      }
+      if (entry.eyebrow) {
+        return slugify(entry.eyebrow);
+      }
+      if (entry.badge && entry.title) {
+        return slugify(`${entry.badge}-${entry.title}`);
+      }
+      return null;
+    }
+
     const heroBodyPieces = [
       { key: 'head', source: { zip: 'Assets.zip', entry: 'Assets/Head.001.glb' }, tint: true },
       { key: 'face', source: { zip: 'Assets.zip', entry: 'Assets/Face.001.glb' }, tint: true },
@@ -599,9 +653,14 @@
       { key: 'nose', source: { zip: 'Assets.zip', entry: 'Assets/Nose.001.glb' }, tint: true },
     ];
 
+    heroBodyPieces.forEach((piece) => {
+      piece.slot = piece.slot || deriveSlotFromSource(piece.source) || slugify(piece.key);
+    });
+
     let avatar;
     const avatarAttachments = new Map();
     const extras = new Map();
+    const slotSelections = new Map();
     const tintTargets = new Set();
     const skinnedRoots = new Set();
     const assetRegistry = new Map();
@@ -635,6 +694,11 @@
       dataset.id = entry.id;
       dataset.type = entry.type || 'extra';
       dataset.locked = entry.locked ? 'true' : 'false';
+      const slotId = resolveSlotId(entry);
+      if (slotId) {
+        dataset.slot = slotId;
+      }
+      dataset.exclusive = entry.exclusive === false ? 'false' : 'true';
 
       const source = entry.source || {};
       if (source.url) {
@@ -979,11 +1043,102 @@
     }
 
     function clearAvatarAttachments() {
-      avatarAttachments.forEach((object) => {
-        modelGroup.remove(object);
-        unregisterSkinnedRoot(object);
+      avatarAttachments.forEach((attachment) => {
+        if (attachment && attachment.object) {
+          modelGroup.remove(attachment.object);
+          unregisterSkinnedRoot(attachment.object);
+        }
       });
       avatarAttachments.clear();
+    }
+
+    function hideAvatarAttachmentBySlot(slotId) {
+      if (!slotId) {
+        return false;
+      }
+      let changed = false;
+      avatarAttachments.forEach((attachment) => {
+        if (!attachment || attachment.slot !== slotId || attachment.visible === false) {
+          return;
+        }
+        if (attachment.object) {
+          modelGroup.remove(attachment.object);
+          unregisterSkinnedRoot(attachment.object);
+        }
+        attachment.visible = false;
+        changed = true;
+      });
+      return changed;
+    }
+
+    function showAvatarAttachmentBySlot(slotId) {
+      if (!slotId) {
+        return false;
+      }
+      let changed = false;
+      avatarAttachments.forEach((attachment) => {
+        if (!attachment || attachment.slot !== slotId || attachment.visible !== false) {
+          return;
+        }
+        if (attachment.object) {
+          modelGroup.add(attachment.object);
+          registerSkinnedRoot(attachment.object);
+        }
+        attachment.visible = true;
+        changed = true;
+      });
+      return changed;
+    }
+
+    function registerSlotSelection(slotId, details) {
+      if (!slotId || !details) {
+        return;
+      }
+      slotSelections.set(slotId, details);
+      hideAvatarAttachmentBySlot(slotId);
+    }
+
+    function clearSlotSelection(slotId, cardId) {
+      if (!slotId) {
+        return;
+      }
+      const active = slotSelections.get(slotId);
+      if (!active) {
+        return;
+      }
+      if (!cardId || active.cardId === cardId) {
+        slotSelections.delete(slotId);
+      }
+    }
+
+    function enforceSlotExclusivity(slotId, nextCardId) {
+      if (!slotId) {
+        return;
+      }
+      const active = slotSelections.get(slotId);
+      if (!active || active.cardId === nextCardId) {
+        return;
+      }
+      setCardState(active.card, false);
+      removeExtra(active.cardId);
+      slotSelections.delete(slotId);
+    }
+
+    function maybeRestoreDefaultSlot(slotId) {
+      if (!slotId) {
+        return;
+      }
+      if (slotSelections.has(slotId)) {
+        return;
+      }
+      if (showAvatarAttachmentBySlot(slotId)) {
+        if (activePoseName) {
+          reapplyActivePose();
+        } else {
+          resetAllSkinnedMeshesPose();
+        }
+        frame(modelGroup);
+      }
     }
 
     function setCardState(card, isSelected) {
@@ -1042,12 +1197,21 @@
               return;
             }
             const object = attachmentGltf.scene;
-            avatarAttachments.set(piece.key, object);
+            const attachmentData = {
+              object,
+              slot: piece.slot || deriveSlotFromSource(piece.source) || slugify(piece.key),
+              tint: !!piece.tint,
+              visible: true,
+            };
+            avatarAttachments.set(piece.key, attachmentData);
             modelGroup.add(object);
             registerSkinnedRoot(object);
-            if (piece.tint) {
+            if (attachmentData.tint) {
               tintTargets.add(object);
               applyColor(object, currentColor);
+            }
+            if (attachmentData.slot && slotSelections.has(attachmentData.slot)) {
+              hideAvatarAttachmentBySlot(attachmentData.slot);
             }
           } catch (pieceError) {
             console.error(`Failed to load core body piece "${piece.key}"`, pieceError);
@@ -1072,15 +1236,15 @@
     async function loadExtra(source, key, card) {
       if (!source || (!source.url && !(source.zip && source.entry))) {
         console.warn(`Skipping extra "${key}" because its source is undefined.`);
-        return;
+        return false;
       }
       if (extras.has(key)) {
-        return;
+        return true;
       }
       try {
         const gltf = await loadGLTFAsset(source);
         if (!card.classList.contains('selected')) {
-          return;
+          return false;
         }
         const obj = gltf.scene;
         extras.set(key, obj);
@@ -1090,8 +1254,10 @@
           await applyPoseByName(activePoseName);
         }
         frame(modelGroup);
+        return true;
       } catch (error) {
         console.error(`Failed to load asset "${key}"`, error);
+        return false;
       }
     }
 
@@ -1130,7 +1296,11 @@
         const type = registry?.type || card.dataset.type || 'extra';
         const locked = registry?.locked ?? (card.dataset.locked === 'true');
         const poseName = registry?.pose || card.dataset.pose || cardId;
-        let isSelected = card.classList.contains('selected');
+        let slotId = card.dataset.slot || resolveSlotId(registry) || deriveSlotFromSource(resolvedSource) || null;
+        if (slotId) {
+          card.dataset.slot = slotId;
+        }
+        const exclusive = registry?.exclusive === false || card.dataset.exclusive === 'false' ? false : true;
 
         loadCardThumbnail(card);
 
@@ -1140,21 +1310,21 @@
           return;
         }
 
-        setCardState(card, isSelected);
+        const initiallySelected = card.classList.contains('selected');
+        setCardState(card, initiallySelected);
 
-        const handleToggle = async () => {
-          if (type === 'avatar') {
-            if (!assetSource) {
-              console.warn(`No asset source registered for avatar card "${cardId}"`);
-              return;
-            }
-            isSelected = true;
-            setCardState(card, true);
-            await loadAvatar(assetSource);
+        if (type === 'avatar') {
+          if (!assetSource) {
+            console.warn(`No asset source registered for avatar card "${cardId}"`);
             return;
           }
+          setCardState(card, true);
+          loadAvatar(assetSource);
+          return;
+        }
 
-          if (type === 'pose') {
+        if (type === 'pose') {
+          const handlePoseToggle = async () => {
             if (locked) {
               return;
             }
@@ -1173,55 +1343,95 @@
               await applyPoseByName(poseName);
               frame(modelGroup);
             }
-            return;
+          };
+
+          if (!locked) {
+            card.addEventListener('click', handlePoseToggle);
+            card.addEventListener('keydown', (event) => {
+              if (event.key === ' ' || event.key === 'Enter') {
+                event.preventDefault();
+                handlePoseToggle();
+              }
+            });
           }
 
-          if (locked) {
-            return;
-          }
-
-          isSelected = !isSelected;
-          setCardState(card, isSelected);
-          if (isSelected) {
-            if (!assetSource) {
-              console.warn(`No asset source registered for card "${cardId}"`);
-              setCardState(card, false);
-              isSelected = false;
-              return;
-            }
-            loadExtra(assetSource, cardId, card);
-          } else {
-            removeExtra(cardId);
-          }
-        };
-
-        if (!locked) {
-          card.addEventListener('click', handleToggle);
-          card.addEventListener('keydown', (event) => {
-            if (event.key === ' ' || event.key === 'Enter') {
-              event.preventDefault();
-              handleToggle();
-            }
-          });
-        }
-
-        if (type === 'avatar') {
-          if (!assetSource) {
-            console.warn(`No asset source registered for avatar card "${cardId}"`);
-            return;
-          }
-          setCardState(card, true);
-          loadAvatar(assetSource);
-        } else if (type === 'pose') {
-          if (card.classList.contains('selected')) {
+          if (initiallySelected) {
             activePoseCard = card;
             activePoseName = poseName;
             applyPoseByName(activePoseName).then(() => {
               frame(modelGroup);
             });
           }
-        } else if (isSelected && assetSource) {
-          loadExtra(assetSource, cardId, card);
+          return;
+        }
+
+        const handleExtraToggle = async () => {
+          const currentlySelected = card.classList.contains('selected');
+
+          if (currentlySelected) {
+            setCardState(card, false);
+            removeExtra(cardId);
+            if (exclusive && slotId) {
+              clearSlotSelection(slotId, cardId);
+              maybeRestoreDefaultSlot(slotId);
+            }
+            return;
+          }
+
+          if (!assetSource) {
+            console.warn(`No asset source registered for card "${cardId}"`);
+            return;
+          }
+
+          if (exclusive && slotId) {
+            enforceSlotExclusivity(slotId, cardId);
+            hideAvatarAttachmentBySlot(slotId);
+          }
+
+          setCardState(card, true);
+          const loaded = await loadExtra(assetSource, cardId, card);
+          if (!loaded) {
+            setCardState(card, false);
+            if (exclusive && slotId) {
+              clearSlotSelection(slotId, cardId);
+              maybeRestoreDefaultSlot(slotId);
+            }
+            return;
+          }
+
+          if (exclusive && slotId) {
+            registerSlotSelection(slotId, { cardId, card, type: 'extra' });
+          }
+        };
+
+        if (!locked) {
+          card.addEventListener('click', handleExtraToggle);
+          card.addEventListener('keydown', (event) => {
+            if (event.key === ' ' || event.key === 'Enter') {
+              event.preventDefault();
+              handleExtraToggle();
+            }
+          });
+        }
+
+        if (initiallySelected && assetSource) {
+          if (exclusive && slotId) {
+            enforceSlotExclusivity(slotId, cardId);
+            hideAvatarAttachmentBySlot(slotId);
+          }
+          loadExtra(assetSource, cardId, card).then((loaded) => {
+            if (!loaded) {
+              setCardState(card, false);
+              if (exclusive && slotId) {
+                clearSlotSelection(slotId, cardId);
+                maybeRestoreDefaultSlot(slotId);
+              }
+              return;
+            }
+            if (exclusive && slotId) {
+              registerSlotSelection(slotId, { cardId, card, type: 'extra' });
+            }
+          });
         }
       });
     }
