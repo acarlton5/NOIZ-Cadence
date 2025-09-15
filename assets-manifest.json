@@ -74,12 +74,12 @@
   {
     "id": "wardrobe-bunny",
     "type": "extra",
-    "title": "Bunny Ears",
-    "badge": "Accessory",
-    "eyebrow": "Accessories · Headwear",
-    "description": "Swaps in the playful bunny ear headpiece bundled as Hat.007.glb.",
+    "title": "Bunny Suit",
+    "badge": "Wardrobe",
+    "eyebrow": "Wardrobe · Full Outfits",
+    "description": "Swaps in the playful bunny suit outfit bundled as Outfit.003.glb.",
     "source": {
-      "url": "Hat.007.glb"
+      "url": "Outfit.003.glb"
     },
     "thumbnail": {
       "url": "thumbnail_bunny.png"

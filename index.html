@@ -658,6 +658,8 @@
     });
 
     let avatar;
+    let activeAvatarId = null;
+    let activeAvatarCard = null;
     const avatarAttachments = new Map();
     const extras = new Map();
     const slotSelections = new Map();
@@ -1318,8 +1320,35 @@
             console.warn(`No asset source registered for avatar card "${cardId}"`);
             return;
           }
-          setCardState(card, true);
-          loadAvatar(assetSource);
+
+          const selectAvatar = () => {
+            if (activeAvatarId === cardId) {
+              return;
+            }
+            if (activeAvatarCard && activeAvatarCard !== card) {
+              setCardState(activeAvatarCard, false);
+            }
+            activeAvatarCard = card;
+            activeAvatarId = cardId;
+            if (!card.classList.contains('selected')) {
+              setCardState(card, true);
+            }
+            loadAvatar(assetSource);
+          };
+
+          if (!locked) {
+            card.addEventListener('click', selectAvatar);
+            card.addEventListener('keydown', (event) => {
+              if (event.key === ' ' || event.key === 'Enter') {
+                event.preventDefault();
+                selectAvatar();
+              }
+            });
+          }
+
+          if (initiallySelected || (!activeAvatarCard && locked)) {
+            selectAvatar();
+          }
           return;
         }
 
