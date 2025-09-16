@@ -1,4 +1,10 @@
-import { pb, PHOTO_POSES, UI_MODES, useConfiguratorStore } from "../store";
+import { PHOTO_POSES, UI_MODES, useConfiguratorStore } from "../store";
+import {
+  getAssetIcon,
+  getAssetLabel,
+  getThumbnailUrl,
+  isAssetLocked,
+} from "../utils/assets";
 
 const PosesBox = () => {
   const curPose = useConfiguratorStore((state) => state.pose);
@@ -31,6 +37,12 @@ const AssetsBox = () => {
     customization,
     lockedGroups,
   } = useConfiguratorStore();
+
+  const selectedAsset =
+    currentCategory?.name
+      ? customization[currentCategory.name]?.asset ?? null
+      : null;
+  const selectedAssetId = selectedAsset?.id ?? null;
 
   return (
     <div className="md:rounded-t-lg bg-gradient-to-br from-black/30 to-indigo-900/20  backdrop-blur-sm drop-shadow-md flex flex-col py-6 gap-3 overflow-hidden ">
@@ -87,24 +99,63 @@ const AssetsBox = () => {
             </div>
           </button>
         )}
-        {currentCategory?.assets.map((asset) => (
-          <button
-            key={asset.thumbnail}
-            onClick={() => changeAsset(currentCategory.name, asset)}
-            className={`w-20 h-20  flex-shrink-0 rounded-xl overflow-hidden pointer-events-auto hover:opacity-100 transition-all border-2 duration-300
+        {currentCategory?.assets.map((asset, index) => {
+          const assetKey =
+            asset.id ??
+            asset.slug ??
+            asset.name ??
+            asset.title ??
+            asset.thumbnail ??
+            `asset-${index}`;
+          const isSelected =
+            (asset.id && asset.id === selectedAssetId) || asset === selectedAsset;
+          const locked = isAssetLocked(asset);
+          const thumbnailUrl =
+            getThumbnailUrl(asset) ?? "/images/wawasensei-white.png";
+          const iconClass = getAssetIcon(asset, { active: isSelected });
+          const iconLabel = getAssetLabel(asset, { active: isSelected });
+          const assetName = asset.name ?? asset.title ?? assetKey;
+
+          return (
+            <button
+              key={assetKey}
+              type="button"
+              onClick={() => changeAsset(currentCategory.name, asset)}
+              className={`w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden pointer-events-auto hover:opacity-100 transition-all border-2 duration-300
               bg-gradient-to-tr
               ${
-                customization[currentCategory.name]?.asset?.id === asset.id
+                isSelected
                   ? "border-white from-white/20 to-white/30"
                   : "from-black/70 to-black/20 border-black"
-              }`}
-          >
-            <img
-              className="object-cover w-full h-full"
-              src={pb.files.getUrl(asset, asset.thumbnail)}
-            />
-          </button>
-        ))}
+              }
+              ${locked && !isSelected ? "opacity-80" : ""}`}
+              aria-pressed={isSelected}
+              aria-label={`${assetName} — ${iconLabel}`}
+              title={assetName}
+            >
+              <div className="relative w-full h-full">
+                <img
+                  className="object-cover w-full h-full"
+                  src={thumbnailUrl}
+                  alt={assetName}
+                />
+                <span
+                  className={`absolute top-2 right-2 inline-flex items-center justify-center rounded-full px-1.5 py-1 text-xs font-medium
+                    ${
+                      isSelected
+                        ? "bg-white/90 text-black"
+                        : "bg-black/60 text-white"
+                    }
+                    ${locked ? "ring-2 ring-white/70" : ""}`}
+                  aria-hidden="true"
+                >
+                  <i className={`bi ${iconClass}`} aria-hidden="true"></i>
+                </span>
+                <span className="sr-only">{iconLabel}</span>
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

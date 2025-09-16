@@ -3,7 +3,8 @@ import { dedup, draco, prune, quantize } from "@gltf-transform/functions";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { Suspense, useEffect, useRef } from "react";
 import { GLTFExporter } from "three-stdlib";
-import { pb, useConfiguratorStore } from "../store";
+import { useConfiguratorStore } from "../store";
+import { getModelUrl } from "../utils/assets";
 import { Asset } from "./Asset";
 
 export const Avatar = ({ ...props }) => {
@@ -74,21 +75,23 @@ export const Avatar = ({ ...props }) => {
       <group name="Scene">
         <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
           <primitive object={nodes.mixamorigHips} />
-          {Object.keys(customization).map(
-            (key) =>
-              customization[key]?.asset?.url && (
-                <Suspense key={customization[key].asset.id}>
-                  <Asset
-                    categoryName={key}
-                    url={pb.files.getUrl(
-                      customization[key].asset,
-                      customization[key].asset.url
-                    )}
-                    skeleton={nodes.Plane.skeleton}
-                  />
-                </Suspense>
-              )
-          )}
+          {Object.entries(customization).map(([categoryName, entry]) => {
+            const assetUrl = getModelUrl(entry?.asset);
+
+            if (!assetUrl) {
+              return null;
+            }
+
+            return (
+              <Suspense key={entry?.asset?.id ?? categoryName}>
+                <Asset
+                  categoryName={categoryName}
+                  url={assetUrl}
+                  skeleton={nodes.Plane.skeleton}
+                />
+              </Suspense>
+            );
+          })}
         </group>
       </group>
     </group>
