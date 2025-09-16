@@ -8,22 +8,80 @@ import { Asset } from "./Asset";
 
 const MODEL_EXTENSIONS = [".glb", ".gltf", ".fbx"];
 
-const isModelFile = (value) =>
-  typeof value === "string" &&
-  MODEL_EXTENSIONS.some((extension) => value.toLowerCase().endsWith(extension));
+const MODEL_FIELD_KEYS = [
+  "url",
+  "file",
+  "files",
+  "model",
+  "modelFile",
+  "model_file",
+  "modelUrl",
+  "model_url",
+  "source",
+  "path",
+  "src",
+];
 
-const resolveFileField = (value) => {
-  if (!value) {
+const createModelReference = (value) => {
+  if (typeof value !== "string") {
     return null;
   }
 
-  if (isModelFile(value)) {
-    return value;
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const [withoutFragment] = trimmed.split("#");
+  const [withoutQuery] = withoutFragment.split("?");
+  const lower = withoutQuery.toLowerCase();
+
+  const extension = MODEL_EXTENSIONS.find((candidate) =>
+    lower.endsWith(candidate)
+  );
+
+  if (!extension) {
+    return null;
+  }
+
+  const segments = withoutQuery.split("/");
+  const fileName = segments[segments.length - 1];
+  if (!fileName) {
+    return null;
+  }
+
+  const hasDirectorySeparator = trimmed.includes("/");
+  const isAbsoluteUrl = /^https?:\/\//.test(trimmed);
+  const isProtocolRelative = trimmed.startsWith("//");
+  const isRelativeUrl = trimmed.startsWith("/") && !isProtocolRelative;
+
+  if (isAbsoluteUrl || isRelativeUrl || hasDirectorySeparator) {
+    return {
+      type: "url",
+      value: trimmed,
+      fileName,
+    };
+  }
+
+  return {
+    type: "file",
+    value: trimmed,
+    fileName,
+  };
+};
+
+const resolveModelReference = (value) => {
+  if (value === null || value === undefined) {
+    return null;
+  }
+
+  if (typeof value === "string") {
+    return createModelReference(value);
   }
 
   if (Array.isArray(value)) {
     for (const entry of value) {
-      const resolved = resolveFileField(entry);
+      const resolved = resolveModelReference(entry);
       if (resolved) {
         return resolved;
       }
@@ -32,55 +90,52 @@ const resolveFileField = (value) => {
   }
 
   if (typeof value === "object") {
-    for (const key of ["url", "file", "path", "src"]) {
+    for (const key of MODEL_FIELD_KEYS) {
       if (key in value) {
-        const resolved = resolveFileField(value[key]);
+        const resolved = resolveModelReference(value[key]);
         if (resolved) {
           return resolved;
         }
       }
     }
-  }
 
-  return null;
-};
-
-const getAssetFileName = (asset) => {
-  if (!asset || typeof asset !== "object") {
-    return null;
-  }
-
-  for (const key of ["url", "file", "source", "model", "path", "src"]) {
-    if (key in asset) {
-      const resolved = resolveFileField(asset[key]);
+    for (const entry of Object.values(value)) {
+      const resolved = resolveModelReference(entry);
       if (resolved) {
         return resolved;
       }
     }
   }
 
-  for (const value of Object.values(asset)) {
-    const resolved = resolveFileField(value);
-    if (resolved) {
-      return resolved;
-    }
-  }
-
   return null;
 };
 
+const hasPocketBaseMetadata = (asset) =>
+  asset && typeof asset === "object" && ("collectionId" in asset || "collectionName" in asset);
+
 const getAssetUrl = (asset) => {
-  const fileName = getAssetFileName(asset);
-  if (!fileName) {
+  const reference = resolveModelReference(asset);
+  if (!reference) {
     return null;
   }
 
-  try {
-    return pb.files.getUrl(asset, fileName);
-  } catch (error) {
-    console.warn("Unable to resolve asset URL", { asset, fileName, error });
-    return null;
+  if (reference.type === "url") {
+    return reference.value;
   }
+
+  if (hasPocketBaseMetadata(asset)) {
+    try {
+      return pb.files.getUrl(asset, reference.fileName);
+    } catch (error) {
+      console.warn("Unable to resolve asset URL from PocketBase", {
+        asset,
+        reference,
+        error,
+      });
+    }
+  }
+
+  return reference.value || null;
 };
 
 export const Avatar = ({ ...props }) => {
