@@ -137,10 +137,12 @@
     }
 
     .panel-stack {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 112px;
       align-items: stretch;
       width: 100%;
       position: relative;
+      gap: 0.6rem;
     }
 
     .panel-card {
@@ -406,7 +408,7 @@
       width: 100%;
       max-width: 620px;
       border-radius: 56px;
-      padding: 3.2rem 3.4rem;
+      padding: 3.2rem 3.4rem 6rem;
       background: radial-gradient(140% 140% at 16% 12%, rgba(139, 105, 255, 0.92) 0%, rgba(82, 48, 200, 0.9) 38%, rgba(16, 8, 60, 0.96) 100%);
       border: 1px solid rgba(148, 134, 255, 0.42);
       box-shadow: 0 60px 160px rgba(8, 0, 46, 0.74), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
@@ -646,34 +648,33 @@
     }
 
     .tone-rail {
-      position: absolute;
-      top: calc(2.8rem + 10.5rem);
-      right: -2.8rem;
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.15rem;
-      padding: 1.55rem 1rem 1.9rem;
-      width: 92px;
-      border-radius: 40px;
-      background: rgba(16, 9, 60, 0.88);
+      gap: 1.2rem;
+      padding: 2.6rem 1.15rem;
+      width: 112px;
+      border-radius: 44px;
+      background: linear-gradient(195deg, rgba(18, 10, 74, 0.95) 0%, rgba(9, 4, 42, 0.98) 100%);
       border: 1px solid rgba(154, 142, 255, 0.32);
-      box-shadow: 0 30px 80px rgba(6, 0, 30, 0.55);
+      box-shadow: 0 28px 68px rgba(6, 0, 30, 0.5);
       backdrop-filter: blur(22px);
-      z-index: 2;
+      align-self: stretch;
+      z-index: 1;
     }
 
     .tone-rail::before {
       content: '';
       position: absolute;
-      left: -14px;
-      top: 24px;
-      width: 20px;
-      height: calc(100% - 52px);
+      left: -10px;
+      top: 28px;
+      bottom: 28px;
+      width: 18px;
       border-radius: 12px 0 0 12px;
-      background: linear-gradient(180deg, rgba(148, 136, 255, 0.24) 0%, rgba(86, 64, 200, 0.24) 100%);
-      opacity: 0.65;
-      filter: blur(12px);
+      background: linear-gradient(180deg, rgba(148, 136, 255, 0.32) 0%, rgba(86, 64, 200, 0.32) 100%);
+      opacity: 0.75;
+      filter: blur(10px);
       pointer-events: none;
     }
 
@@ -725,17 +726,28 @@
       outline-offset: 3px;
     }
 
-    .viewer-actions {
+    .stage-footer {
+      position: absolute;
+      left: 2.6rem;
+      right: 2.6rem;
+      bottom: 2.6rem;
       display: flex;
-      justify-content: center;
+      align-items: center;
       gap: 0.85rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
+      padding: 0.85rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(6, 0, 34, 0.6);
+      border: 1px solid rgba(182, 172, 255, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 18px 40px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(16px);
+      z-index: 2;
     }
 
-    .viewer-actions .panel-action {
-      font-size: 0.82rem;
-      padding: 0.65rem 1.6rem;
+    .stage-footer .panel-action {
+      flex: 1;
+      justify-content: center;
+      font-size: 0.78rem;
+      padding: 0.65rem 1.4rem;
     }
 
     @media (max-width: 1439.98px) {
@@ -754,13 +766,8 @@
         border-radius: 44px;
       }
 
-      .tone-rail {
-        top: calc(2.4rem + 9.25rem);
-        right: -2.4rem;
-      }
-
       .viewer-stage {
-        padding: 3rem;
+        padding: 3rem 3rem 5.6rem;
         border-radius: 52px;
       }
     }
@@ -792,15 +799,20 @@
         gap: 2.2rem;
       }
 
+      .panel-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.6rem;
+      }
+
       .panel-card,
       .viewer-stage {
         min-height: auto;
       }
 
-      .panel-stack {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.8rem;
+      .viewer-stage {
+        padding: 2.8rem 2.4rem;
       }
 
       .tone-rail {
@@ -831,6 +843,17 @@
       .viewer-column {
         width: 100%;
       }
+
+      .stage-footer {
+        position: static;
+        margin-top: 1.8rem;
+        width: 100%;
+        align-self: stretch;
+      }
+
+      .stage-footer .panel-action {
+        width: 100%;
+      }
     }
 
     @media (max-width: 767.98px) {
@@ -839,21 +862,23 @@
         padding: 2rem 1.8rem;
       }
 
-      .viewer-actions {
-        margin-top: 1.6rem;
-      }
-
       .option-grid {
         grid-template-columns: 1fr;
       }
 
       .viewer-stage {
-        padding: 2.4rem;
-        border-radius: 40px;
+        padding: 2.2rem 1.6rem;
+        border-radius: 36px;
       }
 
       .tone-rail {
         gap: 1rem;
+      }
+
+      .stage-footer {
+        gap: 0.65rem;
+        padding: 0.85rem 1rem;
+        border-radius: 28px;
       }
     }
   </style>
@@ -1009,16 +1034,16 @@
             </div>
             <div class="avatar-base"></div>
           </div>
-        </div>
-        <div class="viewer-actions">
-          <button type="button" class="btn panel-action btn-save">
-            <i class="bi bi-cloud-arrow-down"></i>
-            Save
-          </button>
-          <button type="button" class="btn panel-action btn-discard">
-            <i class="bi bi-x-circle"></i>
-            Discard
-          </button>
+          <div class="stage-footer">
+            <button type="button" class="btn panel-action btn-save">
+              <i class="bi bi-cloud-arrow-down"></i>
+              Save
+            </button>
+            <button type="button" class="btn panel-action btn-discard">
+              <i class="bi bi-x-circle"></i>
+              Discard
+            </button>
+          </div>
         </div>
       </section>
     </main>
