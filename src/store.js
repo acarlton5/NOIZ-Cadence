@@ -2,10 +2,10 @@ import { create } from "zustand";
 
 import { MeshStandardMaterial } from "three";
 import { randInt } from "three/src/math/MathUtils.js";
-import { getModelUrl } from "./utils/assets";
-import { pb } from "./utils/pocketbase";
+import { getModelUrl } from "./utils/assets.js";
+import { pb } from "./utils/pocketbase.js";
 
-export { pb } from "./utils/pocketbase";
+export { pb } from "./utils/pocketbase.js";
 
 const LAYER_KEYS = [
   "layer",
@@ -229,6 +229,7 @@ export const UI_MODES = {
 
 export const useConfiguratorStore = create((set, get) => ({
   loading: true,
+  error: null,
   mode: UI_MODES.CUSTOMIZE,
   setMode: (mode) => {
     set({ mode });
@@ -266,63 +267,94 @@ export const useConfiguratorStore = create((set, get) => ({
     get().skin.color.set(color);
   },
   fetchCategories: async () => {
-    // you can also fetch all records at once via getFullList
-    const categories = await pb.collection("CustomizationGroups").getFullList({
-      sort: "+position",
-      expand: "colorPalette,cameraPlacement",
-    });
-    const assets = await pb.collection("CustomizationAssets").getFullList({
-      sort: "-created",
-    });
-    const customization = {};
-    categories.forEach((category) => {
-      category.assets = assets.filter((asset) => asset.group === category.id);
+    set({ loading: true, error: null });
 
-      const defaultColor = category.expand?.colorPalette?.colors?.[0] || "";
-      const categoryCustomization = {
-        color: defaultColor,
-      };
-
-      let defaultAsset = null;
-      if (category.startingAsset) {
-        defaultAsset = category.assets.find(
-          (asset) => asset.id === category.startingAsset
+    try {
+      if (!pb) {
+        throw new Error(
+          "PocketBase URL is not configured. Set VITE_POCKETBASE_URL to load avatar assets."
         );
       }
 
-      if (!defaultAsset) {
-        defaultAsset =
-          category.assets.find((asset) => asset?.isDefault) ??
-          category.assets.find((asset) => asset?.type === "avatar") ??
-          (!category.removable && category.assets.length > 0
-            ? category.assets[0]
-            : null);
+      const categories = await pb
+        .collection("CustomizationGroups")
+        .getFullList({
+          sort: "+position",
+          expand: "colorPalette,cameraPlacement",
+        });
+      const assets = await pb.collection("CustomizationAssets").getFullList({
+        sort: "-created",
+      });
+      const customization = {};
+      categories.forEach((category) => {
+        category.assets = assets.filter((asset) => asset.group === category.id);
+
+        const defaultColor = category.expand?.colorPalette?.colors?.[0] || "";
+        const categoryCustomization = {
+          color: defaultColor,
+        };
+
+        let defaultAsset = null;
+        if (category.startingAsset) {
+          defaultAsset = category.assets.find(
+            (asset) => asset.id === category.startingAsset
+          );
+        }
+
+        if (!defaultAsset) {
+          defaultAsset =
+            category.assets.find((asset) => asset?.isDefault) ??
+            category.assets.find((asset) => asset?.type === "avatar") ??
+            (!category.removable && category.assets.length > 0
+              ? category.assets[0]
+              : null);
+        }
+
+        if (defaultAsset) {
+          categoryCustomization.asset = defaultAsset;
+        }
+
+        customization[category.name] = categoryCustomization;
+      });
+
+      const normalizedCustomization = applyLayerRules(customization, categories);
+
+      const headColor =
+        normalizedCustomization.Head?.color ??
+        normalizedCustomization.head?.color;
+      if (headColor) {
+        get().updateSkin(headColor);
       }
 
-      if (defaultAsset) {
-        categoryCustomization.asset = defaultAsset;
+      set({
+        categories,
+        currentCategory: categories[0] ?? null,
+        assets,
+        customization: normalizedCustomization,
+        loading: false,
+        error: null,
+      });
+      if (categories.length > 0) {
+        get().applyLockedAssets();
       }
-
-      customization[category.name] = categoryCustomization;
-    });
-
-    const normalizedCustomization = applyLayerRules(customization, categories);
-
-    const headColor =
-      normalizedCustomization.Head?.color ??
-      normalizedCustomization.head?.color;
-    if (headColor) {
-      get().updateSkin(headColor);
+    } catch (error) {
+      console.error("Failed to load customization data", error);
+      set((state) => ({
+        loading: false,
+        error:
+          error?.message ??
+          "Unable to load customization data. Please verify the PocketBase service.",
+        categories: state.categories ?? [],
+        assets: state.assets ?? [],
+      }));
     }
-
-    set({
-      categories,
-      currentCategory: categories[0],
-      assets,
-      customization: normalizedCustomization,
-      loading: false,
-    });
-    get().applyLockedAssets();
+  },
+  retryFetch: () => {
+    if (get().loading) {
+      return;
+    }
+    set({ error: null, loading: true });
+    get().fetchCategories();
   },
   setCurrentCategory: (category) => set({ currentCategory: category }),
   changeAsset: (categoryName, asset) => {

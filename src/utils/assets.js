@@ -1,4 +1,4 @@
-import { pb } from "./pocketbase";
+import { pb } from "./pocketbase.js";
 
 const MODEL_EXTENSIONS = [".glb", ".gltf", ".fbx"];
 const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"];
@@ -302,7 +302,7 @@ const getFileUrlFromRecord = (record, value, extensions, fieldKeys) => {
   const recordWithMetadata =
     resolvedRecord ?? (hasPocketBaseMetadata(record) ? record : null);
 
-  if (recordWithMetadata) {
+  if (recordWithMetadata && pb) {
     try {
       return pb.files.getUrl(recordWithMetadata, reference.fileName);
     } catch (error) {

@@ -4,7 +4,7 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { Suspense, useEffect, useRef } from "react";
 import { GLTFExporter } from "three-stdlib";
 import { useConfiguratorStore } from "../store";
-import { getModelUrl } from "../utils/assets";
+import { getModelUrl } from "../utils/assets.js";
 import { Asset } from "./Asset";
 
 export const Avatar = ({ ...props }) => {

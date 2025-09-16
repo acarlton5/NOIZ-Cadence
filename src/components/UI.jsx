@@ -4,7 +4,7 @@ import {
   getAssetLabel,
   getThumbnailUrl,
   isAssetLocked,
-} from "../utils/assets";
+} from "../utils/assets.js";
 
 const PosesBox = () => {
   const curPose = useConfiguratorStore((state) => state.pose);
@@ -236,17 +236,40 @@ export const UI = () => {
   const mode = useConfiguratorStore((state) => state.mode);
   const setMode = useConfiguratorStore((state) => state.setMode);
   const loading = useConfiguratorStore((state) => state.loading);
+  const error = useConfiguratorStore((state) => state.error);
+  const retryFetch = useConfiguratorStore((state) => state.retryFetch);
+
+  const overlayVisible = loading || Boolean(error);
+  const overlayPointerClass = error ? "pointer-events-auto" : "pointer-events-none";
   return (
     <main className="pointer-events-none fixed z-10 inset-0 select-none">
       <div
-        className={`absolute inset-0 bg-black z-10 pointer-events-none flex items-center justify-center transition-opacity  duration-1000 ${
-          loading ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute inset-0 bg-black z-10 flex items-center justify-center transition-opacity  duration-1000 ${
+          overlayVisible ? "opacity-100" : "opacity-0"
+        } ${overlayPointerClass}`}
       >
-        <img
-          src="/images/wawasensei-white.png"
-          className="w-40 animate-pulse"
-        />
+        {error ? (
+          <div className="max-w-lg space-y-4 px-6 text-center">
+            <h2 className="text-white text-xl font-semibold">
+              Unable to load avatar assets
+            </h2>
+            <p className="text-white/80 text-sm leading-relaxed">
+              {error}
+            </p>
+            <button
+              onClick={retryFetch}
+              className="inline-flex items-center justify-center rounded-lg bg-white/90 px-4 py-2 font-medium text-indigo-950 transition-colors duration-200 hover:bg-white"
+            >
+              Try again
+            </button>
+          </div>
+        ) : (
+          <img
+            src="/images/wawasensei-white.png"
+            className="w-40 animate-pulse"
+            alt="Wawa Sensei"
+          />
+        )}
       </div>
       <div className="mx-auto h-full max-w-screen-xl w-full flex flex-col justify-between">
         <div className="flex justify-between items-center p-10">
