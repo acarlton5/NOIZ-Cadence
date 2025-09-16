@@ -126,8 +126,8 @@
     .workspace {
       flex: 1;
       display: grid;
-      grid-template-columns: minmax(0, 640px) minmax(0, 520px);
-      gap: 2.6rem;
+      grid-template-columns: minmax(0, 560px) minmax(0, 520px);
+      gap: 2.8rem;
       align-items: stretch;
     }
 
@@ -161,7 +161,66 @@
     .panel-header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .panel-actions {
+      display: inline-flex;
+      gap: 0.85rem;
+      margin-left: auto;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .panel-action {
+      display: inline-flex;
       align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      padding: 0.6rem 1.45rem;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .panel-action i {
+      font-size: 1rem;
+    }
+
+    .btn-save {
+      background: linear-gradient(140deg, #8f76ff 0%, #5c3fff 100%);
+      border-color: rgba(255, 255, 255, 0.55);
+      color: #ffffff;
+      box-shadow: 0 18px 40px rgba(84, 58, 210, 0.35);
+    }
+
+    .btn-save:hover {
+      box-shadow: 0 24px 48px rgba(84, 58, 210, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .btn-discord {
+      background: rgba(130, 114, 255, 0.15);
+      border-color: rgba(132, 118, 255, 0.42);
+      color: #5d42ff;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .btn-discord:hover {
+      background: rgba(130, 114, 255, 0.24);
+      color: #4428d6;
+      transform: translateY(-2px);
+    }
+
+    .panel-action:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.85);
+      outline-offset: 3px;
     }
 
     .gender-toggle {
@@ -594,41 +653,59 @@
       box-shadow: 0 16px 22px rgba(0, 0, 0, 0.25);
     }
 
-    .tone-tray {
-      width: 100%;
+    .tone-rail {
+      position: absolute;
+      top: 3.8rem;
+      right: -4.5rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 1.8rem;
-      padding: 1.35rem 1.8rem;
-      border-radius: 999px;
-      background: rgba(18, 10, 54, 0.72);
-      border: 1px solid rgba(154, 142, 255, 0.28);
-      box-shadow: 0 26px 80px rgba(6, 0, 30, 0.45);
-      backdrop-filter: blur(18px);
+      gap: 1.15rem;
+      padding: 1.55rem 1rem 1.9rem;
+      width: 92px;
+      border-radius: 40px;
+      background: rgba(16, 9, 60, 0.88);
+      border: 1px solid rgba(154, 142, 255, 0.32);
+      box-shadow: 0 30px 80px rgba(6, 0, 30, 0.55);
+      backdrop-filter: blur(22px);
+      z-index: 2;
     }
 
-    .tone-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.32em;
+    .tone-rail::before {
+      content: '';
+      position: absolute;
+      left: -14px;
+      top: 24px;
+      width: 20px;
+      height: calc(100% - 52px);
+      border-radius: 12px 0 0 12px;
+      background: linear-gradient(180deg, rgba(148, 136, 255, 0.24) 0%, rgba(86, 64, 200, 0.24) 100%);
+      opacity: 0.65;
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .tone-rail-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.34em;
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.78);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.35rem 0.9rem;
+      padding: 0.38rem 1.1rem;
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
-      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
     }
 
-    .tone-list {
+    .tone-rail-swatches {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      flex-wrap: wrap;
       gap: 0.85rem;
-      flex: 1;
+      margin-top: 0.4rem;
     }
 
     .tone-swatch {
@@ -651,6 +728,11 @@
       box-shadow: 0 20px 36px rgba(0, 0, 0, 0.48);
     }
 
+    .tone-swatch:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.85);
+      outline-offset: 3px;
+    }
+
     @media (max-width: 1439.98px) {
       .app-shell {
         padding: 2.8rem 2.6rem;
@@ -658,8 +740,8 @@
       }
 
       .workspace {
-        grid-template-columns: minmax(0, 560px) minmax(0, 480px);
-        gap: 2.2rem;
+        grid-template-columns: minmax(0, 520px) minmax(0, 480px);
+        gap: 2.4rem;
       }
 
       .panel-card {
@@ -667,8 +749,9 @@
         border-radius: 44px;
       }
 
-      .tone-tray {
-        padding: 1.2rem 1.6rem;
+      .tone-rail {
+        top: 3.4rem;
+        right: -4rem;
       }
 
       .viewer-stage {
@@ -704,27 +787,43 @@
         gap: 2.2rem;
       }
 
-      .panel-stack {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.6rem;
-      }
-
       .panel-card,
       .viewer-stage {
         min-height: auto;
       }
 
-      .tone-tray {
+      .panel-stack {
         flex-direction: column;
         align-items: center;
-        gap: 1.2rem;
-        padding: 1.2rem 1.4rem;
-        align-self: center;
-        text-align: center;
+        gap: 1.8rem;
       }
 
-      .tone-list {
+      .panel-actions {
+        margin-left: 0;
+        justify-content: center;
+      }
+
+      .tone-rail {
+        position: static;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 1.15rem 1.6rem;
+        margin-top: 0;
+      }
+
+      .tone-rail::before {
+        display: none;
+      }
+
+      .tone-rail-label {
+        padding: 0.35rem 1.1rem;
+      }
+
+      .tone-rail-swatches {
+        flex-direction: row;
+        flex-wrap: wrap;
         justify-content: center;
       }
 
@@ -749,9 +848,8 @@
         border-radius: 40px;
       }
 
-      .tone-tray {
-        width: 100%;
-        justify-content: center;
+      .tone-rail {
+        gap: 1rem;
       }
     }
   </style>
@@ -789,8 +887,18 @@
           <div class="panel-card">
             <div class="panel-header">
               <div class="gender-toggle" role="group" aria-label="Body presentation">
-                <button type="button" class="toggle-pill active">Masculine</button>
-                <button type="button" class="toggle-pill">Feminine</button>
+                <button type="button" class="toggle-pill active" aria-pressed="true">Masculine</button>
+                <button type="button" class="toggle-pill" aria-pressed="false">Feminine</button>
+              </div>
+              <div class="panel-actions">
+                <button type="button" class="btn panel-action btn-save">
+                  <i class="bi bi-cloud-arrow-down"></i>
+                  Save
+                </button>
+                <button type="button" class="btn panel-action btn-discord">
+                  <i class="bi bi-discord"></i>
+                  Discord
+                </button>
               </div>
             </div>
             <div>
@@ -803,76 +911,76 @@
                   <h1 class="heading-title">Head Type</h1>
                 </div>
               </div>
-              <p class="heading-subtext">Select from preset head shapes to refine the look of your avatar before choosing outfits.</p>
+              <p class="heading-subtext">Select a new head type to update the look of your avatar before choosing outfits.</p>
             </div>
-          <div class="option-grid" role="list">
-            <button type="button" class="option-card active" role="listitem">
-              <div class="option-avatar">
-                <span class="option-icon">
-                  <i class="bi bi-emoji-smile"></i>
-                </span>
-                <div class="option-meta">
-                  <span class="option-name">Head 5</span>
-                  <span class="option-detail">Balanced</span>
+            <div class="option-grid" role="list">
+              <button type="button" class="option-card active" role="listitem">
+                <div class="option-avatar">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-smile"></i>
+                  </span>
+                  <div class="option-meta">
+                    <span class="option-name">Head 5</span>
+                    <span class="option-detail">Balanced</span>
+                  </div>
                 </div>
-              </div>
-            </button>
-            <button type="button" class="option-card" role="listitem">
-              <div class="option-avatar">
-                <span class="option-icon">
-                  <i class="bi bi-emoji-neutral"></i>
-                </span>
-                <div class="option-meta">
-                  <span class="option-name">Head 7</span>
-                  <span class="option-detail">Angular</span>
+              </button>
+              <button type="button" class="option-card" role="listitem">
+                <div class="option-avatar">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-neutral"></i>
+                  </span>
+                  <div class="option-meta">
+                    <span class="option-name">Head 7</span>
+                    <span class="option-detail">Angular</span>
+                  </div>
                 </div>
-              </div>
-            </button>
-            <button type="button" class="option-card" role="listitem">
-              <div class="option-avatar">
-                <span class="option-icon">
-                  <i class="bi bi-emoji-sunglasses"></i>
-                </span>
-                <div class="option-meta">
-                  <span class="option-name">Head 11</span>
-                  <span class="option-detail">Heroic</span>
+              </button>
+              <button type="button" class="option-card" role="listitem">
+                <div class="option-avatar">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-sunglasses"></i>
+                  </span>
+                  <div class="option-meta">
+                    <span class="option-name">Head 11</span>
+                    <span class="option-detail">Heroic</span>
+                  </div>
                 </div>
-              </div>
-            </button>
-            <button type="button" class="option-card" role="listitem">
-              <div class="option-avatar">
-                <span class="option-icon">
-                  <i class="bi bi-emoji-smile-upside-down"></i>
-                </span>
-                <div class="option-meta">
-                  <span class="option-name">Head 14</span>
-                  <span class="option-detail">Round</span>
+              </button>
+              <button type="button" class="option-card" role="listitem">
+                <div class="option-avatar">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-smile-upside-down"></i>
+                  </span>
+                  <div class="option-meta">
+                    <span class="option-name">Head 14</span>
+                    <span class="option-detail">Round</span>
+                  </div>
                 </div>
+              </button>
+            </div>
+            <div class="panel-footer">
+              <span class="footer-label">Body Type</span>
+              <div class="bodytype-toggle" role="group" aria-label="Body type">
+                <button type="button" class="bodytype-pill active">Light Build</button>
+                <button type="button" class="bodytype-pill">Athletic Build</button>
+                <button type="button" class="bodytype-pill">Plus Build</button>
               </div>
-            </button>
-          </div>
-          <div class="tone-tray" aria-label="Skin tone selector">
-            <span class="tone-label">Color</span>
-            <div class="tone-list">
-              <button type="button" class="tone-swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
-              <button type="button" class="tone-swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
-              <button type="button" class="tone-swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
-              <button type="button" class="tone-swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
-              <button type="button" class="tone-swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
-              <button type="button" class="tone-swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
-              <button type="button" class="tone-swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
-              <button type="button" class="tone-swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
             </div>
           </div>
-          <div class="panel-footer">
-            <span class="footer-label">Body Type</span>
-            <div class="bodytype-toggle" role="group" aria-label="Body type">
-              <button type="button" class="bodytype-pill active">Light Build</button>
-              <button type="button" class="bodytype-pill">Athletic Build</button>
-              <button type="button" class="bodytype-pill">Plus Build</button>
-            </div>
+        <aside class="tone-rail" aria-label="Skin tone selector">
+          <span class="tone-rail-label">Color</span>
+          <div class="tone-rail-swatches">
+            <button type="button" class="tone-swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
+            <button type="button" class="tone-swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
           </div>
-        </div>
+        </aside>
       </div>
     </section>
       <section class="viewer-column" aria-label="Avatar preview">
@@ -915,8 +1023,12 @@
     const genderButtons = document.querySelectorAll('.gender-toggle .toggle-pill');
     genderButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        genderButtons.forEach((item) => item.classList.remove('active'));
+        genderButtons.forEach((item) => {
+          item.classList.remove('active');
+          item.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
       });
     });
 
