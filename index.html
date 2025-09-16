@@ -126,7 +126,7 @@
     .workspace {
       flex: 1;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 560px));
+      grid-template-columns: minmax(0, 640px) minmax(0, 520px);
       gap: 2.6rem;
       align-items: stretch;
     }
@@ -594,40 +594,41 @@
       box-shadow: 0 16px 22px rgba(0, 0, 0, 0.25);
     }
 
-    .tone-rail {
-      height: 100%;
-      margin-left: -1.85rem;
-      padding: 2.4rem 1.4rem 2.4rem 1.8rem;
-      background: rgba(18, 10, 54, 0.72);
-      border: 1px solid rgba(154, 142, 255, 0.28);
-      border-radius: 999px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      box-shadow: 0 26px 80px rgba(6, 0, 30, 0.55);
-      backdrop-filter: blur(18px);
+    .tone-tray {
+      width: 100%;
       display: flex;
-      flex-direction: column;
       align-items: center;
       gap: 1.8rem;
-      align-self: stretch;
-      flex-shrink: 0;
-      min-width: 118px;
-      position: relative;
+      padding: 1.35rem 1.8rem;
+      border-radius: 999px;
+      background: rgba(18, 10, 54, 0.72);
+      border: 1px solid rgba(154, 142, 255, 0.28);
+      box-shadow: 0 26px 80px rgba(6, 0, 30, 0.45);
+      backdrop-filter: blur(18px);
     }
 
     .tone-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.38em;
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.74);
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
+      color: rgba(255, 255, 255, 0.78);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      flex-shrink: 0;
     }
 
     .tone-list {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
       gap: 0.85rem;
+      flex: 1;
     }
 
     .tone-swatch {
@@ -657,7 +658,7 @@
       }
 
       .workspace {
-        grid-template-columns: repeat(2, minmax(0, 500px));
+        grid-template-columns: minmax(0, 560px) minmax(0, 480px);
         gap: 2.2rem;
       }
 
@@ -666,8 +667,8 @@
         border-radius: 44px;
       }
 
-      .tone-rail {
-        margin-left: -1.5rem;
+      .tone-tray {
+        padding: 1.2rem 1.6rem;
       }
 
       .viewer-stage {
@@ -714,25 +715,17 @@
         min-height: auto;
       }
 
-      .tone-rail {
-        flex-direction: row;
+      .tone-tray {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+        padding: 1.2rem 1.4rem;
         align-self: center;
-        border-radius: 36px;
-        padding: 1.6rem 1.8rem;
-        gap: 1.4rem;
-        margin-left: 0;
-        border-top-left-radius: 36px;
-        border-bottom-left-radius: 36px;
-      }
-
-      .tone-label {
-        writing-mode: horizontal-tb;
-        transform: none;
-        letter-spacing: 0.32em;
+        text-align: center;
       }
 
       .tone-list {
-        flex-direction: row;
+        justify-content: center;
       }
 
       .panel-column,
@@ -756,7 +749,7 @@
         border-radius: 40px;
       }
 
-      .tone-rail {
+      .tone-tray {
         width: 100%;
         justify-content: center;
       }
@@ -799,19 +792,19 @@
                 <button type="button" class="toggle-pill active">Masculine</button>
                 <button type="button" class="toggle-pill">Feminine</button>
               </div>
-          </div>
-          <div>
-            <div class="panel-heading">
-              <span class="heading-icon">
-                <i class="bi bi-person-circle"></i>
-              </span>
-              <div>
-                <p class="heading-eyebrow mb-0">Customize</p>
-                <h1 class="heading-title">Head Type</h1>
-              </div>
             </div>
-            <p class="heading-subtext">Select from preset head shapes to refine the look of your avatar before choosing outfits.</p>
-          </div>
+            <div>
+              <div class="panel-heading">
+                <span class="heading-icon">
+                  <i class="bi bi-person-circle"></i>
+                </span>
+                <div>
+                  <p class="heading-eyebrow mb-0">Customize</p>
+                  <h1 class="heading-title">Head Type</h1>
+                </div>
+              </div>
+              <p class="heading-subtext">Select from preset head shapes to refine the look of your avatar before choosing outfits.</p>
+            </div>
           <div class="option-grid" role="list">
             <button type="button" class="option-card active" role="listitem">
               <div class="option-avatar">
@@ -858,6 +851,19 @@
               </div>
             </button>
           </div>
+          <div class="tone-tray" aria-label="Skin tone selector">
+            <span class="tone-label">Color</span>
+            <div class="tone-list">
+              <button type="button" class="tone-swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
+              <button type="button" class="tone-swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
+              <button type="button" class="tone-swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
+              <button type="button" class="tone-swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
+              <button type="button" class="tone-swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
+              <button type="button" class="tone-swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
+              <button type="button" class="tone-swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
+              <button type="button" class="tone-swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
+            </div>
+          </div>
           <div class="panel-footer">
             <span class="footer-label">Body Type</span>
             <div class="bodytype-toggle" role="group" aria-label="Body type">
@@ -867,19 +873,6 @@
             </div>
           </div>
         </div>
-        <aside class="tone-rail" aria-label="Skin tone selector">
-          <span class="tone-label">Color</span>
-          <div class="tone-list">
-            <button type="button" class="tone-swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
-            <button type="button" class="tone-swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
-          </div>
-        </aside>
       </div>
     </section>
       <section class="viewer-column" aria-label="Avatar preview">
