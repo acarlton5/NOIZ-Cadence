@@ -6,6 +6,83 @@ import { GLTFExporter } from "three-stdlib";
 import { pb, useConfiguratorStore } from "../store";
 import { Asset } from "./Asset";
 
+const MODEL_EXTENSIONS = [".glb", ".gltf", ".fbx"];
+
+const isModelFile = (value) =>
+  typeof value === "string" &&
+  MODEL_EXTENSIONS.some((extension) => value.toLowerCase().endsWith(extension));
+
+const resolveFileField = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  if (isModelFile(value)) {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    for (const entry of value) {
+      const resolved = resolveFileField(entry);
+      if (resolved) {
+        return resolved;
+      }
+    }
+    return null;
+  }
+
+  if (typeof value === "object") {
+    for (const key of ["url", "file", "path", "src"]) {
+      if (key in value) {
+        const resolved = resolveFileField(value[key]);
+        if (resolved) {
+          return resolved;
+        }
+      }
+    }
+  }
+
+  return null;
+};
+
+const getAssetFileName = (asset) => {
+  if (!asset || typeof asset !== "object") {
+    return null;
+  }
+
+  for (const key of ["url", "file", "source", "model", "path", "src"]) {
+    if (key in asset) {
+      const resolved = resolveFileField(asset[key]);
+      if (resolved) {
+        return resolved;
+      }
+    }
+  }
+
+  for (const value of Object.values(asset)) {
+    const resolved = resolveFileField(value);
+    if (resolved) {
+      return resolved;
+    }
+  }
+
+  return null;
+};
+
+const getAssetUrl = (asset) => {
+  const fileName = getAssetFileName(asset);
+  if (!fileName) {
+    return null;
+  }
+
+  try {
+    return pb.files.getUrl(asset, fileName);
+  } catch (error) {
+    console.warn("Unable to resolve asset URL", { asset, fileName, error });
+    return null;
+  }
+};
+
 export const Avatar = ({ ...props }) => {
   const group = useRef();
   const { nodes } = useGLTF("/models/Armature.glb");
@@ -74,21 +151,23 @@ export const Avatar = ({ ...props }) => {
       <group name="Scene">
         <group name="Armature" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
           <primitive object={nodes.mixamorigHips} />
-          {Object.keys(customization).map(
-            (key) =>
-              customization[key]?.asset?.url && (
-                <Suspense key={customization[key].asset.id}>
-                  <Asset
-                    categoryName={key}
-                    url={pb.files.getUrl(
-                      customization[key].asset,
-                      customization[key].asset.url
-                    )}
-                    skeleton={nodes.Plane.skeleton}
-                  />
-                </Suspense>
-              )
-          )}
+          {Object.entries(customization).map(([categoryName, entry]) => {
+            const assetUrl = getAssetUrl(entry?.asset);
+
+            if (!assetUrl) {
+              return null;
+            }
+
+            return (
+              <Suspense key={entry?.asset?.id ?? categoryName}>
+                <Asset
+                  categoryName={categoryName}
+                  url={assetUrl}
+                  skeleton={nodes.Plane.skeleton}
+                />
+              </Suspense>
+            );
+          })}
         </group>
       </group>
     </group>
