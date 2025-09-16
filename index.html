@@ -126,13 +126,21 @@
     .workspace {
       flex: 1;
       display: grid;
-      grid-template-columns: minmax(0, 520px) 108px minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 560px));
       gap: 2.6rem;
-      align-items: center;
+      align-items: stretch;
     }
 
     .panel-column {
       display: flex;
+      align-items: stretch;
+    }
+
+    .panel-stack {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+      position: relative;
     }
 
     .panel-card {
@@ -146,6 +154,8 @@
       flex-direction: column;
       gap: 2.35rem;
       width: 100%;
+      flex: 1;
+      min-height: 640px;
     }
 
     .panel-header {
@@ -337,6 +347,7 @@
     .viewer-column {
       display: flex;
       justify-content: center;
+      align-items: stretch;
     }
 
     .viewer-stage {
@@ -352,6 +363,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      min-height: 640px;
     }
 
     .viewer-stage::before,
@@ -584,10 +596,13 @@
 
     .tone-rail {
       height: 100%;
-      border-radius: 44px;
-      padding: 2.2rem 1.35rem 2.2rem 1.1rem;
+      margin-left: -1.85rem;
+      padding: 2.4rem 1.4rem 2.4rem 1.8rem;
       background: rgba(18, 10, 54, 0.72);
       border: 1px solid rgba(154, 142, 255, 0.28);
+      border-radius: 999px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
       box-shadow: 0 26px 80px rgba(6, 0, 30, 0.55);
       backdrop-filter: blur(18px);
       display: flex;
@@ -595,6 +610,9 @@
       align-items: center;
       gap: 1.8rem;
       align-self: stretch;
+      flex-shrink: 0;
+      min-width: 118px;
+      position: relative;
     }
 
     .tone-label {
@@ -639,13 +657,17 @@
       }
 
       .workspace {
-        grid-template-columns: minmax(0, 480px) 96px minmax(0, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 500px));
         gap: 2.2rem;
       }
 
       .panel-card {
         padding: 2.4rem 2.5rem;
         border-radius: 44px;
+      }
+
+      .tone-rail {
+        margin-left: -1.5rem;
       }
 
       .viewer-stage {
@@ -681,12 +703,26 @@
         gap: 2.2rem;
       }
 
+      .panel-stack {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.6rem;
+      }
+
+      .panel-card,
+      .viewer-stage {
+        min-height: auto;
+      }
+
       .tone-rail {
         flex-direction: row;
         align-self: center;
         border-radius: 36px;
         padding: 1.6rem 1.8rem;
         gap: 1.4rem;
+        margin-left: 0;
+        border-top-left-radius: 36px;
+        border-bottom-left-radius: 36px;
       }
 
       .tone-label {
@@ -756,12 +792,13 @@
     </nav>
     <main class="workspace">
       <section class="panel-column">
-        <div class="panel-card">
-          <div class="panel-header">
-            <div class="gender-toggle" role="group" aria-label="Body presentation">
-              <button type="button" class="toggle-pill active">Masculine</button>
-              <button type="button" class="toggle-pill">Feminine</button>
-            </div>
+        <div class="panel-stack">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="gender-toggle" role="group" aria-label="Body presentation">
+                <button type="button" class="toggle-pill active">Masculine</button>
+                <button type="button" class="toggle-pill">Feminine</button>
+              </div>
           </div>
           <div>
             <div class="panel-heading">
@@ -830,20 +867,21 @@
             </div>
           </div>
         </div>
-      </section>
-      <aside class="tone-rail" aria-label="Skin tone selector">
-        <span class="tone-label">Color</span>
-        <div class="tone-list">
-          <button type="button" class="tone-swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
-          <button type="button" class="tone-swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
-          <button type="button" class="tone-swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
-          <button type="button" class="tone-swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
-          <button type="button" class="tone-swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
-          <button type="button" class="tone-swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
-          <button type="button" class="tone-swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
-          <button type="button" class="tone-swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
-        </div>
-      </aside>
+        <aside class="tone-rail" aria-label="Skin tone selector">
+          <span class="tone-label">Color</span>
+          <div class="tone-list">
+            <button type="button" class="tone-swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
+            <button type="button" class="tone-swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
+            <button type="button" class="tone-swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
+          </div>
+        </aside>
+      </div>
+    </section>
       <section class="viewer-column" aria-label="Avatar preview">
         <div class="viewer-stage">
           <div class="stage-header">
