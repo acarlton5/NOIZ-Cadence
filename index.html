@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpe+jISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <style>
     *,
@@ -17,17 +17,17 @@
     }
 
     :root {
-      --gradient-bg: radial-gradient(130% 150% at 12% 8%, #8354ff 0%, #421c9a 38%, #090122 100%);
-      --panel-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(239, 234, 255, 0.95) 100%);
-      --panel-border: rgba(148, 139, 255, 0.28);
-      --ink-900: #1a1647;
-      --ink-700: #4b4886;
-      --ink-500: #8f8abf;
-      --accent: #7b5dff;
-      --accent-strong: #5c3dff;
-      --accent-soft: rgba(123, 93, 255, 0.16);
-      --skin-tone: #f7d7c4;
-      --panel-radius: 44px;
+      --gradient-bg: radial-gradient(125% 145% at 10% 10%, #7b4dff 0%, #3b1696 40%, #060018 100%);
+      --panel-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(238, 234, 255, 0.94) 100%);
+      --panel-border: rgba(141, 129, 255, 0.28);
+      --ink-900: #1e1a4d;
+      --ink-700: #4d4a82;
+      --ink-500: #807cab;
+      --accent: #7655ff;
+      --accent-strong: #5d3fff;
+      --accent-soft: rgba(121, 93, 255, 0.16);
+      --surface-glass: rgba(16, 10, 52, 0.7);
+      --text-light: rgba(255, 255, 255, 0.78);
       color-scheme: only light;
     }
 
@@ -36,8 +36,7 @@
       min-height: 100vh;
       font-family: 'Manrope', sans-serif;
       background: var(--gradient-bg);
-      color: #f4f5ff;
-      display: flex;
+      color: #ffffff;
     }
 
     a,
@@ -50,122 +49,119 @@
     }
 
     .app-shell {
-      display: flex;
-      width: 100%;
       min-height: 100vh;
+      display: flex;
       align-items: stretch;
-      overflow: hidden;
+      gap: 3rem;
+      padding: 3.2rem 3.8rem;
     }
 
-    .sidebar {
-      width: 108px;
-      background: rgba(10, 6, 40, 0.86);
-      border-right: 1px solid rgba(140, 126, 255, 0.22);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    .main-sidebar {
+      width: 96px;
+      border-radius: 48px;
+      background: var(--surface-glass);
+      border: 1px solid rgba(150, 136, 255, 0.28);
+      box-shadow: 0 30px 70px rgba(8, 0, 30, 0.55);
       backdrop-filter: blur(28px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2.75rem 1.5rem 2.25rem;
-      gap: 2.5rem;
+      padding: 2.6rem 1.25rem 2.2rem;
+      gap: 2.4rem;
     }
 
-    .sidebar .logo {
-      width: 62px;
-      height: 62px;
-      border-radius: 24px;
+    .sidebar-brand {
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.05) 100%);
       display: grid;
       place-items: center;
-      font-size: 1.5rem;
       font-weight: 800;
-      color: #ffffff;
-      background: linear-gradient(150deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 18px 36px rgba(6, 0, 40, 0.55);
+      font-size: 1.45rem;
+      letter-spacing: -0.05em;
     }
 
-    .sidebar .nav-links,
-    .sidebar .nav-footer {
+    .nav-stack,
+    .sidebar-footer {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1.15rem;
       width: 100%;
     }
 
-    .sidebar .nav-footer {
+    .sidebar-footer {
       margin-top: auto;
-      gap: 1.1rem;
+      gap: 1rem;
     }
 
-    .sidebar .nav-link {
-      width: 60px;
-      height: 60px;
+    .nav-button {
+      width: 58px;
+      height: 58px;
       border-radius: 22px;
       border: 1px solid transparent;
-      background: rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.45rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 1.35rem;
       display: grid;
       place-items: center;
-      transition: all 0.3s ease;
-      position: relative;
+      transition: all 0.25s ease;
     }
 
-    .sidebar .nav-link:hover {
-      border-color: rgba(255, 255, 255, 0.28);
+    .nav-button:hover {
+      border-color: rgba(255, 255, 255, 0.38);
       color: #ffffff;
-      box-shadow: 0 20px 36px rgba(10, 0, 56, 0.45);
+      box-shadow: 0 18px 32px rgba(10, 0, 46, 0.36);
     }
 
-    .sidebar .nav-link.active {
-      background: linear-gradient(150deg, #7b5dff 0%, #5634ff 100%);
-      border-color: rgba(255, 255, 255, 0.32);
+    .nav-button.active {
+      background: linear-gradient(150deg, #7a5cff 0%, #5435ff 100%);
+      border-color: rgba(255, 255, 255, 0.4);
       color: #ffffff;
-      box-shadow: 0 24px 52px rgba(54, 28, 176, 0.68);
+      box-shadow: 0 20px 44px rgba(60, 28, 168, 0.52);
     }
 
     .workspace {
       flex: 1;
       display: flex;
-      gap: 3.5rem;
-      padding: 3.5rem 4rem;
+      gap: 3rem;
       align-items: stretch;
     }
 
     .panel-column {
-      flex: 0 0 540px;
+      flex: 0 0 520px;
       display: flex;
-      flex-direction: column;
     }
 
-    .panel-surface {
+    .panel-card {
       background: var(--panel-gradient);
       color: var(--ink-900);
-      border-radius: var(--panel-radius);
-      padding: 2.6rem 2.75rem;
+      border-radius: 48px;
       border: 1px solid var(--panel-border);
-      box-shadow: 0 50px 120px rgba(20, 10, 64, 0.32);
+      box-shadow: 0 48px 120px rgba(24, 12, 70, 0.32);
+      padding: 2.8rem 3rem;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
-      height: 100%;
+      gap: 2.35rem;
+      width: 100%;
     }
 
-    .panel-top {
+    .panel-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
     }
 
     .gender-toggle {
       display: inline-flex;
-      gap: 0.45rem;
-      background: rgba(138, 126, 255, 0.18);
+      gap: 0.4rem;
       padding: 0.45rem;
       border-radius: 999px;
-      border: 1px solid rgba(150, 136, 255, 0.25);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      background: rgba(136, 124, 255, 0.16);
+      border: 1px solid rgba(152, 138, 255, 0.32);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     }
 
     .toggle-pill {
@@ -173,417 +169,189 @@
       border-radius: 999px;
       background: transparent;
       color: var(--ink-700);
-      font-weight: 600;
-      text-transform: uppercase;
+      font-weight: 700;
       letter-spacing: 0.16em;
-      padding: 0.65rem 1.6rem;
+      text-transform: uppercase;
+      padding: 0.6rem 1.55rem;
       transition: all 0.25s ease;
     }
 
     .toggle-pill.active {
-      background: linear-gradient(140deg, #8f76ff 0%, #5d39ff 100%);
+      background: linear-gradient(140deg, #8f76ff 0%, #5d3eff 100%);
       color: #ffffff;
-      box-shadow: 0 14px 26px rgba(80, 56, 200, 0.35);
+      box-shadow: 0 14px 26px rgba(82, 58, 200, 0.32);
     }
 
-    .reset-link {
-      color: var(--ink-500);
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0;
-    }
-
-    .reset-link i {
-      font-size: 1rem;
-    }
-
-    .appearance-layout {
+    .panel-heading {
       display: flex;
-      gap: 1.85rem;
-      align-items: stretch;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .appearance-nav {
-      width: 88px;
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 1.05rem;
-      border-radius: 32px;
-      padding: 1.4rem 0.75rem;
-      background: rgba(133, 119, 255, 0.16);
-      border: 1px solid rgba(151, 138, 255, 0.28);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      gap: 1.2rem;
     }
 
-    .appearance-tab {
+    .heading-icon {
       width: 58px;
       height: 58px;
       border-radius: 20px;
-      border: none;
-      background: rgba(255, 255, 255, 0.32);
-      color: rgba(86, 70, 176, 0.82);
+      background: rgba(124, 109, 255, 0.18);
+      color: #6a57d3;
       display: grid;
       place-items: center;
-      font-size: 1.45rem;
-      transition: all 0.25s ease;
+      font-size: 1.6rem;
     }
 
-    .appearance-tab.active {
-      background: linear-gradient(150deg, #7d5eff 0%, #5332ff 100%);
-      color: #ffffff;
-      box-shadow: 0 20px 34px rgba(60, 30, 168, 0.55);
-    }
-
-    .appearance-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1.75rem;
-      min-height: 0;
-    }
-
-    .eyebrow {
+    .heading-eyebrow {
       font-size: 0.72rem;
-      letter-spacing: 0.32em;
+      letter-spacing: 0.34em;
       font-weight: 700;
-      color: #756fd2;
+      color: #746fd6;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
     }
 
-    .display-title {
-      margin: 0.35rem 0;
-      font-size: 2.65rem;
+    .heading-title {
+      font-size: 2.68rem;
       font-weight: 800;
       letter-spacing: -0.01em;
-      color: var(--ink-900);
+      margin: 0;
     }
 
-    .lead-text {
-      margin: 0;
-      font-size: 0.98rem;
+    .heading-subtext {
+      margin: -1.1rem 0 0;
       color: var(--ink-500);
+      font-size: 0.95rem;
       max-width: 26rem;
     }
 
     .option-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
     }
 
     .option-card {
+      border: 1.5px solid rgba(132, 124, 255, 0.2);
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 48px rgba(36, 18, 110, 0.14);
+      padding: 1.45rem 1.6rem;
       display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.35rem 1.4rem;
-      border-radius: 30px;
-      background: rgba(255, 255, 255, 0.88);
-      border: 1.5px solid rgba(131, 122, 255, 0.26);
-      box-shadow: 0 18px 36px rgba(44, 24, 120, 0.12);
-      color: var(--ink-900);
+      flex-direction: column;
+      gap: 1.25rem;
       text-align: left;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-
-    .option-card .option-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      font-size: 1.75rem;
-      background: rgba(125, 109, 255, 0.16);
-      color: #6a55cf;
-    }
-
-    .option-card .option-eyebrow {
-      display: block;
-      font-size: 0.68rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: #7670d5;
-      margin-bottom: 0.25rem;
-      font-weight: 700;
-    }
-
-    .option-card .option-title {
-      display: block;
-      font-size: 1.26rem;
-      font-weight: 700;
-      color: var(--ink-900);
+      color: inherit;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
     }
 
     .option-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 24px 48px rgba(44, 24, 120, 0.2);
+      box-shadow: 0 26px 60px rgba(36, 18, 110, 0.24);
     }
 
     .option-card.active {
       border-color: var(--accent);
-      background: linear-gradient(150deg, rgba(130, 114, 255, 0.18) 0%, rgba(94, 57, 255, 0.1) 100%), rgba(255, 255, 255, 0.95);
-      box-shadow: 0 28px 60px rgba(76, 48, 180, 0.32);
+      background: linear-gradient(150deg, rgba(130, 116, 255, 0.16) 0%, rgba(255, 255, 255, 0.98) 100%);
+      box-shadow: 0 30px 62px rgba(78, 48, 190, 0.32);
+    }
+
+    .option-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .option-icon {
+      width: 66px;
+      height: 66px;
+      border-radius: 22px;
+      border: 2px dashed rgba(121, 105, 210, 0.65);
+      background: rgba(126, 114, 255, 0.12);
+      color: #6c58d2;
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+    }
+
+    .option-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .option-name {
+      font-size: 1.28rem;
+      font-weight: 700;
+    }
+
+    .option-detail {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-500);
+    }
+
+    .panel-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .footer-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      font-weight: 700;
+      color: #746fd6;
+      text-transform: uppercase;
     }
 
     .bodytype-toggle {
       display: inline-flex;
       gap: 0.65rem;
-      background: rgba(143, 133, 255, 0.16);
+      padding: 0.55rem 0.6rem;
       border-radius: 999px;
-      padding: 0.5rem 0.6rem;
-      border: 1px solid rgba(151, 138, 255, 0.22);
+      background: rgba(137, 128, 255, 0.14);
+      border: 1px solid rgba(148, 136, 255, 0.28);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-      align-self: flex-start;
     }
 
     .bodytype-pill {
       border: none;
-      background: transparent;
       border-radius: 999px;
-      padding: 0.55rem 1.45rem;
+      background: transparent;
+      padding: 0.55rem 1.55rem;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--ink-700);
       transition: all 0.25s ease;
     }
 
     .bodytype-pill.active {
-      background: linear-gradient(140deg, #8c72ff 0%, #5c37ff 100%);
+      background: linear-gradient(150deg, #8f76ff 0%, #5a36ff 100%);
       color: #ffffff;
-      box-shadow: 0 14px 28px rgba(82, 52, 210, 0.32);
+      box-shadow: 0 16px 28px rgba(80, 54, 200, 0.3);
     }
 
-    .panel-heading {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1.75rem;
-      flex-wrap: wrap;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .btn-light {
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(150, 140, 255, 0.26);
-      color: var(--ink-900);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      box-shadow: 0 12px 26px rgba(44, 24, 120, 0.18);
-    }
-
-    .btn-light:hover {
-      background: #ffffff;
-    }
-
-    .outfit-scroll {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-      overflow-y: auto;
-      padding-right: 0.25rem;
-    }
-
-    .outfit-scroll::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .outfit-scroll::-webkit-scrollbar-thumb {
-      background: rgba(20, 12, 80, 0.18);
-      border-radius: 4px;
-    }
-
-    .outfit-card {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 1.4rem;
-      padding: 1.45rem 1.6rem;
-      border-radius: 34px;
-      background: rgba(255, 255, 255, 0.92);
-      border: 1.5px solid rgba(140, 130, 255, 0.24);
-      box-shadow: 0 20px 42px rgba(36, 16, 100, 0.16);
-      color: var(--ink-900);
-      text-align: left;
-      transition: all 0.25s ease;
-    }
-
-    .outfit-card .outfit-thumb {
-      width: 82px;
-      aspect-ratio: 3 / 4;
-      border-radius: 24px;
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.6) 0%, rgba(162, 142, 255, 0.8) 100%);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .thumb-figure,
-    .thumb-figure::before,
-    .thumb-figure::after {
-      content: '';
-      display: block;
-    }
-
-    .thumb-figure {
-      width: 38px;
-      height: 70px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, #ffffff 0%, #9ad1ff 100%);
-      position: relative;
-    }
-
-    .thumb-figure::before {
-      position: absolute;
-      top: -18px;
-      left: 50%;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: var(--skin-tone);
-      transform: translateX(-50%);
-    }
-
-    .thumb-figure::after {
-      position: absolute;
-      bottom: -14px;
-      left: 50%;
-      width: 32px;
-      height: 18px;
-      border-radius: 50% 50% 12px 12px;
-      background: rgba(0, 0, 0, 0.16);
-      filter: blur(6px);
-      transform: translateX(-50%);
-    }
-
-    .thumb-figure.alt {
-      background: linear-gradient(180deg, #ffe3f2 0%, #ff7ec7 100%);
-    }
-
-    .thumb-figure.alt::before {
-      background: #f4c29f;
-    }
-
-    .thumb-figure.neon {
-      background: linear-gradient(180deg, #b4ffb6 0%, #45ffdd 100%);
-    }
-
-    .thumb-figure.bold {
-      background: linear-gradient(180deg, #ffd29e 0%, #ff7e50 100%);
-    }
-
-    .outfit-card .option-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.24em;
-      font-weight: 700;
-      color: #7a73c7;
-      display: inline-block;
-      margin-bottom: 0.35rem;
-    }
-
-    .outfit-title {
-      margin: 0;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--ink-900);
-    }
-
-    .outfit-desc {
-      margin: 0.35rem 0 0;
-      font-size: 0.94rem;
-      color: var(--ink-500);
-      max-width: 22rem;
-    }
-
-    .outfit-card i {
-      font-size: 1.5rem;
-      color: rgba(122, 113, 210, 0.7);
-    }
-
-    .outfit-card.active {
-      border-color: var(--accent);
-      box-shadow: 0 28px 64px rgba(70, 40, 170, 0.28);
-    }
-
-    .outfit-card.active i {
-      color: var(--accent);
-    }
-
-    .viewer-column {
+    .viewer-area {
       flex: 1;
       display: flex;
-      flex-direction: column;
-      gap: 1.75rem;
-      color: #ffffff;
-    }
-
-    .viewer-header {
-      display: flex;
+      gap: 2.6rem;
       align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.38em;
-      font-weight: 700;
-      font-size: 0.82rem;
-      color: rgba(255, 255, 255, 0.72);
-    }
-
-    .viewer-title {
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #a47bff 0%, #6335ff 100%);
-      border: none;
-      color: #ffffff;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      box-shadow: 0 22px 48px rgba(93, 60, 220, 0.45);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.05);
-      color: #ffffff;
-    }
-
-    .btn-outline-light {
-      border-color: rgba(255, 255, 255, 0.45);
-      color: #ffffff;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      backdrop-filter: blur(3px);
-    }
-
-    .btn-outline-light:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: #ffffff;
     }
 
     .viewer-stage {
       position: relative;
       flex: 1;
-      border-radius: 62px;
-      background: radial-gradient(120% 120% at 18% 12%, rgba(148, 124, 255, 0.68) 0%, rgba(54, 16, 168, 0.8) 48%, rgba(8, 0, 42, 0.96) 100%);
-      border: 1px solid rgba(136, 122, 255, 0.35);
-      box-shadow: 0 70px 160px rgba(10, 0, 50, 0.7);
-      padding: 3.4rem 4rem;
+      border-radius: 60px;
+      padding: 3.4rem 3.8rem;
+      background: radial-gradient(130% 120% at 22% 12%, rgba(144, 120, 255, 0.78) 0%, rgba(60, 24, 170, 0.82) 45%, rgba(8, 0, 40, 0.96) 100%);
+      border: 1px solid rgba(140, 124, 255, 0.35);
+      box-shadow: 0 60px 160px rgba(8, 0, 46, 0.72);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3.4rem;
       overflow: hidden;
     }
 
@@ -599,612 +367,547 @@
     .viewer-stage::before {
       width: 58%;
       height: 58%;
-      top: -22%;
-      left: -16%;
-      background: rgba(166, 140, 255, 0.9);
+      top: -18%;
+      left: -18%;
+      background: rgba(170, 140, 255, 0.9);
     }
 
     .viewer-stage::after {
-      width: 62%;
-      height: 62%;
-      bottom: -24%;
+      width: 60%;
+      height: 60%;
+      bottom: -20%;
       right: -18%;
-      background: rgba(76, 48, 210, 0.8);
+      background: rgba(70, 40, 190, 0.82);
+    }
+
+    .stage-header {
+      position: absolute;
+      top: 2.2rem;
+      left: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-light);
+      z-index: 2;
+    }
+
+    .stage-header i {
+      font-size: 1rem;
+    }
+
+    .stage-actions {
+      position: absolute;
+      top: 2.2rem;
+      right: 2.5rem;
+      display: flex;
+      gap: 0.75rem;
+      z-index: 2;
+    }
+
+    .stage-action {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .stage-action:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-2px);
     }
 
     .avatar-spotlight {
       position: relative;
-      width: min(100%, 460px);
-      height: clamp(420px, 70vh, 640px);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
       z-index: 1;
-    }
-
-    .avatar-figure {
-      position: relative;
-      width: 220px;
-      height: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
+      gap: 1.8rem;
+    }
+
+    .avatar-base {
+      width: 260px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(140, 238, 255, 0.6) 0%, rgba(32, 122, 255, 0) 72%);
+      filter: blur(3px);
+      position: relative;
+    }
+
+    .avatar-base::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle, rgba(26, 32, 96, 0.55) 0%, rgba(6, 0, 28, 0) 70%);
+      filter: blur(18px);
+    }
+
+    .avatar-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
     }
 
     .avatar-head {
-      display: block;
-      width: 92px;
-      height: 92px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
-      background: var(--skin-tone);
-      box-shadow: 0 12px 24px rgba(10, 0, 40, 0.35);
+      background: linear-gradient(140deg, #f3d7c0 0%, #e5a882 100%);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+
+    .avatar-head::after {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 12px;
+      width: 72px;
+      height: 44px;
+      border-radius: 40px 40px 18px 18px;
+      background: linear-gradient(140deg, #c99a5c 0%, #8a5a29 100%);
+    }
+
+    .avatar-face {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 58px;
+      height: 34px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.85);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0.55rem;
+    }
+
+    .avatar-eye {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3a2a1a;
     }
 
     .avatar-torso {
-      display: block;
-      width: 178px;
-      height: 168px;
-      border-radius: 90px 90px 40px 40px;
-      background: linear-gradient(150deg, #ffffff 0%, #9ce0ff 55%, #4fbbff 100%);
+      width: 206px;
+      height: 200px;
+      border-radius: 120px 120px 48px 48px;
+      background: linear-gradient(150deg, #f4f4f6 0%, #bcdcff 55%, #4fa3ff 100%);
       position: relative;
-      box-shadow: 0 28px 44px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 24px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .avatar-torso::before {
+      content: '';
+      position: absolute;
+      inset: 26px 38px;
+      border-radius: 70px;
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgba(208, 228, 255, 0.8) 100%);
+      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.45);
     }
 
     .avatar-torso::after {
       content: '';
       position: absolute;
-      bottom: -26px;
+      bottom: 18px;
       left: 50%;
-      width: 120px;
+      transform: translateX(-50%);
+      width: 110px;
       height: 52px;
       border-radius: 28px;
-      background: linear-gradient(135deg, #ffe18f 0%, #ff9f45 100%);
+      background: linear-gradient(150deg, #ffe08f 0%, #ff9c45 100%);
+      box-shadow: 0 18px 26px rgba(0, 0, 0, 0.25);
+    }
+
+    .avatar-belt {
+      position: absolute;
+      bottom: 72px;
+      left: 50%;
       transform: translateX(-50%);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
-    }
-
-    .avatar-leg {
-      display: block;
-      width: 70px;
-      height: 150px;
-      border-radius: 40px;
-      background: linear-gradient(180deg, #2ec1c8 0%, #146574 100%);
-      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
-    }
-
-    .avatar-leg.right {
-      background: linear-gradient(180deg, #87ff65 0%, #2f9c28 100%);
+      width: 176px;
+      height: 32px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(52, 42, 96, 0.85) 0%, rgba(22, 16, 58, 0.9) 100%);
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
     }
 
     .avatar-legs {
-      position: relative;
       display: flex;
-      align-items: flex-end;
-      gap: 18px;
+      gap: 24px;
+      position: relative;
+      margin-top: 18px;
     }
 
-    .avatar-legs::after {
+    .avatar-leg {
+      width: 78px;
+      height: 150px;
+      border-radius: 50px;
+      background: linear-gradient(180deg, #34b8ff 0%, #0d63ac 100%);
+      box-shadow: 0 20px 32px rgba(0, 0, 0, 0.28);
+      position: relative;
+    }
+
+    .avatar-leg.right {
+      background: linear-gradient(180deg, #6bff7b 0%, #249c2f 100%);
+    }
+
+    .avatar-leg::after {
       content: '';
       position: absolute;
-      bottom: 18px;
+      bottom: -18px;
       left: 50%;
-      width: 200px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.25);
-      filter: blur(12px);
       transform: translateX(-50%);
-      opacity: 0.9;
+      width: 86px;
+      height: 30px;
+      border-radius: 18px 18px 14px 14px;
+      background: linear-gradient(150deg, #ff726a 0%, #f94242 100%);
+      box-shadow: 0 16px 22px rgba(0, 0, 0, 0.25);
     }
 
-    .ground-glow {
-      position: absolute;
-      bottom: 18px;
-      left: 50%;
-      width: 240px;
-      height: 40px;
-      background: radial-gradient(circle, rgba(116, 255, 237, 0.55) 0%, rgba(42, 122, 255, 0) 70%);
-      transform: translateX(-50%);
-      filter: blur(8px);
-      opacity: 0.9;
-    }
-
-    .color-rail {
-      position: relative;
-      z-index: 1;
+    .swatch-card {
+      align-self: stretch;
+      border-radius: 38px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      padding: 1.8rem 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.2rem;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 38px;
-      padding: 1.65rem 1.2rem;
-      border: 1px solid rgba(255, 255, 255, 0.26);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
+      gap: 1.35rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 26px 60px rgba(8, 0, 40, 0.45);
     }
 
-    .rail-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.38em;
+    .swatch-heading {
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      font-weight: 700;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.75);
+      color: var(--text-light);
     }
 
-    .rail-swatches {
-      display: grid;
-      gap: 0.65rem;
+    .swatch-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
-    .rail-swatch {
-      width: 34px;
-      height: 34px;
+    .swatch {
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       border: 2px solid transparent;
-      background: var(--swatch-color, #ffffff);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+      background: var(--tone, #ffffff);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
       transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
-    .rail-swatch:hover {
+    .swatch:hover {
       transform: translateY(-2px);
     }
 
-    .rail-swatch.active {
+    .swatch.active {
       border-color: #ffffff;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.36);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
     }
 
-    .text-accent {
-      color: var(--accent) !important;
-    }
+    @media (max-width: 1439.98px) {
+      .app-shell {
+        padding: 2.8rem 2.6rem;
+        gap: 2.4rem;
+      }
 
-    .panel-surface[data-panel='outfit'] {
-      gap: 1.5rem;
-    }
-
-    .appearance-panel-hidden {
-      display: none !important;
-    }
-
-    .viewer-actions {
-      display: flex;
-      gap: 1rem;
-    }
-
-    @media (max-width: 1440px) {
       .workspace {
-        gap: 2.75rem;
-        padding: 3rem;
+        gap: 2.2rem;
       }
 
       .panel-column {
-        flex-basis: 500px;
+        flex-basis: 460px;
+      }
+
+      .panel-card {
+        padding: 2.4rem 2.5rem;
+        border-radius: 40px;
       }
 
       .viewer-stage {
         padding: 3rem;
+        border-radius: 52px;
       }
     }
 
     @media (max-width: 1199.98px) {
       .app-shell {
         flex-direction: column;
+        align-items: stretch;
       }
 
-      .sidebar {
+      .main-sidebar {
         flex-direction: row;
-        width: 100%;
-        padding: 1.5rem 2rem;
-        gap: 1.5rem;
+        width: auto;
+        border-radius: 36px;
+        padding: 1.8rem 2.2rem;
         justify-content: space-between;
+        gap: 1.8rem;
       }
 
-      .sidebar .nav-links,
-      .sidebar .nav-footer {
+      .nav-stack,
+      .sidebar-footer {
         flex-direction: row;
-      }
-
-      .sidebar .nav-footer {
-        margin-top: 0;
       }
 
       .workspace {
         flex-direction: column;
-        gap: 2rem;
-        padding: 2.5rem 2.5rem 3rem;
       }
 
-      .panel-column {
-        flex-basis: auto;
-      }
-
-      .panel-surface {
-        min-height: 0;
-      }
-
-      .viewer-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .viewer-actions {
+      .panel-column,
+      .viewer-area {
         width: 100%;
-        justify-content: space-between;
       }
 
-      .viewer-stage {
-        border-radius: 48px;
+      .viewer-area {
+        justify-content: space-between;
       }
     }
 
     @media (max-width: 767.98px) {
-      .workspace {
-        padding: 2rem 1.5rem 2.5rem;
+      .panel-card {
+        border-radius: 32px;
+        padding: 2rem 1.8rem;
       }
 
-      .panel-surface {
-        padding: 2.1rem 2.25rem;
+      .option-grid {
+        grid-template-columns: 1fr;
       }
 
-      .panel-top,
-      .panel-heading {
+      .viewer-area {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 1.25rem;
-      }
-
-      .appearance-layout {
-        flex-direction: column;
-      }
-
-      .appearance-nav {
-        flex-direction: row;
-        width: auto;
-        border-radius: 999px;
+        align-items: stretch;
+        gap: 1.8rem;
       }
 
       .viewer-stage {
-        flex-direction: column;
-        gap: 2.5rem;
-        padding: 2.5rem;
+        padding: 2.4rem;
+        border-radius: 40px;
       }
 
-      .color-rail {
+      .swatch-card {
         flex-direction: row;
-        padding: 1rem 1.2rem;
-      }
-
-      .rail-swatches {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.45rem;
-      }
-    }
-
-    @media (max-width: 575.98px) {
-      .sidebar {
-        flex-wrap: wrap;
         justify-content: center;
+        border-radius: 30px;
       }
 
-      .sidebar .logo {
-        width: 52px;
-        height: 52px;
-        font-size: 1.2rem;
-      }
-
-      .sidebar .nav-link {
-        width: 52px;
-        height: 52px;
-        font-size: 1.2rem;
-      }
-
-      .viewer-actions {
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .viewer-stage {
-        padding: 2rem;
+      .swatch-list {
+        flex-direction: row;
       }
     }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <nav class="sidebar" aria-label="Primary">
-      <div class="logo">N</div>
-      <div class="nav-links">
-        <button type="button" class="nav-link active" data-panel-trigger="appearance" data-panel-label="Appearance" aria-pressed="true">
+    <nav class="main-sidebar" aria-label="Primary">
+      <div class="sidebar-brand">N</div>
+      <div class="nav-stack">
+        <button type="button" class="nav-button active" aria-label="Appearance">
           <i class="bi bi-person-fill"></i>
-          <span class="visually-hidden">Appearance</span>
         </button>
-        <button type="button" class="nav-link" data-panel-trigger="outfit" data-panel-label="Clothing Sets" aria-pressed="false">
+        <button type="button" class="nav-button" aria-label="Wardrobe">
           <i class="bi bi-hanger"></i>
-          <span class="visually-hidden">Outfits</span>
         </button>
-        <button type="button" class="nav-link" aria-label="Accessories">
+        <button type="button" class="nav-button" aria-label="Accessories">
           <i class="bi bi-sunglasses"></i>
         </button>
-        <button type="button" class="nav-link" aria-label="Emotes">
+        <button type="button" class="nav-button" aria-label="Emotes">
           <i class="bi bi-lightning-charge"></i>
         </button>
-        <button type="button" class="nav-link" aria-label="Backgrounds">
-          <i class="bi bi-stars"></i>
-        </button>
       </div>
-      <div class="nav-footer">
-        <button type="button" class="nav-link" aria-label="Settings">
+      <div class="sidebar-footer">
+        <button type="button" class="nav-button" aria-label="Settings">
           <i class="bi bi-gear"></i>
         </button>
-        <button type="button" class="nav-link" aria-label="Help">
+        <button type="button" class="nav-button" aria-label="Help">
           <i class="bi bi-question-circle"></i>
         </button>
       </div>
     </nav>
     <main class="workspace">
-      <div class="panel-column">
-        <section class="panel-surface" data-panel="appearance">
-          <div class="panel-top">
+      <section class="panel-column">
+        <div class="panel-card">
+          <div class="panel-header">
             <div class="gender-toggle" role="group" aria-label="Body presentation">
-              <button type="button" class="toggle-pill active" data-gender="masculine">Masculine</button>
-              <button type="button" class="toggle-pill" data-gender="feminine">Feminine</button>
+              <button type="button" class="toggle-pill active">Masculine</button>
+              <button type="button" class="toggle-pill">Feminine</button>
             </div>
-            <button type="button" class="btn btn-link reset-link">
-              <i class="bi bi-arrow-counterclockwise me-2"></i>
-              Reset
-            </button>
           </div>
-          <div class="appearance-layout">
-            <div class="appearance-nav" role="tablist" aria-label="Appearance categories">
-              <button type="button" class="appearance-tab active" data-category="head" aria-label="Head">
-                <i class="bi bi-person-bounding-box"></i>
-              </button>
-              <button type="button" class="appearance-tab" data-category="hair" aria-label="Hair">
-                <i class="bi bi-scissors"></i>
-              </button>
-              <button type="button" class="appearance-tab" data-category="eyes" aria-label="Eyes">
-                <i class="bi bi-eye"></i>
-              </button>
-              <button type="button" class="appearance-tab" data-category="brows" aria-label="Brows">
-                <i class="bi bi-eyedropper"></i>
-              </button>
-              <button type="button" class="appearance-tab" data-category="face" aria-label="Face details">
-                <i class="bi bi-magic"></i>
-              </button>
-            </div>
-            <div class="appearance-content">
-              <header>
-                <span class="eyebrow text-uppercase">Appearance</span>
-                <h1 class="display-title">Head Type</h1>
-                <p class="lead-text">Choose a base head to shape the rest of your look.</p>
-              </header>
-              <div class="option-grid" role="list">
-                <button type="button" class="option-card active" role="listitem" aria-pressed="true">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-smile"></i>
-                  </span>
-                  <span>
-                    <span class="option-eyebrow text-uppercase">Head 01</span>
-                    <span class="option-title">Balanced</span>
-                  </span>
-                </button>
-                <button type="button" class="option-card" role="listitem" aria-pressed="false">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-laughing"></i>
-                  </span>
-                  <span>
-                    <span class="option-eyebrow text-uppercase">Head 02</span>
-                    <span class="option-title">Athletic</span>
-                  </span>
-                </button>
-                <button type="button" class="option-card" role="listitem" aria-pressed="false">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-smile-upside-down"></i>
-                  </span>
-                  <span>
-                    <span class="option-eyebrow text-uppercase">Head 03</span>
-                    <span class="option-title">Plus</span>
-                  </span>
-                </button>
-                <button type="button" class="option-card" role="listitem" aria-pressed="false">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-neutral"></i>
-                  </span>
-                  <span>
-                    <span class="option-eyebrow text-uppercase">Head 04</span>
-                    <span class="option-title">Sharp</span>
-                  </span>
-                </button>
-              </div>
-              <div class="bodytype-toggle" role="group" aria-label="Body build">
-                <button type="button" class="bodytype-pill active">Light Build</button>
-                <button type="button" class="bodytype-pill">Athletic Build</button>
-                <button type="button" class="bodytype-pill">Plus Build</button>
+          <div>
+            <div class="panel-heading">
+              <span class="heading-icon">
+                <i class="bi bi-person-circle"></i>
+              </span>
+              <div>
+                <p class="heading-eyebrow mb-0">Customize</p>
+                <h1 class="heading-title">Head Type</h1>
               </div>
             </div>
+            <p class="heading-subtext">Select from preset head shapes to refine the look of your avatar before choosing outfits.</p>
           </div>
-        </section>
-        <section class="panel-surface d-none" data-panel="outfit">
-          <div class="panel-heading">
-            <div>
-              <span class="eyebrow text-uppercase">Champion Signal</span>
-              <h1 class="display-title">Clothing Sets</h1>
-              <p class="lead-text">Curated looks assembled to drop straight into game night.</p>
+          <div class="option-grid" role="list">
+            <button type="button" class="option-card active" role="listitem">
+              <div class="option-avatar">
+                <span class="option-icon">
+                  <i class="bi bi-emoji-smile"></i>
+                </span>
+                <div class="option-meta">
+                  <span class="option-name">Head 5</span>
+                  <span class="option-detail">Balanced</span>
+                </div>
+              </div>
+            </button>
+            <button type="button" class="option-card" role="listitem">
+              <div class="option-avatar">
+                <span class="option-icon">
+                  <i class="bi bi-emoji-neutral"></i>
+                </span>
+                <div class="option-meta">
+                  <span class="option-name">Head 7</span>
+                  <span class="option-detail">Angular</span>
+                </div>
+              </div>
+            </button>
+            <button type="button" class="option-card" role="listitem">
+              <div class="option-avatar">
+                <span class="option-icon">
+                  <i class="bi bi-emoji-sunglasses"></i>
+                </span>
+                <div class="option-meta">
+                  <span class="option-name">Head 11</span>
+                  <span class="option-detail">Heroic</span>
+                </div>
+              </div>
+            </button>
+            <button type="button" class="option-card" role="listitem">
+              <div class="option-avatar">
+                <span class="option-icon">
+                  <i class="bi bi-emoji-smile-upside-down"></i>
+                </span>
+                <div class="option-meta">
+                  <span class="option-name">Head 14</span>
+                  <span class="option-detail">Round</span>
+                </div>
+              </div>
+            </button>
+          </div>
+          <div class="panel-footer">
+            <span class="footer-label">Body Type</span>
+            <div class="bodytype-toggle" role="group" aria-label="Body type">
+              <button type="button" class="bodytype-pill active">Light Build</button>
+              <button type="button" class="bodytype-pill">Athletic Build</button>
+              <button type="button" class="bodytype-pill">Plus Build</button>
             </div>
-            <div class="toolbar">
-              <button type="button" class="btn btn-light rounded-pill px-4">
-                <i class="bi bi-sliders me-2"></i>
-                Sort
-              </button>
-              <button type="button" class="btn btn-light rounded-pill px-4">
-                <i class="bi bi-funnel me-2"></i>
-                Filter
-              </button>
-            </div>
-          </div>
-          <div class="outfit-scroll">
-            <button type="button" class="outfit-card active" aria-pressed="true">
-              <span class="outfit-thumb">
-                <span class="thumb-figure"></span>
-              </span>
-              <span>
-                <span class="option-eyebrow text-uppercase">Featured</span>
-                <h2 class="outfit-title">Champion Signal</h2>
-                <p class="outfit-desc">Bright panels and layered techwear ready for the finals.</p>
-              </span>
-              <i class="bi bi-check-circle-fill"></i>
-            </button>
-            <button type="button" class="outfit-card" aria-pressed="false">
-              <span class="outfit-thumb">
-                <span class="thumb-figure alt"></span>
-              </span>
-              <span>
-                <span class="option-eyebrow text-uppercase">Rotation</span>
-                <h2 class="outfit-title">Daybreak</h2>
-                <p class="outfit-desc">Soft gradients, warm neutrals, and breezy layers.</p>
-              </span>
-              <i class="bi bi-plus-circle"></i>
-            </button>
-            <button type="button" class="outfit-card" aria-pressed="false">
-              <span class="outfit-thumb">
-                <span class="thumb-figure neon"></span>
-              </span>
-              <span>
-                <span class="option-eyebrow text-uppercase">Seasonal</span>
-                <h2 class="outfit-title">Night Runner</h2>
-                <p class="outfit-desc">Reflective tech with neon trims for nighttime ops.</p>
-              </span>
-              <i class="bi bi-plus-circle"></i>
-            </button>
-            <button type="button" class="outfit-card" aria-pressed="false">
-              <span class="outfit-thumb">
-                <span class="thumb-figure bold"></span>
-              </span>
-              <span>
-                <span class="option-eyebrow text-uppercase">Seasonal</span>
-                <h2 class="outfit-title">Boardwalk</h2>
-                <p class="outfit-desc">Casual denim layers with pastel pops.</p>
-              </span>
-              <i class="bi bi-plus-circle"></i>
-            </button>
-          </div>
-        </section>
-      </div>
-      <div class="viewer-column">
-        <div class="viewer-header">
-          <div class="viewer-title" id="viewerTitle">Appearance</div>
-          <div class="viewer-actions">
-            <button type="button" class="btn btn-outline-light rounded-pill px-4">Discard Changes</button>
-            <button type="button" class="btn btn-primary rounded-pill px-4">Save &amp; Close</button>
           </div>
         </div>
+      </section>
+      <section class="viewer-area" aria-label="Avatar preview">
         <div class="viewer-stage">
+          <div class="stage-header">
+            <i class="bi bi-person-badge"></i>
+            Head Type
+          </div>
+          <div class="stage-actions">
+            <button type="button" class="stage-action" aria-label="Randomize">
+              <i class="bi bi-stars"></i>
+            </button>
+            <button type="button" class="stage-action" aria-label="Rotate">
+              <i class="bi bi-arrow-repeat"></i>
+            </button>
+          </div>
           <div class="avatar-spotlight">
-            <div class="avatar-figure">
-              <span class="avatar-head"></span>
-              <span class="avatar-torso"></span>
+            <div class="avatar-body">
+              <div class="avatar-head">
+                <div class="avatar-face">
+                  <span class="avatar-eye"></span>
+                  <span class="avatar-eye"></span>
+                </div>
+              </div>
+              <div class="avatar-torso">
+                <div class="avatar-belt"></div>
+              </div>
               <div class="avatar-legs">
-                <span class="avatar-leg"></span>
-                <span class="avatar-leg right"></span>
+                <div class="avatar-leg"></div>
+                <div class="avatar-leg right"></div>
               </div>
             </div>
-            <div class="ground-glow"></div>
-          </div>
-          <div class="color-rail" aria-label="Color options">
-            <span class="rail-label">Color</span>
-            <div class="rail-swatches">
-              <button type="button" class="rail-swatch active" style="--swatch-color:#f7d7c4;" aria-label="Porcelain"></button>
-              <button type="button" class="rail-swatch" style="--swatch-color:#e8ba8c;" aria-label="Warm Sand"></button>
-              <button type="button" class="rail-swatch" style="--swatch-color:#d79b6c;" aria-label="Copper"></button>
-              <button type="button" class="rail-swatch" style="--swatch-color:#c98158;" aria-label="Amber"></button>
-              <button type="button" class="rail-swatch" style="--swatch-color:#b16945;" aria-label="Chestnut"></button>
-              <button type="button" class="rail-swatch" style="--swatch-color:#945236;" aria-label="Mocha"></button>
-              <button type="button" class="rail-swatch" style="--swatch-color:#6f3926;" aria-label="Mahogany"></button>
-              <button type="button" class="rail-swatch" style="--swatch-color:#4b2619;" aria-label="Espresso"></button>
-            </div>
+            <div class="avatar-base"></div>
           </div>
         </div>
-      </div>
+        <aside class="swatch-card" aria-label="Skin tone selector">
+          <span class="swatch-heading">Color</span>
+          <div class="swatch-list">
+            <button type="button" class="swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
+            <button type="button" class="swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
+            <button type="button" class="swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
+            <button type="button" class="swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
+            <button type="button" class="swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
+            <button type="button" class="swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
+            <button type="button" class="swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
+            <button type="button" class="swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
+          </div>
+        </aside>
+      </section>
     </main>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script>
-    const panelTriggers = document.querySelectorAll('[data-panel-trigger]');
-    const panels = document.querySelectorAll('[data-panel]');
-    const viewerTitle = document.getElementById('viewerTitle');
-
-    panelTriggers.forEach((trigger) => {
-      trigger.addEventListener('click', () => {
-        const target = trigger.dataset.panelTrigger;
-        panelTriggers.forEach((btn) => {
-          const isActive = btn === trigger;
-          btn.classList.toggle('active', isActive);
-          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-        panels.forEach((panel) => {
-          const matches = panel.dataset.panel === target;
-          panel.classList.toggle('d-none', !matches);
-        });
-        if (viewerTitle && trigger.dataset.panelLabel) {
-          viewerTitle.textContent = trigger.dataset.panelLabel;
-        }
+    const genderButtons = document.querySelectorAll('.gender-toggle .toggle-pill');
+    genderButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        genderButtons.forEach((item) => item.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
 
-    document.querySelectorAll('[data-gender]').forEach((button) => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('[data-gender]').forEach((btn) => {
-          btn.classList.toggle('active', btn === button);
-        });
+    const headOptions = document.querySelectorAll('.option-card');
+    headOptions.forEach((option) => {
+      option.addEventListener('click', () => {
+        headOptions.forEach((item) => item.classList.remove('active'));
+        option.classList.add('active');
       });
     });
 
-    document.querySelectorAll('.bodytype-pill').forEach((button) => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.bodytype-pill').forEach((btn) => {
-          btn.classList.toggle('active', btn === button);
-        });
+    const bodyButtons = document.querySelectorAll('.bodytype-pill');
+    bodyButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        bodyButtons.forEach((item) => item.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
 
-    document.querySelectorAll('.option-card').forEach((card) => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.option-card').forEach((btn) => {
-          const isActive = btn === card;
-          btn.classList.toggle('active', isActive);
-          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-      });
-    });
-
-    document.querySelectorAll('.outfit-card').forEach((card) => {
-      card.addEventListener('click', () => {
-        document.querySelectorAll('.outfit-card').forEach((btn) => {
-          const isActive = btn === card;
-          btn.classList.toggle('active', isActive);
-          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-      });
-    });
-
-    document.querySelectorAll('.rail-swatch').forEach((swatch) => {
+    const swatches = document.querySelectorAll('.swatch');
+    swatches.forEach((swatch) => {
       swatch.addEventListener('click', () => {
-        document.querySelectorAll('.rail-swatch').forEach((btn) => {
-          btn.classList.toggle('active', btn === swatch);
+        swatches.forEach((item) => {
+          item.classList.remove('active');
+          item.setAttribute('aria-pressed', 'false');
         });
-        const color = getComputedStyle(swatch).getPropertyValue('--swatch-color');
-        document.documentElement.style.setProperty('--skin-tone', color.trim());
-      });
-    });
-
-    document.querySelectorAll('.appearance-tab').forEach((tab) => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.appearance-tab').forEach((btn) => {
-          btn.classList.toggle('active', btn === tab);
-        });
+        swatch.classList.add('active');
+        swatch.setAttribute('aria-pressed', 'true');
       });
     });
   </script>
