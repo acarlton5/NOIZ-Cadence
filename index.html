@@ -11,16 +11,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <style>
     :root {
-      --bg-gradient: radial-gradient(120% 120% at 16% 6%, #7d36ff 0%, #3812ab 42%, #0c022d 100%);
-      --sidebar-bg: rgba(17, 9, 68, 0.65);
-      --sidebar-border: rgba(255, 255, 255, 0.14);
-      --panel-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(237, 234, 255, 0.98) 100%);
-      --panel-border: rgba(138, 124, 255, 0.18);
-      --panel-text: #14153a;
+      --bg-gradient: radial-gradient(120% 140% at 10% 0%, #6f3dff 0%, #341287 42%, #050021 100%);
+      --sidebar-bg: rgba(16, 8, 56, 0.8);
+      --sidebar-border: rgba(137, 122, 255, 0.16);
+      --panel-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(231, 228, 255, 0.98) 100%);
+      --panel-border: rgba(136, 123, 255, 0.28);
+      --panel-text: #1c1a4b;
+      --subtle-text: #8b8bb5;
       --accent: #7f6bff;
       --accent-dark: #4f34ff;
       --accent-soft: rgba(129, 116, 255, 0.18);
-      --card-gradient: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(236, 232, 255, 0.9) 100%);
+      --card-gradient: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(237, 233, 255, 0.92) 100%);
+      --badge-bg: rgba(255, 255, 255, 0.3);
     }
 
     body {
@@ -40,133 +42,138 @@
     .app-shell {
       display: flex;
       min-height: 100vh;
+      align-items: stretch;
       overflow: hidden;
     }
 
     .sidebar {
-      width: 88px;
+      width: 96px;
       background: var(--sidebar-bg);
-      backdrop-filter: blur(22px);
+      backdrop-filter: blur(26px);
       border-right: 1px solid var(--sidebar-border);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2.25rem 1rem;
-      gap: 1.25rem;
+      padding: 2.5rem 1.25rem;
+      gap: 2rem;
     }
 
     .sidebar .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.04) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      width: 56px;
+      height: 56px;
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       display: grid;
       place-items: center;
       font-weight: 700;
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       color: #ffffff;
+      box-shadow: 0 14px 32px rgba(8, 4, 32, 0.45);
+    }
+
+    .sidebar .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
     }
 
     .sidebar .nav-link {
-      width: 52px;
-      height: 52px;
-      border-radius: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 20px;
       display: grid;
       place-items: center;
-      color: rgba(255, 255, 255, 0.6);
-      background: rgba(255, 255, 255, 0.02);
+      color: rgba(255, 255, 255, 0.58);
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid transparent;
-      transition: 0.25s ease;
-      font-size: 1.3rem;
+      transition: all 0.3s ease;
+      font-size: 1.4rem;
+      text-decoration: none;
+      position: relative;
     }
 
     .sidebar .nav-link:hover {
       color: #ffffff;
       border-color: rgba(255, 255, 255, 0.28);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 12px 30px rgba(19, 0, 76, 0.35);
+      background: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 18px 36px rgba(17, 4, 68, 0.46);
     }
 
     .sidebar .nav-link.active {
-      background: linear-gradient(140deg, #826bff 0%, #5034ff 100%);
       color: #ffffff;
-      box-shadow: 0 16px 36px rgba(54, 28, 163, 0.55);
-      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(150deg, #8066ff 0%, #5034ff 100%);
+      border-color: rgba(255, 255, 255, 0.24);
+      box-shadow: 0 22px 46px rgba(55, 36, 152, 0.65);
+    }
+
+    .sidebar .nav-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
     }
 
     .content-layout {
       flex: 1;
       display: flex;
       gap: 3rem;
-      padding: 2.75rem 3.25rem;
+      padding: 3rem 3.5rem;
+      align-items: stretch;
+      position: relative;
     }
 
     .customizer-panel {
+      max-width: 540px;
       width: 100%;
-      max-width: 520px;
       background: var(--panel-bg);
       color: var(--panel-text);
-      border-radius: 36px;
+      border-radius: 40px;
       padding: 2.75rem;
       border: 1px solid var(--panel-border);
-      box-shadow: 0 42px 80px rgba(17, 8, 84, 0.28);
+      box-shadow: 0 48px 96px rgba(19, 9, 84, 0.32);
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
+      gap: 0;
       max-height: calc(100vh - 5.5rem);
       overflow: hidden;
     }
 
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.75rem;
+      margin-bottom: 1.75rem;
+    }
+
     .panel-eyebrow {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.32em;
       font-weight: 700;
-      color: #8786c5;
+      color: #8e8acd;
+      margin-bottom: 0.5rem;
     }
 
     .panel-title {
       font-weight: 700;
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
       color: var(--panel-text);
-      letter-spacing: -0.01em;
+      margin-bottom: 0.35rem;
     }
 
     .panel-subtext {
-      color: #8b8cb8;
-      font-size: 0.9rem;
-    }
-
-    .section-tabs {
-      display: flex;
-      gap: 0.5rem;
-      background: rgba(131, 118, 255, 0.16);
-      padding: 0.45rem;
-      border-radius: 999px;
-    }
-
-    .btn-tab {
-      flex: 1;
-      border-radius: 999px !important;
-      border: none;
-      background: transparent;
-      color: rgba(79, 52, 255, 0.7);
-      font-weight: 600;
-      padding: 0.55rem 1.5rem;
-      box-shadow: none;
-      transition: 0.2s ease;
-    }
-
-    .btn-tab:hover {
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--accent-dark);
-    }
-
-    .btn-tab.active {
-      background: #ffffff;
-      color: var(--accent-dark);
-      box-shadow: 0 16px 36px rgba(72, 54, 255, 0.3);
+      font-size: 0.92rem;
+      color: var(--subtle-text);
+      margin-bottom: 0;
+      max-width: 18rem;
     }
 
     .panel-actions {
@@ -176,14 +183,16 @@
 
     .panel-actions .btn {
       border-radius: 999px;
-      padding-inline: 1.6rem;
+      padding: 0.65rem 1.85rem;
       font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .panel-actions .btn-outline-secondary {
-      border-color: rgba(109, 102, 185, 0.35);
+      border-color: rgba(118, 110, 188, 0.45);
       color: var(--panel-text);
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.65);
     }
 
     .panel-actions .btn-outline-secondary:hover {
@@ -192,24 +201,129 @@
     }
 
     .panel-actions .btn-primary {
-      background: linear-gradient(140deg, #8a76ff 0%, #5237ff 100%);
+      background: linear-gradient(145deg, #8d76ff 0%, #4f34ff 100%);
       border: none;
-      box-shadow: 0 22px 48px rgba(72, 54, 255, 0.32);
+      box-shadow: 0 24px 44px rgba(82, 54, 200, 0.42);
     }
 
     .panel-actions .btn-primary:hover {
       filter: brightness(1.05);
     }
 
+    .panel-body {
+      display: flex;
+      gap: 1.8rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .section-tabs {
+      width: 88px;
+      background: rgba(131, 118, 255, 0.16);
+      border-radius: 32px;
+      padding: 1.35rem 0.7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.95rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-tab {
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      display: grid;
+      place-items: center;
+      font-size: 1.45rem;
+      color: rgba(85, 69, 194, 0.78);
+      background: rgba(255, 255, 255, 0.24);
+      transition: all 0.3s ease;
+      box-shadow: none;
+    }
+
+    .btn-tab:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.36);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-tab.active {
+      color: #ffffff;
+      background: linear-gradient(150deg, #7e63ff 0%, #4f33ff 100%);
+      border-color: rgba(255, 255, 255, 0.32);
+      box-shadow: 0 20px 36px rgba(58, 34, 168, 0.58);
+    }
+
+    .collection-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .collection-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .collection-header .collection-label {
+      display: block;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-weight: 700;
+      color: #736adf;
+      margin-bottom: 0.35rem;
+    }
+
+    .collection-header .collection-subtitle {
+      font-size: 0.92rem;
+      color: var(--subtle-text);
+      margin-bottom: 0;
+      max-width: 18rem;
+    }
+
+    .collection-toolbar {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .collection-toolbar .btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      padding: 0;
+      border: 1px solid rgba(115, 110, 189, 0.28);
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--panel-text);
+      display: grid;
+      place-items: center;
+    }
+
+    .collection-toolbar .btn:hover {
+      background: #ffffff;
+    }
+
+    .asset-grid-wrapper {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+
     .asset-grid {
       flex: 1;
       min-height: 0;
       overflow-y: auto;
-      padding-right: 0.35rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1.15rem;
-      align-content: start;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.35rem;
+      padding-right: 0.5rem;
     }
 
     .asset-grid::-webkit-scrollbar {
@@ -217,61 +331,115 @@
     }
 
     .asset-grid::-webkit-scrollbar-thumb {
-      background: rgba(12, 12, 60, 0.14);
+      background: rgba(12, 12, 60, 0.18);
       border-radius: 3px;
     }
 
     .asset-card {
-      position: relative;
-      border: 1px solid rgba(141, 129, 255, 0.2);
-      border-radius: 26px;
+      border-radius: 32px;
+      border: 1px solid rgba(141, 129, 255, 0.25);
       background: var(--card-gradient);
-      transition: 0.25s ease;
-      height: 100%;
-      box-shadow: 0 18px 46px rgba(22, 15, 70, 0.12);
-      cursor: pointer;
-      padding: 1.25rem;
+      box-shadow: 0 32px 64px rgba(25, 18, 90, 0.18);
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.25rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      height: 100%;
     }
 
     .asset-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 58px rgba(28, 18, 95, 0.18);
+      transform: translateY(-8px);
+      box-shadow: 0 36px 80px rgba(29, 20, 96, 0.28);
     }
 
     .asset-card.selected {
-      border-color: rgba(126, 102, 255, 0.65);
-      box-shadow: 0 28px 68px rgba(99, 81, 255, 0.35);
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(238, 234, 255, 0.92) 100%);
+      border-color: rgba(126, 102, 255, 0.75);
+      box-shadow: 0 40px 96px rgba(88, 70, 232, 0.4);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(233, 229, 255, 0.95) 100%);
+    }
+
+    .card-status {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      font-weight: 600;
+      color: #7a74bb;
+    }
+
+    .card-status .status-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background: rgba(130, 116, 255, 0.16);
+      display: grid;
+      place-items: center;
+      color: #7665e9;
+      font-size: 1.3rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .card-eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-weight: 600;
+      color: #736ccf;
+    }
+
+    .asset-card .card-body {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     .card-visual {
       position: relative;
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
-      min-height: 118px;
+      min-height: 160px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, rgba(129, 111, 255, 0.85) 0%, rgba(88, 68, 255, 0.92) 100%);
+      background: linear-gradient(135deg, rgba(134, 112, 255, 0.92) 0%, rgba(83, 60, 220, 0.92) 100%);
       isolation: isolate;
-    }
-
-    .card-visual img {
-      width: 140%;
-      max-width: none;
-      opacity: 0.55;
-      filter: saturate(0) brightness(1.45);
     }
 
     .card-visual::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(118, 93, 255, 0.45) 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(109, 86, 255, 0.4) 100%);
       mix-blend-mode: screen;
-      opacity: 0.65;
+      opacity: 0.7;
+    }
+
+    .card-visual img {
+      width: 140%;
+      max-width: none;
+      opacity: 0.6;
+      filter: saturate(0) brightness(1.45);
+      transform: translateY(6px);
+    }
+
+    .card-visual .card-badge {
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.64rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      background: var(--badge-bg);
+      color: rgba(25, 20, 78, 0.76);
+      z-index: 1;
     }
 
     .card-watermark {
@@ -285,79 +453,58 @@
       font-weight: 700;
       color: rgba(255, 255, 255, 0.45);
       mix-blend-mode: screen;
-    }
-
-    .asset-card .card-body {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .card-eyebrow {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-weight: 600;
-      color: #8b86dd;
+      z-index: 0;
     }
 
     .asset-card .card-title {
-      font-size: 1.05rem;
+      font-size: 1.18rem;
       font-weight: 600;
-      margin-bottom: 0;
       color: var(--panel-text);
+      margin-bottom: 0;
     }
 
     .asset-card .card-text {
-      font-size: 0.8rem;
-      color: #7677a8;
+      font-size: 0.85rem;
+      color: #7a7bb0;
       margin-bottom: 0;
-    }
-
-    .asset-card.locked {
-      cursor: default;
-    }
-
-    .asset-card.locked:hover {
-      transform: none;
-      box-shadow: 0 18px 46px rgba(22, 15, 70, 0.12);
-    }
-
-    .card-visual .card-badge {
-      position: absolute;
-      top: 14px;
-      left: 16px;
-      padding: 0.35rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.28);
-      color: rgba(20, 16, 78, 0.78);
-    }
-
-    .asset-card.locked .card-badge {
-      background: rgba(18, 13, 68, 0.7);
-      color: #f4f3ff;
+      line-height: 1.5;
     }
 
     .card-meta {
       margin-top: auto;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
+      gap: 0.55rem;
+      font-size: 0.74rem;
       text-transform: uppercase;
-      color: #7a74bb;
+      letter-spacing: 0.16em;
       font-weight: 600;
+      color: #766fc0;
     }
 
     .card-meta .bi {
-      font-size: 0.85rem;
-      color: #9084ff;
+      font-size: 0.95rem;
+      color: #8a7eff;
+      transition: color 0.2s ease;
+    }
+
+    .asset-card.selected .card-meta .bi {
+      color: #5a4fff;
+    }
+
+    .asset-card.locked {
+      cursor: default;
+      opacity: 0.78;
+    }
+
+    .asset-card.locked:hover {
+      transform: none;
+      box-shadow: 0 32px 64px rgba(25, 18, 90, 0.18);
+    }
+
+    .asset-card.locked .card-badge {
+      background: rgba(18, 13, 68, 0.72);
+      color: #f8f7ff;
     }
 
     .viewer-pane {
@@ -369,13 +516,17 @@
 
     .viewer-wrapper {
       position: relative;
-      width: min(100%, 560px);
-      height: clamp(360px, 68vh, 640px);
-      border-radius: 44px;
-      background: linear-gradient(150deg, #6f3dff 0%, #2c0c79 48%, #070022 100%);
-      border: 1px solid rgba(124, 114, 255, 0.18);
-      box-shadow: 0 48px 120px rgba(14, 6, 70, 0.62);
+      width: min(100%, 620px);
+      height: clamp(420px, 72vh, 680px);
+      border-radius: 56px;
+      background: radial-gradient(circle at 20% 20%, rgba(137, 111, 255, 0.95) 0%, rgba(56, 20, 150, 0.88) 45%, rgba(7, 0, 36, 0.96) 100%);
+      border: 1px solid rgba(118, 108, 232, 0.3);
+      box-shadow: 0 56px 140px rgba(15, 6, 72, 0.65);
       overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 2.5rem;
     }
 
     .viewer-wrapper::before,
@@ -383,7 +534,7 @@
       content: '';
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(90px);
       opacity: 0.85;
       pointer-events: none;
     }
@@ -391,9 +542,9 @@
     .viewer-wrapper::before {
       width: 60%;
       height: 60%;
-      top: -22%;
-      right: -10%;
-      background: radial-gradient(circle, rgba(146, 118, 255, 0.9) 0%, rgba(93, 47, 220, 0) 70%);
+      top: -20%;
+      right: -12%;
+      background: radial-gradient(circle, rgba(155, 125, 255, 0.9) 0%, rgba(72, 30, 202, 0) 70%);
     }
 
     .viewer-wrapper::after {
@@ -416,81 +567,191 @@
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.24);
       border-radius: 20px;
-      padding: 1rem 1.35rem;
-      backdrop-filter: blur(20px);
+      padding: 1rem 1.4rem;
+      backdrop-filter: blur(22px);
       color: #ffffff;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      min-width: 160px;
+      gap: 0.45rem;
+      min-width: 180px;
+    }
+
+    .viewer-overlay .overlay-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.72;
     }
 
     .viewer-overlay label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.72;
+      letter-spacing: 0.14em;
       font-weight: 600;
+      opacity: 0.74;
+    }
+
+    .viewer-overlay .overlay-value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
     }
 
     .viewer-overlay input[type="color"] {
-      width: 64px;
-      height: 36px;
+      width: 68px;
+      height: 38px;
       border: none;
       border-radius: 12px;
       background: transparent;
       padding: 0;
       cursor: pointer;
+      align-self: flex-start;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
     }
 
-    @media (max-width: 1199.98px) {
+    .viewer-overlay input[type="color"]::-webkit-color-swatch {
+      border: none;
+      border-radius: 10px;
+    }
+
+    .viewer-overlay input[type="color"]::-moz-color-swatch {
+      border: none;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 1399.98px) {
       .content-layout {
-        padding: 2rem;
-        gap: 2rem;
+        gap: 2.5rem;
+        padding: 2.5rem 2.75rem;
       }
     }
 
-    @media (max-width: 991.98px) {
+    @media (max-width: 1199.98px) {
       .app-shell {
         flex-direction: column;
       }
 
       .sidebar {
-        width: 100%;
         flex-direction: row;
-        justify-content: center;
-        border-right: none;
-        border-bottom: 1px solid var(--sidebar-border);
-        padding: 1rem;
+        width: 100%;
+        height: auto;
+        padding: 1.5rem 2rem;
+        justify-content: space-between;
+      }
+
+      .sidebar .nav-links {
+        flex-direction: row;
+      }
+
+      .sidebar .nav-footer {
+        flex-direction: row;
+        margin-top: 0;
       }
 
       .content-layout {
         flex-direction: column;
+        padding: 2.25rem;
       }
 
       .customizer-panel {
         max-width: none;
         max-height: none;
-        overflow: visible;
+        padding: 2.25rem;
+      }
+
+      .panel-actions {
+        display: none;
+      }
+
+      .panel-body {
+        flex-direction: column;
+      }
+
+      .section-tabs {
+        width: auto;
+        flex-direction: row;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 0.75rem 1rem;
+      }
+
+      .btn-tab {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+      }
+
+      .collection-header {
+        align-items: flex-start;
+      }
+
+      .asset-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding-right: 0;
+      }
+
+      .viewer-pane {
+        order: -1;
       }
 
       .viewer-wrapper {
         width: 100%;
-        height: clamp(320px, 60vh, 560px);
       }
     }
 
-    @media (max-width: 575.98px) {
+    @media (max-width: 767.98px) {
       .content-layout {
-        padding: 1.5rem 1.25rem 2.5rem;
+        padding: 1.75rem;
       }
 
       .customizer-panel {
         padding: 1.75rem;
       }
 
-      .panel-actions {
-        display: none;
+      .asset-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .viewer-wrapper {
+        height: clamp(360px, 65vh, 520px);
+        border-radius: 40px;
+        padding: 1.8rem;
+      }
+
+      .viewer-overlay {
+        right: 20px;
+        top: 20px;
+        padding: 0.85rem 1.15rem;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .sidebar {
+        padding: 1.25rem;
+        gap: 1.25rem;
+      }
+
+      .sidebar .logo {
+        width: 46px;
+        height: 46px;
+        font-size: 1rem;
+      }
+
+      .sidebar .nav-link {
+        width: 44px;
+        height: 44px;
+        border-radius: 16px;
+        font-size: 1.15rem;
+      }
+
+      .panel-title {
+        font-size: 1.9rem;
+      }
+
+      .panel-body {
+        gap: 1.25rem;
       }
     }
   </style>
@@ -499,40 +760,72 @@
   <div class="app-shell">
     <nav class="sidebar">
       <div class="logo">N</div>
-      <a class="nav-link active" href="#" aria-label="Appearance"><i class="bi bi-person"></i></a>
-      <a class="nav-link" href="#" aria-label="Wardrobe"><i class="bi bi-tshirt"></i></a>
-      <a class="nav-link" href="#" aria-label="Accessories"><i class="bi bi-sunglasses"></i></a>
-      <a class="nav-link" href="#" aria-label="Settings"><i class="bi bi-sliders"></i></a>
+      <div class="nav-links">
+        <a class="nav-link active" href="#" aria-label="Appearance"><i class="bi bi-person"></i></a>
+        <a class="nav-link" href="#" aria-label="Wardrobe"><i class="bi bi-tshirt"></i></a>
+        <a class="nav-link" href="#" aria-label="Accessories"><i class="bi bi-sunglasses"></i></a>
+        <a class="nav-link" href="#" aria-label="Emotes"><i class="bi bi-lightning-charge"></i></a>
+      </div>
+      <div class="nav-footer">
+        <a class="nav-link" href="#" aria-label="Notifications"><i class="bi bi-bell"></i></a>
+        <a class="nav-link" href="#" aria-label="Settings"><i class="bi bi-gear"></i></a>
+      </div>
     </nav>
 
     <div class="content-layout">
       <section class="customizer-panel">
-        <div class="d-flex align-items-start justify-content-between gap-3">
+        <div class="panel-header">
           <div>
-            <p class="panel-eyebrow mb-1">Outfit</p>
-            <h1 class="panel-title h3 mb-0">Asset Library</h1>
-            <p class="panel-subtext mb-0">Toggle modular pieces to build the perfect hero look.</p>
+            <span class="panel-eyebrow d-block">Champion Signal</span>
+            <h1 class="panel-title mb-0">Clothing Sets</h1>
+            <p class="panel-subtext mb-0">Curated loadouts built for the highlight reel.</p>
           </div>
-          <div class="panel-actions d-none d-md-flex">
-            <button type="button" class="btn btn-outline-secondary">Discard</button>
-            <button type="button" class="btn btn-primary">Save &amp; Load</button>
+          <div class="panel-actions d-none d-xl-flex">
+            <button type="button" class="btn btn-outline-secondary text-uppercase">Discard Changes</button>
+            <button type="button" class="btn btn-primary text-uppercase text-white">Save &amp; Share</button>
           </div>
         </div>
 
-        <div class="section-tabs">
-          <button type="button" class="btn btn-tab active">Appearance</button>
-          <button type="button" class="btn btn-tab">Outfit</button>
-          <button type="button" class="btn btn-tab">Extras</button>
+        <div class="panel-body">
+          <div class="section-tabs" role="tablist" aria-label="Customization categories">
+            <button type="button" class="btn btn-tab active" aria-label="Champion signal">
+              <i class="bi bi-stars"></i>
+            </button>
+            <button type="button" class="btn btn-tab" aria-label="Daybreak">
+              <i class="bi bi-sun"></i>
+            </button>
+            <button type="button" class="btn btn-tab" aria-label="Night runner">
+              <i class="bi bi-moon"></i>
+            </button>
+            <button type="button" class="btn btn-tab" aria-label="Accessories">
+              <i class="bi bi-bag"></i>
+            </button>
+          </div>
+
+          <div class="collection-panel">
+            <div class="collection-header">
+              <div>
+                <span class="collection-label">Featured Rotation</span>
+                <p class="collection-subtitle">Pick a preset kit to instantly style your avatar.</p>
+              </div>
+              <div class="collection-toolbar">
+                <button type="button" class="btn btn-light" aria-label="Sort outfits"><i class="bi bi-sliders"></i></button>
+                <button type="button" class="btn btn-light" aria-label="Filter outfits"><i class="bi bi-funnel"></i></button>
+              </div>
+            </div>
+            <div class="asset-grid-wrapper">
+              <div id="assetGrid" class="asset-grid" role="list" aria-live="polite"></div>
+            </div>
+          </div>
         </div>
-
-                <div id="assetGrid" class="asset-grid" role="list" aria-live="polite"></div>
-
       </section>
 
       <section class="viewer-pane">
         <div class="viewer-wrapper" id="viewerWrapper">
           <div id="viewer"></div>
           <div class="viewer-overlay">
+            <span class="overlay-eyebrow">Active Set</span>
+            <span class="overlay-value">Champion Signal</span>
             <label for="colorInput">Primary Color</label>
             <input type="color" id="colorInput" value="#9c7bff" aria-label="Choose avatar color">
           </div>
@@ -540,6 +833,8 @@
       </section>
     </div>
   </div>
+
+
 
   <script type="importmap">
     {
@@ -750,13 +1045,16 @@
       const metaIcon = entry.selected ? dataset.iconActive : dataset.iconInactive;
 
       card.innerHTML = `
+        <div class="card-status">
+          <span class="status-icon"><i class="bi bi-stars" aria-hidden="true"></i></span>
+          <span class="card-eyebrow">${eyebrow}</span>
+        </div>
         <div class="card-visual" aria-hidden="true">
           <span class="card-badge">${badge}</span>
           <img src="public/images/wawasensei-white.png" alt="${title} thumbnail" aria-hidden="true">
           <span class="card-watermark" aria-hidden="true">SENSEI</span>
         </div>
-        <div class="card-body">
-          <span class="card-eyebrow">${eyebrow}</span>
+        <div class="card-body p-0">
           <h2 class="card-title">${title}</h2>
           <p class="card-text">${description}</p>
         </div>
