@@ -126,7 +126,7 @@
     .workspace {
       flex: 1;
       display: grid;
-      grid-template-columns: minmax(0, 560px) minmax(0, 520px);
+      grid-template-columns: minmax(0, 640px) minmax(0, 480px);
       gap: 2.8rem;
       align-items: stretch;
     }
@@ -142,14 +142,15 @@
       align-items: stretch;
       width: 100%;
       position: relative;
-      gap: 0.6rem;
+      gap: 0;
     }
 
     .panel-card {
       background: var(--panel-gradient);
       color: var(--ink-900);
-      border-radius: 48px;
+      border-radius: 48px 0 0 48px;
       border: 1px solid var(--panel-border);
+      border-right: none;
       box-shadow: 0 48px 120px rgba(24, 12, 70, 0.32);
       padding: 2.8rem 3rem;
       display: flex;
@@ -653,28 +654,32 @@
       flex-direction: column;
       align-items: center;
       gap: 1.2rem;
-      padding: 2.6rem 1.15rem;
+      padding: 2.3rem 1.15rem;
       width: 112px;
-      border-radius: 44px;
+      border-radius: 0 44px 44px 0;
       background: linear-gradient(195deg, rgba(18, 10, 74, 0.95) 0%, rgba(9, 4, 42, 0.98) 100%);
       border: 1px solid rgba(154, 142, 255, 0.32);
+      border-left: none;
       box-shadow: 0 28px 68px rgba(6, 0, 30, 0.5);
       backdrop-filter: blur(22px);
-      align-self: stretch;
+      align-self: start;
+      height: calc(100% - 64px);
+      min-height: 0;
+      margin-left: -1px;
       z-index: 1;
     }
 
     .tone-rail::before {
       content: '';
       position: absolute;
-      left: -10px;
-      top: 28px;
-      bottom: 28px;
-      width: 18px;
-      border-radius: 12px 0 0 12px;
+      left: -14px;
+      top: 32px;
+      bottom: 32px;
+      width: 22px;
+      border-radius: 16px;
       background: linear-gradient(180deg, rgba(148, 136, 255, 0.32) 0%, rgba(86, 64, 200, 0.32) 100%);
       opacity: 0.75;
-      filter: blur(10px);
+      filter: blur(12px);
       pointer-events: none;
     }
 
@@ -757,13 +762,13 @@
       }
 
       .workspace {
-        grid-template-columns: minmax(0, 520px) minmax(0, 480px);
+        grid-template-columns: minmax(0, 600px) minmax(0, 440px);
         gap: 2.4rem;
       }
 
       .panel-card {
         padding: 2.4rem 2.5rem;
-        border-radius: 44px;
+        border-radius: 44px 0 0 44px;
       }
 
       .viewer-stage {
@@ -811,6 +816,11 @@
         min-height: auto;
       }
 
+      .panel-card {
+        border-radius: 44px;
+        border-right: 1px solid var(--panel-border);
+      }
+
       .viewer-stage {
         padding: 2.8rem 2.4rem;
       }
@@ -823,6 +833,10 @@
         border-radius: 999px;
         padding: 1.15rem 1.6rem;
         margin-top: 0;
+        margin-left: 0;
+        height: auto;
+        align-self: stretch;
+        border-left: 1px solid rgba(154, 142, 255, 0.32);
       }
 
       .tone-rail::before {
