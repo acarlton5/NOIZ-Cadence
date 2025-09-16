@@ -1,4 +1,4 @@
-import { pb } from "../store";
+import { pb } from "./pocketbase";
 
 const MODEL_EXTENSIONS = [".glb", ".gltf", ".fbx"];
 const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"];

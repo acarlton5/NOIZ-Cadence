@@ -1,8 +1,11 @@
 import { create } from "zustand";
 
-import PocketBase from "pocketbase";
 import { MeshStandardMaterial } from "three";
 import { randInt } from "three/src/math/MathUtils.js";
+import { getModelUrl } from "./utils/assets";
+import { pb } from "./utils/pocketbase";
+
+export { pb } from "./utils/pocketbase";
 
 const LAYER_KEYS = [
   "layer",
@@ -209,11 +212,6 @@ const applyLayerRules = (customization, categories) => {
   return updated;
 };
 
-const pocketBaseUrl = import.meta.env.VITE_POCKETBASE_URL;
-if (!pocketBaseUrl) {
-  throw new Error("VITE_POCKETBASE_URL is required");
-}
-
 export const PHOTO_POSES = {
   Idle: "Idle",
   Chill: "Chill",
@@ -228,8 +226,6 @@ export const UI_MODES = {
   PHOTO: "photo",
   CUSTOMIZE: "customize",
 };
-
-export const pb = new PocketBase(pocketBaseUrl);
 
 export const useConfiguratorStore = create((set, get) => ({
   loading: true,
@@ -412,6 +408,11 @@ export const useConfiguratorStore = create((set, get) => ({
     Object.entries(customization).forEach(([categoryName, entry]) => {
       const asset = entry.asset;
       if (!asset?.lockedGroups) {
+        return;
+      }
+
+      const assetModelUrl = getModelUrl(asset);
+      if (!assetModelUrl) {
         return;
       }
 
