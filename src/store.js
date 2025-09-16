@@ -82,6 +82,53 @@ const getLayerIds = (asset, category) => {
   return getLayerIdsFrom(category);
 };
 
+const resolveGroupIdentifier = (value) => {
+  if (value === null || value === undefined) {
+    return null;
+  }
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed ? trimmed : null;
+  }
+
+  if (typeof value === "number") {
+    return String(value);
+  }
+
+  if (typeof value === "object") {
+    if ("id" in value && value.id) {
+      return resolveGroupIdentifier(value.id);
+    }
+    if ("group" in value && value.group) {
+      return resolveGroupIdentifier(value.group);
+    }
+    if ("name" in value && value.name) {
+      return resolveGroupIdentifier(value.name);
+    }
+    if ("slug" in value && value.slug) {
+      return resolveGroupIdentifier(value.slug);
+    }
+  }
+
+  return null;
+};
+
+const findCategoryByIdentifier = (categories, identifier) => {
+  if (identifier === null || identifier === undefined) {
+    return null;
+  }
+
+  const normalized =
+    typeof identifier === "string" ? identifier : String(identifier);
+
+  return (
+    categories.find((category) => category.id === normalized) ??
+    categories.find((category) => category.name === normalized) ??
+    categories.find((category) => category.slug === normalized)
+  );
+};
+
 const clearLayerConflicts = (
   customization,
   categories,
@@ -362,24 +409,53 @@ export const useConfiguratorStore = create((set, get) => ({
     const categories = get().categories;
     const lockedGroups = {};
 
-    Object.values(customization).forEach((category) => {
-      if (category.asset?.lockedGroups) {
-        category.asset.lockedGroups.forEach((group) => {
-          const categoryName = categories.find(
-            (category) => category.id === group
-          ).name;
-          if (!lockedGroups[categoryName]) {
-            lockedGroups[categoryName] = [];
-          }
-          const lockingAssetCategoryName = categories.find(
-            (cat) => cat.id === category.asset.group
-          ).name;
-          lockedGroups[categoryName].push({
-            name: category.asset.name,
-            categoryName: lockingAssetCategoryName,
-          });
-        });
+    Object.entries(customization).forEach(([categoryName, entry]) => {
+      const asset = entry.asset;
+      if (!asset?.lockedGroups) {
+        return;
       }
+
+      const lockingCategory =
+        findCategoryByIdentifier(categories, asset.group) ??
+        categories.find((category) => category.name === categoryName);
+      const lockingCategoryName = lockingCategory?.name ?? categoryName;
+
+      const groupEntries = Array.isArray(asset.lockedGroups)
+        ? asset.lockedGroups
+        : [asset.lockedGroups];
+
+      groupEntries.forEach((group) => {
+        const identifier = resolveGroupIdentifier(group);
+        if (!identifier) {
+          return;
+        }
+
+        const targetCategory = findCategoryByIdentifier(categories, identifier);
+        if (!targetCategory) {
+          return;
+        }
+
+        if (targetCategory.name === lockingCategoryName) {
+          return;
+        }
+
+        if (!lockedGroups[targetCategory.name]) {
+          lockedGroups[targetCategory.name] = [];
+        }
+
+        const alreadyLocked = lockedGroups[targetCategory.name].some(
+          (lockedEntry) =>
+            lockedEntry.name === asset.name &&
+            lockedEntry.categoryName === lockingCategoryName
+        );
+
+        if (!alreadyLocked) {
+          lockedGroups[targetCategory.name].push({
+            name: asset.name,
+            categoryName: lockingCategoryName,
+          });
+        }
+      });
     });
 
     set({ lockedGroups });
