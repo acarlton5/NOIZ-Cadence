@@ -10,16 +10,27 @@ const MODEL_EXTENSIONS = [".glb", ".gltf", ".fbx"];
 
 const MODEL_FIELD_KEYS = [
   "url",
+  "uri",
+  "href",
   "file",
+  "fileName",
+  "filename",
   "files",
   "model",
   "modelFile",
   "model_file",
   "modelUrl",
   "model_url",
+  "asset",
+  "assetFile",
+  "asset_file",
+  "assetUrl",
+  "asset_url",
   "source",
   "path",
   "src",
+  "downloadUrl",
+  "download_url",
 ];
 
 const createModelReference = (value) => {
@@ -70,18 +81,35 @@ const createModelReference = (value) => {
   };
 };
 
-const resolveModelReference = (value) => {
+const resolveModelReference = (value, contextRecord, visited) => {
   if (value === null || value === undefined) {
     return null;
   }
 
   if (typeof value === "string") {
-    return createModelReference(value);
+    const reference = createModelReference(value);
+    if (!reference) {
+      return null;
+    }
+
+    return {
+      reference,
+      record: hasPocketBaseMetadata(contextRecord) ? contextRecord : null,
+    };
   }
+
+  if (typeof value !== "object") {
+    return null;
+  }
+
+  if (visited.has(value)) {
+    return null;
+  }
+  visited.add(value);
 
   if (Array.isArray(value)) {
     for (const entry of value) {
-      const resolved = resolveModelReference(entry);
+      const resolved = resolveModelReference(entry, contextRecord, visited);
       if (resolved) {
         return resolved;
       }
@@ -89,21 +117,25 @@ const resolveModelReference = (value) => {
     return null;
   }
 
-  if (typeof value === "object") {
-    for (const key of MODEL_FIELD_KEYS) {
-      if (key in value) {
-        const resolved = resolveModelReference(value[key]);
-        if (resolved) {
-          return resolved;
-        }
-      }
-    }
+  const nextContext = hasPocketBaseMetadata(value) ? value : contextRecord;
 
-    for (const entry of Object.values(value)) {
-      const resolved = resolveModelReference(entry);
+  for (const key of MODEL_FIELD_KEYS) {
+    if (key in value) {
+      const resolved = resolveModelReference(value[key], nextContext, visited);
       if (resolved) {
         return resolved;
       }
+    }
+  }
+
+  for (const [key, entry] of Object.entries(value)) {
+    if (MODEL_FIELD_KEYS.includes(key)) {
+      continue;
+    }
+
+    const resolved = resolveModelReference(entry, nextContext, visited);
+    if (resolved) {
+      return resolved;
     }
   }
 
@@ -111,24 +143,31 @@ const resolveModelReference = (value) => {
 };
 
 const hasPocketBaseMetadata = (asset) =>
-  asset && typeof asset === "object" && ("collectionId" in asset || "collectionName" in asset);
+  asset &&
+  typeof asset === "object" &&
+  ("collectionId" in asset || "collectionName" in asset);
 
 const getAssetUrl = (asset) => {
-  const reference = resolveModelReference(asset);
-  if (!reference) {
+  const resolved = resolveModelReference(asset, asset, new WeakSet());
+  if (!resolved) {
     return null;
   }
+
+  const { reference, record } = resolved;
 
   if (reference.type === "url") {
     return reference.value;
   }
 
-  if (hasPocketBaseMetadata(asset)) {
+  const recordWithMetadata = record ?? (hasPocketBaseMetadata(asset) ? asset : null);
+
+  if (recordWithMetadata) {
     try {
-      return pb.files.getUrl(asset, reference.fileName);
+      return pb.files.getUrl(recordWithMetadata, reference.fileName);
     } catch (error) {
       console.warn("Unable to resolve asset URL from PocketBase", {
         asset,
+        record: recordWithMetadata,
         reference,
         error,
       });
