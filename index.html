@@ -6,624 +6,785 @@
   <title>Avatar Outfit Editor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     :root {
-      --bg-gradient: radial-gradient(120% 140% at 10% 0%, #6f3dff 0%, #341287 42%, #050021 100%);
-      --sidebar-bg: rgba(16, 8, 56, 0.8);
-      --sidebar-border: rgba(137, 122, 255, 0.16);
-      --panel-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(231, 228, 255, 0.98) 100%);
-      --panel-border: rgba(136, 123, 255, 0.28);
-      --panel-text: #1c1a4b;
-      --subtle-text: #8b8bb5;
-      --accent: #7f6bff;
-      --accent-dark: #4f34ff;
-      --accent-soft: rgba(129, 116, 255, 0.18);
-      --card-gradient: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(237, 233, 255, 0.92) 100%);
-      --badge-bg: rgba(255, 255, 255, 0.3);
+      --gradient-bg: radial-gradient(130% 150% at 12% 8%, #8354ff 0%, #421c9a 38%, #090122 100%);
+      --panel-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(239, 234, 255, 0.95) 100%);
+      --panel-border: rgba(148, 139, 255, 0.28);
+      --ink-900: #1a1647;
+      --ink-700: #4b4886;
+      --ink-500: #8f8abf;
+      --accent: #7b5dff;
+      --accent-strong: #5c3dff;
+      --accent-soft: rgba(123, 93, 255, 0.16);
+      --skin-tone: #f7d7c4;
+      --panel-radius: 44px;
+      color-scheme: only light;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
       font-family: 'Manrope', sans-serif;
-      background: var(--bg-gradient);
-      color: #f3f4ff;
+      background: var(--gradient-bg);
+      color: #f4f5ff;
+      display: flex;
     }
 
-    canvas {
-      width: 100% !important;
-      height: 100% !important;
-      display: block;
+    a,
+    button {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
     }
 
     .app-shell {
       display: flex;
+      width: 100%;
       min-height: 100vh;
       align-items: stretch;
       overflow: hidden;
     }
 
     .sidebar {
-      width: 96px;
-      background: var(--sidebar-bg);
-      backdrop-filter: blur(26px);
-      border-right: 1px solid var(--sidebar-border);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      width: 108px;
+      background: rgba(10, 6, 40, 0.86);
+      border-right: 1px solid rgba(140, 126, 255, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(28px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2.5rem 1.25rem;
-      gap: 2rem;
+      padding: 2.75rem 1.5rem 2.25rem;
+      gap: 2.5rem;
     }
 
     .sidebar .logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 20px;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 62px;
+      height: 62px;
+      border-radius: 24px;
       display: grid;
       place-items: center;
-      font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.5rem;
+      font-weight: 800;
       color: #ffffff;
-      box-shadow: 0 14px 32px rgba(8, 4, 32, 0.45);
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 18px 36px rgba(6, 0, 40, 0.55);
     }
 
-    .sidebar .nav-links {
+    .sidebar .nav-links,
+    .sidebar .nav-footer {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 1.25rem;
       width: 100%;
-    }
-
-    .sidebar .nav-link {
-      width: 56px;
-      height: 56px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      color: rgba(255, 255, 255, 0.58);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid transparent;
-      transition: all 0.3s ease;
-      font-size: 1.4rem;
-      text-decoration: none;
-      position: relative;
-    }
-
-    .sidebar .nav-link:hover {
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.28);
-      background: rgba(255, 255, 255, 0.16);
-      box-shadow: 0 18px 36px rgba(17, 4, 68, 0.46);
-    }
-
-    .sidebar .nav-link.active {
-      color: #ffffff;
-      background: linear-gradient(150deg, #8066ff 0%, #5034ff 100%);
-      border-color: rgba(255, 255, 255, 0.24);
-      box-shadow: 0 22px 46px rgba(55, 36, 152, 0.65);
     }
 
     .sidebar .nav-footer {
       margin-top: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      width: 100%;
+      gap: 1.1rem;
     }
 
-    .content-layout {
-      flex: 1;
-      display: flex;
-      gap: 3rem;
-      padding: 3rem 3.5rem;
-      align-items: stretch;
+    .sidebar .nav-link {
+      width: 60px;
+      height: 60px;
+      border-radius: 22px;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.45rem;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s ease;
       position: relative;
     }
 
-    .customizer-panel {
-      max-width: 540px;
-      width: 100%;
-      background: var(--panel-bg);
-      color: var(--panel-text);
-      border-radius: 40px;
-      padding: 2.75rem;
-      border: 1px solid var(--panel-border);
-      box-shadow: 0 48px 96px rgba(19, 9, 84, 0.32);
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      max-height: calc(100vh - 5.5rem);
-      overflow: hidden;
+    .sidebar .nav-link:hover {
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #ffffff;
+      box-shadow: 0 20px 36px rgba(10, 0, 56, 0.45);
     }
 
-    .panel-header {
+    .sidebar .nav-link.active {
+      background: linear-gradient(150deg, #7b5dff 0%, #5634ff 100%);
+      border-color: rgba(255, 255, 255, 0.32);
+      color: #ffffff;
+      box-shadow: 0 24px 52px rgba(54, 28, 176, 0.68);
+    }
+
+    .workspace {
+      flex: 1;
+      display: flex;
+      gap: 3.5rem;
+      padding: 3.5rem 4rem;
+      align-items: stretch;
+    }
+
+    .panel-column {
+      flex: 0 0 540px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-surface {
+      background: var(--panel-gradient);
+      color: var(--ink-900);
+      border-radius: var(--panel-radius);
+      padding: 2.6rem 2.75rem;
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 50px 120px rgba(20, 10, 64, 0.32);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      height: 100%;
+    }
+
+    .panel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .gender-toggle {
+      display: inline-flex;
+      gap: 0.45rem;
+      background: rgba(138, 126, 255, 0.18);
+      padding: 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(150, 136, 255, 0.25);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    .toggle-pill {
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink-700);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.65rem 1.6rem;
+      transition: all 0.25s ease;
+    }
+
+    .toggle-pill.active {
+      background: linear-gradient(140deg, #8f76ff 0%, #5d39ff 100%);
+      color: #ffffff;
+      box-shadow: 0 14px 26px rgba(80, 56, 200, 0.35);
+    }
+
+    .reset-link {
+      color: var(--ink-500);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0;
+    }
+
+    .reset-link i {
+      font-size: 1rem;
+    }
+
+    .appearance-layout {
+      display: flex;
+      gap: 1.85rem;
+      align-items: stretch;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .appearance-nav {
+      width: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.05rem;
+      border-radius: 32px;
+      padding: 1.4rem 0.75rem;
+      background: rgba(133, 119, 255, 0.16);
+      border: 1px solid rgba(151, 138, 255, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .appearance-tab {
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      border: none;
+      background: rgba(255, 255, 255, 0.32);
+      color: rgba(86, 70, 176, 0.82);
+      display: grid;
+      place-items: center;
+      font-size: 1.45rem;
+      transition: all 0.25s ease;
+    }
+
+    .appearance-tab.active {
+      background: linear-gradient(150deg, #7d5eff 0%, #5332ff 100%);
+      color: #ffffff;
+      box-shadow: 0 20px 34px rgba(60, 30, 168, 0.55);
+    }
+
+    .appearance-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      min-height: 0;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      font-weight: 700;
+      color: #756fd2;
+    }
+
+    .display-title {
+      margin: 0.35rem 0;
+      font-size: 2.65rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--ink-900);
+    }
+
+    .lead-text {
+      margin: 0;
+      font-size: 0.98rem;
+      color: var(--ink-500);
+      max-width: 26rem;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.35rem 1.4rem;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1.5px solid rgba(131, 122, 255, 0.26);
+      box-shadow: 0 18px 36px rgba(44, 24, 120, 0.12);
+      color: var(--ink-900);
+      text-align: left;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .option-card .option-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 1.75rem;
+      background: rgba(125, 109, 255, 0.16);
+      color: #6a55cf;
+    }
+
+    .option-card .option-eyebrow {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #7670d5;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+    }
+
+    .option-card .option-title {
+      display: block;
+      font-size: 1.26rem;
+      font-weight: 700;
+      color: var(--ink-900);
+    }
+
+    .option-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px rgba(44, 24, 120, 0.2);
+    }
+
+    .option-card.active {
+      border-color: var(--accent);
+      background: linear-gradient(150deg, rgba(130, 114, 255, 0.18) 0%, rgba(94, 57, 255, 0.1) 100%), rgba(255, 255, 255, 0.95);
+      box-shadow: 0 28px 60px rgba(76, 48, 180, 0.32);
+    }
+
+    .bodytype-toggle {
+      display: inline-flex;
+      gap: 0.65rem;
+      background: rgba(143, 133, 255, 0.16);
+      border-radius: 999px;
+      padding: 0.5rem 0.6rem;
+      border: 1px solid rgba(151, 138, 255, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      align-self: flex-start;
+    }
+
+    .bodytype-pill {
+      border: none;
+      background: transparent;
+      border-radius: 999px;
+      padding: 0.55rem 1.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 600;
+      color: var(--ink-700);
+      transition: all 0.25s ease;
+    }
+
+    .bodytype-pill.active {
+      background: linear-gradient(140deg, #8c72ff 0%, #5c37ff 100%);
+      color: #ffffff;
+      box-shadow: 0 14px 28px rgba(82, 52, 210, 0.32);
+    }
+
+    .panel-heading {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 1.75rem;
-      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
     }
 
-    .panel-eyebrow {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.32em;
-      font-weight: 700;
-      color: #8e8acd;
-      margin-bottom: 0.5rem;
-    }
-
-    .panel-title {
-      font-weight: 700;
-      font-size: 2.4rem;
-      letter-spacing: -0.02em;
-      color: var(--panel-text);
-      margin-bottom: 0.35rem;
-    }
-
-    .panel-subtext {
-      font-size: 0.92rem;
-      color: var(--subtle-text);
-      margin-bottom: 0;
-      max-width: 18rem;
-    }
-
-    .panel-actions {
+    .toolbar {
       display: flex;
       gap: 0.75rem;
     }
 
-    .panel-actions .btn {
-      border-radius: 999px;
-      padding: 0.65rem 1.85rem;
+    .btn-light {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(150, 140, 255, 0.26);
+      color: var(--ink-900);
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      box-shadow: 0 12px 26px rgba(44, 24, 120, 0.18);
     }
 
-    .panel-actions .btn-outline-secondary {
-      border-color: rgba(118, 110, 188, 0.45);
-      color: var(--panel-text);
-      background: rgba(255, 255, 255, 0.65);
-    }
-
-    .panel-actions .btn-outline-secondary:hover {
-      background: rgba(255, 255, 255, 0.85);
-      color: var(--panel-text);
-    }
-
-    .panel-actions .btn-primary {
-      background: linear-gradient(145deg, #8d76ff 0%, #4f34ff 100%);
-      border: none;
-      box-shadow: 0 24px 44px rgba(82, 54, 200, 0.42);
-    }
-
-    .panel-actions .btn-primary:hover {
-      filter: brightness(1.05);
-    }
-
-    .panel-body {
-      display: flex;
-      gap: 1.8rem;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .section-tabs {
-      width: 88px;
-      background: rgba(131, 118, 255, 0.16);
-      border-radius: 32px;
-      padding: 1.35rem 0.7rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.95rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    }
-
-    .btn-tab {
-      width: 58px;
-      height: 58px;
-      border-radius: 20px;
-      border: 1px solid transparent;
-      display: grid;
-      place-items: center;
-      font-size: 1.45rem;
-      color: rgba(85, 69, 194, 0.78);
-      background: rgba(255, 255, 255, 0.24);
-      transition: all 0.3s ease;
-      box-shadow: none;
-    }
-
-    .btn-tab:hover {
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.36);
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    .btn-tab.active {
-      color: #ffffff;
-      background: linear-gradient(150deg, #7e63ff 0%, #4f33ff 100%);
-      border-color: rgba(255, 255, 255, 0.32);
-      box-shadow: 0 20px 36px rgba(58, 34, 168, 0.58);
-    }
-
-    .collection-panel {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-
-    .collection-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
-
-    .collection-header .collection-label {
-      display: block;
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.28em;
-      font-weight: 700;
-      color: #736adf;
-      margin-bottom: 0.35rem;
-    }
-
-    .collection-header .collection-subtitle {
-      font-size: 0.92rem;
-      color: var(--subtle-text);
-      margin-bottom: 0;
-      max-width: 18rem;
-    }
-
-    .collection-toolbar {
-      display: flex;
-      gap: 0.6rem;
-    }
-
-    .collection-toolbar .btn {
-      width: 46px;
-      height: 46px;
-      border-radius: 16px;
-      padding: 0;
-      border: 1px solid rgba(115, 110, 189, 0.28);
-      background: rgba(255, 255, 255, 0.62);
-      color: var(--panel-text);
-      display: grid;
-      place-items: center;
-    }
-
-    .collection-toolbar .btn:hover {
+    .btn-light:hover {
       background: #ffffff;
     }
 
-    .asset-grid-wrapper {
+    .outfit-scroll {
       flex: 1;
       min-height: 0;
-      position: relative;
-    }
-
-    .asset-grid {
-      flex: 1;
-      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
       overflow-y: auto;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.35rem;
-      padding-right: 0.5rem;
+      padding-right: 0.25rem;
     }
 
-    .asset-grid::-webkit-scrollbar {
+    .outfit-scroll::-webkit-scrollbar {
       width: 6px;
     }
 
-    .asset-grid::-webkit-scrollbar-thumb {
-      background: rgba(12, 12, 60, 0.18);
-      border-radius: 3px;
+    .outfit-scroll::-webkit-scrollbar-thumb {
+      background: rgba(20, 12, 80, 0.18);
+      border-radius: 4px;
     }
 
-    .asset-card {
-      border-radius: 32px;
-      border: 1px solid rgba(141, 129, 255, 0.25);
-      background: var(--card-gradient);
-      box-shadow: 0 32px 64px rgba(25, 18, 90, 0.18);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      position: relative;
-      height: 100%;
-    }
-
-    .asset-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 36px 80px rgba(29, 20, 96, 0.28);
-    }
-
-    .asset-card.selected {
-      border-color: rgba(126, 102, 255, 0.75);
-      box-shadow: 0 40px 96px rgba(88, 70, 232, 0.4);
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(233, 229, 255, 0.95) 100%);
-    }
-
-    .card-status {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      font-weight: 600;
-      color: #7a74bb;
-    }
-
-    .card-status .status-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 16px;
-      background: rgba(130, 116, 255, 0.16);
+    .outfit-card {
       display: grid;
-      place-items: center;
-      color: #7665e9;
-      font-size: 1.3rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1.4rem;
+      padding: 1.45rem 1.6rem;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid rgba(140, 130, 255, 0.24);
+      box-shadow: 0 20px 42px rgba(36, 16, 100, 0.16);
+      color: var(--ink-900);
+      text-align: left;
+      transition: all 0.25s ease;
     }
 
-    .card-eyebrow {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-      font-weight: 600;
-      color: #736ccf;
-    }
-
-    .asset-card .card-body {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .card-visual {
-      position: relative;
+    .outfit-card .outfit-thumb {
+      width: 82px;
+      aspect-ratio: 3 / 4;
       border-radius: 24px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.6) 0%, rgba(162, 142, 255, 0.8) 100%);
+      display: grid;
+      place-items: center;
       overflow: hidden;
-      min-height: 160px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, rgba(134, 112, 255, 0.92) 0%, rgba(83, 60, 220, 0.92) 100%);
-      isolation: isolate;
+      position: relative;
     }
 
-    .card-visual::after {
+    .thumb-figure,
+    .thumb-figure::before,
+    .thumb-figure::after {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(109, 86, 255, 0.4) 100%);
-      mix-blend-mode: screen;
-      opacity: 0.7;
+      display: block;
     }
 
-    .card-visual img {
-      width: 140%;
-      max-width: none;
-      opacity: 0.6;
-      filter: saturate(0) brightness(1.45);
-      transform: translateY(6px);
+    .thumb-figure {
+      width: 38px;
+      height: 70px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #9ad1ff 100%);
+      position: relative;
     }
 
-    .card-visual .card-badge {
+    .thumb-figure::before {
       position: absolute;
-      top: 16px;
-      left: 18px;
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.64rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
+      top: -18px;
+      left: 50%;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--skin-tone);
+      transform: translateX(-50%);
+    }
+
+    .thumb-figure::after {
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      width: 32px;
+      height: 18px;
+      border-radius: 50% 50% 12px 12px;
+      background: rgba(0, 0, 0, 0.16);
+      filter: blur(6px);
+      transform: translateX(-50%);
+    }
+
+    .thumb-figure.alt {
+      background: linear-gradient(180deg, #ffe3f2 0%, #ff7ec7 100%);
+    }
+
+    .thumb-figure.alt::before {
+      background: #f4c29f;
+    }
+
+    .thumb-figure.neon {
+      background: linear-gradient(180deg, #b4ffb6 0%, #45ffdd 100%);
+    }
+
+    .thumb-figure.bold {
+      background: linear-gradient(180deg, #ffd29e 0%, #ff7e50 100%);
+    }
+
+    .outfit-card .option-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.24em;
       font-weight: 700;
-      background: var(--badge-bg);
-      color: rgba(25, 20, 78, 0.76);
-      z-index: 1;
+      color: #7a73c7;
+      display: inline-block;
+      margin-bottom: 0.35rem;
     }
 
-    .card-watermark {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-size: 1.05rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
+    .outfit-title {
+      margin: 0;
+      font-size: 1.4rem;
       font-weight: 700;
-      color: rgba(255, 255, 255, 0.45);
-      mix-blend-mode: screen;
-      z-index: 0;
+      color: var(--ink-900);
     }
 
-    .asset-card .card-title {
-      font-size: 1.18rem;
-      font-weight: 600;
-      color: var(--panel-text);
-      margin-bottom: 0;
+    .outfit-desc {
+      margin: 0.35rem 0 0;
+      font-size: 0.94rem;
+      color: var(--ink-500);
+      max-width: 22rem;
     }
 
-    .asset-card .card-text {
-      font-size: 0.85rem;
-      color: #7a7bb0;
-      margin-bottom: 0;
-      line-height: 1.5;
+    .outfit-card i {
+      font-size: 1.5rem;
+      color: rgba(122, 113, 210, 0.7);
     }
 
-    .card-meta {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-weight: 600;
-      color: #766fc0;
+    .outfit-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 28px 64px rgba(70, 40, 170, 0.28);
     }
 
-    .card-meta .bi {
-      font-size: 0.95rem;
-      color: #8a7eff;
-      transition: color 0.2s ease;
+    .outfit-card.active i {
+      color: var(--accent);
     }
 
-    .asset-card.selected .card-meta .bi {
-      color: #5a4fff;
-    }
-
-    .asset-card.locked {
-      cursor: default;
-      opacity: 0.78;
-    }
-
-    .asset-card.locked:hover {
-      transform: none;
-      box-shadow: 0 32px 64px rgba(25, 18, 90, 0.18);
-    }
-
-    .asset-card.locked .card-badge {
-      background: rgba(18, 13, 68, 0.72);
-      color: #f8f7ff;
-    }
-
-    .viewer-pane {
+    .viewer-column {
       flex: 1;
       display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      color: #ffffff;
+    }
+
+    .viewer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.38em;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .viewer-title {
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #a47bff 0%, #6335ff 100%);
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      box-shadow: 0 22px 48px rgba(93, 60, 220, 0.45);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      color: #ffffff;
+    }
+
+    .btn-outline-light {
+      border-color: rgba(255, 255, 255, 0.45);
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      backdrop-filter: blur(3px);
+    }
+
+    .btn-outline-light:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .viewer-stage {
+      position: relative;
+      flex: 1;
+      border-radius: 62px;
+      background: radial-gradient(120% 120% at 18% 12%, rgba(148, 124, 255, 0.68) 0%, rgba(54, 16, 168, 0.8) 48%, rgba(8, 0, 42, 0.96) 100%);
+      border: 1px solid rgba(136, 122, 255, 0.35);
+      box-shadow: 0 70px 160px rgba(10, 0, 50, 0.7);
+      padding: 3.4rem 4rem;
+      display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .viewer-wrapper {
-      position: relative;
-      width: min(100%, 620px);
-      height: clamp(420px, 72vh, 680px);
-      border-radius: 56px;
-      background: radial-gradient(circle at 20% 20%, rgba(137, 111, 255, 0.95) 0%, rgba(56, 20, 150, 0.88) 45%, rgba(7, 0, 36, 0.96) 100%);
-      border: 1px solid rgba(118, 108, 232, 0.3);
-      box-shadow: 0 56px 140px rgba(15, 6, 72, 0.65);
+      gap: 3.4rem;
       overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 2.5rem;
     }
 
-    .viewer-wrapper::before,
-    .viewer-wrapper::after {
+    .viewer-stage::before,
+    .viewer-stage::after {
       content: '';
       position: absolute;
       border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.85;
-      pointer-events: none;
+      filter: blur(120px);
+      opacity: 0.75;
     }
 
-    .viewer-wrapper::before {
-      width: 60%;
-      height: 60%;
-      top: -20%;
-      right: -12%;
-      background: radial-gradient(circle, rgba(155, 125, 255, 0.9) 0%, rgba(72, 30, 202, 0) 70%);
+    .viewer-stage::before {
+      width: 58%;
+      height: 58%;
+      top: -22%;
+      left: -16%;
+      background: rgba(166, 140, 255, 0.9);
     }
 
-    .viewer-wrapper::after {
-      width: 55%;
-      height: 55%;
-      bottom: -18%;
-      left: -12%;
-      background: radial-gradient(circle, rgba(62, 31, 180, 0.8) 0%, rgba(13, 5, 60, 0) 70%);
+    .viewer-stage::after {
+      width: 62%;
+      height: 62%;
+      bottom: -24%;
+      right: -18%;
+      background: rgba(76, 48, 210, 0.8);
     }
 
-    #viewer {
-      position: absolute;
-      inset: 0;
+    .avatar-spotlight {
+      position: relative;
+      width: min(100%, 460px);
+      height: clamp(420px, 70vh, 640px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1;
     }
 
-    .viewer-overlay {
-      position: absolute;
-      top: 28px;
-      right: 28px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      border-radius: 20px;
-      padding: 1rem 1.4rem;
-      backdrop-filter: blur(22px);
-      color: #ffffff;
+    .avatar-figure {
+      position: relative;
+      width: 220px;
+      height: 420px;
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
-      min-width: 180px;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
     }
 
-    .viewer-overlay .overlay-eyebrow {
+    .avatar-head {
+      display: block;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: var(--skin-tone);
+      box-shadow: 0 12px 24px rgba(10, 0, 40, 0.35);
+    }
+
+    .avatar-torso {
+      display: block;
+      width: 178px;
+      height: 168px;
+      border-radius: 90px 90px 40px 40px;
+      background: linear-gradient(150deg, #ffffff 0%, #9ce0ff 55%, #4fbbff 100%);
+      position: relative;
+      box-shadow: 0 28px 44px rgba(0, 0, 0, 0.2);
+    }
+
+    .avatar-torso::after {
+      content: '';
+      position: absolute;
+      bottom: -26px;
+      left: 50%;
+      width: 120px;
+      height: 52px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #ffe18f 0%, #ff9f45 100%);
+      transform: translateX(-50%);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
+    }
+
+    .avatar-leg {
+      display: block;
+      width: 70px;
+      height: 150px;
+      border-radius: 40px;
+      background: linear-gradient(180deg, #2ec1c8 0%, #146574 100%);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .avatar-leg.right {
+      background: linear-gradient(180deg, #87ff65 0%, #2f9c28 100%);
+    }
+
+    .avatar-legs {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      gap: 18px;
+    }
+
+    .avatar-legs::after {
+      content: '';
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      width: 200px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.25);
+      filter: blur(12px);
+      transform: translateX(-50%);
+      opacity: 0.9;
+    }
+
+    .ground-glow {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      width: 240px;
+      height: 40px;
+      background: radial-gradient(circle, rgba(116, 255, 237, 0.55) 0%, rgba(42, 122, 255, 0) 70%);
+      transform: translateX(-50%);
+      filter: blur(8px);
+      opacity: 0.9;
+    }
+
+    .color-rail {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 38px;
+      padding: 1.65rem 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+
+    .rail-label {
       font-size: 0.7rem;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      font-weight: 600;
-      opacity: 0.72;
+      color: rgba(255, 255, 255, 0.75);
     }
 
-    .viewer-overlay label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-weight: 600;
-      opacity: 0.74;
+    .rail-swatches {
+      display: grid;
+      gap: 0.65rem;
     }
 
-    .viewer-overlay .overlay-value {
-      font-size: 1.05rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
+    .rail-swatch {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background: var(--swatch-color, #ffffff);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+      transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
-    .viewer-overlay input[type="color"] {
-      width: 68px;
-      height: 38px;
-      border: none;
-      border-radius: 12px;
-      background: transparent;
-      padding: 0;
-      cursor: pointer;
-      align-self: flex-start;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+    .rail-swatch:hover {
+      transform: translateY(-2px);
     }
 
-    .viewer-overlay input[type="color"]::-webkit-color-swatch {
-      border: none;
-      border-radius: 10px;
+    .rail-swatch.active {
+      border-color: #ffffff;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.36);
     }
 
-    .viewer-overlay input[type="color"]::-moz-color-swatch {
-      border: none;
-      border-radius: 10px;
+    .text-accent {
+      color: var(--accent) !important;
     }
 
-    @media (max-width: 1399.98px) {
-      .content-layout {
-        gap: 2.5rem;
-        padding: 2.5rem 2.75rem;
+    .panel-surface[data-panel='outfit'] {
+      gap: 1.5rem;
+    }
+
+    .appearance-panel-hidden {
+      display: none !important;
+    }
+
+    .viewer-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    @media (max-width: 1440px) {
+      .workspace {
+        gap: 2.75rem;
+        padding: 3rem;
+      }
+
+      .panel-column {
+        flex-basis: 500px;
+      }
+
+      .viewer-stage {
+        padding: 3rem;
       }
     }
 
@@ -635,1152 +796,417 @@
       .sidebar {
         flex-direction: row;
         width: 100%;
-        height: auto;
         padding: 1.5rem 2rem;
+        gap: 1.5rem;
         justify-content: space-between;
       }
 
-      .sidebar .nav-links {
+      .sidebar .nav-links,
+      .sidebar .nav-footer {
         flex-direction: row;
       }
 
       .sidebar .nav-footer {
-        flex-direction: row;
         margin-top: 0;
       }
 
-      .content-layout {
+      .workspace {
         flex-direction: column;
-        padding: 2.25rem;
+        gap: 2rem;
+        padding: 2.5rem 2.5rem 3rem;
       }
 
-      .customizer-panel {
-        max-width: none;
-        max-height: none;
-        padding: 2.25rem;
+      .panel-column {
+        flex-basis: auto;
       }
 
-      .panel-actions {
-        display: none;
+      .panel-surface {
+        min-height: 0;
       }
 
-      .panel-body {
+      .viewer-header {
         flex-direction: column;
-      }
-
-      .section-tabs {
-        width: auto;
-        flex-direction: row;
-        justify-content: center;
-        border-radius: 999px;
-        padding: 0.75rem 1rem;
-      }
-
-      .btn-tab {
-        width: 50px;
-        height: 50px;
-        font-size: 1.25rem;
-      }
-
-      .collection-header {
         align-items: flex-start;
       }
 
-      .asset-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        padding-right: 0;
-      }
-
-      .viewer-pane {
-        order: -1;
-      }
-
-      .viewer-wrapper {
+      .viewer-actions {
         width: 100%;
+        justify-content: space-between;
+      }
+
+      .viewer-stage {
+        border-radius: 48px;
       }
     }
 
     @media (max-width: 767.98px) {
-      .content-layout {
-        padding: 1.75rem;
+      .workspace {
+        padding: 2rem 1.5rem 2.5rem;
       }
 
-      .customizer-panel {
-        padding: 1.75rem;
+      .panel-surface {
+        padding: 2.1rem 2.25rem;
       }
 
-      .asset-grid {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-        gap: 1rem;
+      .panel-top,
+      .panel-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
       }
 
-      .viewer-wrapper {
-        height: clamp(360px, 65vh, 520px);
-        border-radius: 40px;
-        padding: 1.8rem;
+      .appearance-layout {
+        flex-direction: column;
       }
 
-      .viewer-overlay {
-        right: 20px;
-        top: 20px;
-        padding: 0.85rem 1.15rem;
+      .appearance-nav {
+        flex-direction: row;
+        width: auto;
+        border-radius: 999px;
+      }
+
+      .viewer-stage {
+        flex-direction: column;
+        gap: 2.5rem;
+        padding: 2.5rem;
+      }
+
+      .color-rail {
+        flex-direction: row;
+        padding: 1rem 1.2rem;
+      }
+
+      .rail-swatches {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.45rem;
       }
     }
 
     @media (max-width: 575.98px) {
       .sidebar {
-        padding: 1.25rem;
-        gap: 1.25rem;
+        flex-wrap: wrap;
+        justify-content: center;
       }
 
       .sidebar .logo {
-        width: 46px;
-        height: 46px;
-        font-size: 1rem;
+        width: 52px;
+        height: 52px;
+        font-size: 1.2rem;
       }
 
       .sidebar .nav-link {
-        width: 44px;
-        height: 44px;
-        border-radius: 16px;
-        font-size: 1.15rem;
+        width: 52px;
+        height: 52px;
+        font-size: 1.2rem;
       }
 
-      .panel-title {
-        font-size: 1.9rem;
+      .viewer-actions {
+        flex-direction: column;
+        gap: 0.75rem;
       }
 
-      .panel-body {
-        gap: 1.25rem;
+      .viewer-stage {
+        padding: 2rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <nav class="sidebar">
+    <nav class="sidebar" aria-label="Primary">
       <div class="logo">N</div>
       <div class="nav-links">
-        <a class="nav-link active" href="#" aria-label="Appearance"><i class="bi bi-person"></i></a>
-        <a class="nav-link" href="#" aria-label="Wardrobe"><i class="bi bi-tshirt"></i></a>
-        <a class="nav-link" href="#" aria-label="Accessories"><i class="bi bi-sunglasses"></i></a>
-        <a class="nav-link" href="#" aria-label="Emotes"><i class="bi bi-lightning-charge"></i></a>
+        <button type="button" class="nav-link active" data-panel-trigger="appearance" data-panel-label="Appearance" aria-pressed="true">
+          <i class="bi bi-person-fill"></i>
+          <span class="visually-hidden">Appearance</span>
+        </button>
+        <button type="button" class="nav-link" data-panel-trigger="outfit" data-panel-label="Clothing Sets" aria-pressed="false">
+          <i class="bi bi-hanger"></i>
+          <span class="visually-hidden">Outfits</span>
+        </button>
+        <button type="button" class="nav-link" aria-label="Accessories">
+          <i class="bi bi-sunglasses"></i>
+        </button>
+        <button type="button" class="nav-link" aria-label="Emotes">
+          <i class="bi bi-lightning-charge"></i>
+        </button>
+        <button type="button" class="nav-link" aria-label="Backgrounds">
+          <i class="bi bi-stars"></i>
+        </button>
       </div>
       <div class="nav-footer">
-        <a class="nav-link" href="#" aria-label="Notifications"><i class="bi bi-bell"></i></a>
-        <a class="nav-link" href="#" aria-label="Settings"><i class="bi bi-gear"></i></a>
+        <button type="button" class="nav-link" aria-label="Settings">
+          <i class="bi bi-gear"></i>
+        </button>
+        <button type="button" class="nav-link" aria-label="Help">
+          <i class="bi bi-question-circle"></i>
+        </button>
       </div>
     </nav>
-
-    <div class="content-layout">
-      <section class="customizer-panel">
-        <div class="panel-header">
-          <div>
-            <span class="panel-eyebrow d-block">Champion Signal</span>
-            <h1 class="panel-title mb-0">Clothing Sets</h1>
-            <p class="panel-subtext mb-0">Curated loadouts built for the highlight reel.</p>
-          </div>
-          <div class="panel-actions d-none d-xl-flex">
-            <button type="button" class="btn btn-outline-secondary text-uppercase">Discard Changes</button>
-            <button type="button" class="btn btn-primary text-uppercase text-white">Save &amp; Share</button>
-          </div>
-        </div>
-
-        <div class="panel-body">
-          <div class="section-tabs" role="tablist" aria-label="Customization categories">
-            <button type="button" class="btn btn-tab active" aria-label="Champion signal">
-              <i class="bi bi-stars"></i>
-            </button>
-            <button type="button" class="btn btn-tab" aria-label="Daybreak">
-              <i class="bi bi-sun"></i>
-            </button>
-            <button type="button" class="btn btn-tab" aria-label="Night runner">
-              <i class="bi bi-moon"></i>
-            </button>
-            <button type="button" class="btn btn-tab" aria-label="Accessories">
-              <i class="bi bi-bag"></i>
+    <main class="workspace">
+      <div class="panel-column">
+        <section class="panel-surface" data-panel="appearance">
+          <div class="panel-top">
+            <div class="gender-toggle" role="group" aria-label="Body presentation">
+              <button type="button" class="toggle-pill active" data-gender="masculine">Masculine</button>
+              <button type="button" class="toggle-pill" data-gender="feminine">Feminine</button>
+            </div>
+            <button type="button" class="btn btn-link reset-link">
+              <i class="bi bi-arrow-counterclockwise me-2"></i>
+              Reset
             </button>
           </div>
-
-          <div class="collection-panel">
-            <div class="collection-header">
-              <div>
-                <span class="collection-label">Featured Rotation</span>
-                <p class="collection-subtitle">Pick a preset kit to instantly style your avatar.</p>
+          <div class="appearance-layout">
+            <div class="appearance-nav" role="tablist" aria-label="Appearance categories">
+              <button type="button" class="appearance-tab active" data-category="head" aria-label="Head">
+                <i class="bi bi-person-bounding-box"></i>
+              </button>
+              <button type="button" class="appearance-tab" data-category="hair" aria-label="Hair">
+                <i class="bi bi-scissors"></i>
+              </button>
+              <button type="button" class="appearance-tab" data-category="eyes" aria-label="Eyes">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button type="button" class="appearance-tab" data-category="brows" aria-label="Brows">
+                <i class="bi bi-eyedropper"></i>
+              </button>
+              <button type="button" class="appearance-tab" data-category="face" aria-label="Face details">
+                <i class="bi bi-magic"></i>
+              </button>
+            </div>
+            <div class="appearance-content">
+              <header>
+                <span class="eyebrow text-uppercase">Appearance</span>
+                <h1 class="display-title">Head Type</h1>
+                <p class="lead-text">Choose a base head to shape the rest of your look.</p>
+              </header>
+              <div class="option-grid" role="list">
+                <button type="button" class="option-card active" role="listitem" aria-pressed="true">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-smile"></i>
+                  </span>
+                  <span>
+                    <span class="option-eyebrow text-uppercase">Head 01</span>
+                    <span class="option-title">Balanced</span>
+                  </span>
+                </button>
+                <button type="button" class="option-card" role="listitem" aria-pressed="false">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-laughing"></i>
+                  </span>
+                  <span>
+                    <span class="option-eyebrow text-uppercase">Head 02</span>
+                    <span class="option-title">Athletic</span>
+                  </span>
+                </button>
+                <button type="button" class="option-card" role="listitem" aria-pressed="false">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-smile-upside-down"></i>
+                  </span>
+                  <span>
+                    <span class="option-eyebrow text-uppercase">Head 03</span>
+                    <span class="option-title">Plus</span>
+                  </span>
+                </button>
+                <button type="button" class="option-card" role="listitem" aria-pressed="false">
+                  <span class="option-icon">
+                    <i class="bi bi-emoji-neutral"></i>
+                  </span>
+                  <span>
+                    <span class="option-eyebrow text-uppercase">Head 04</span>
+                    <span class="option-title">Sharp</span>
+                  </span>
+                </button>
               </div>
-              <div class="collection-toolbar">
-                <button type="button" class="btn btn-light" aria-label="Sort outfits"><i class="bi bi-sliders"></i></button>
-                <button type="button" class="btn btn-light" aria-label="Filter outfits"><i class="bi bi-funnel"></i></button>
+              <div class="bodytype-toggle" role="group" aria-label="Body build">
+                <button type="button" class="bodytype-pill active">Light Build</button>
+                <button type="button" class="bodytype-pill">Athletic Build</button>
+                <button type="button" class="bodytype-pill">Plus Build</button>
               </div>
             </div>
-            <div class="asset-grid-wrapper">
-              <div id="assetGrid" class="asset-grid" role="list" aria-live="polite"></div>
+          </div>
+        </section>
+        <section class="panel-surface d-none" data-panel="outfit">
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow text-uppercase">Champion Signal</span>
+              <h1 class="display-title">Clothing Sets</h1>
+              <p class="lead-text">Curated looks assembled to drop straight into game night.</p>
+            </div>
+            <div class="toolbar">
+              <button type="button" class="btn btn-light rounded-pill px-4">
+                <i class="bi bi-sliders me-2"></i>
+                Sort
+              </button>
+              <button type="button" class="btn btn-light rounded-pill px-4">
+                <i class="bi bi-funnel me-2"></i>
+                Filter
+              </button>
+            </div>
+          </div>
+          <div class="outfit-scroll">
+            <button type="button" class="outfit-card active" aria-pressed="true">
+              <span class="outfit-thumb">
+                <span class="thumb-figure"></span>
+              </span>
+              <span>
+                <span class="option-eyebrow text-uppercase">Featured</span>
+                <h2 class="outfit-title">Champion Signal</h2>
+                <p class="outfit-desc">Bright panels and layered techwear ready for the finals.</p>
+              </span>
+              <i class="bi bi-check-circle-fill"></i>
+            </button>
+            <button type="button" class="outfit-card" aria-pressed="false">
+              <span class="outfit-thumb">
+                <span class="thumb-figure alt"></span>
+              </span>
+              <span>
+                <span class="option-eyebrow text-uppercase">Rotation</span>
+                <h2 class="outfit-title">Daybreak</h2>
+                <p class="outfit-desc">Soft gradients, warm neutrals, and breezy layers.</p>
+              </span>
+              <i class="bi bi-plus-circle"></i>
+            </button>
+            <button type="button" class="outfit-card" aria-pressed="false">
+              <span class="outfit-thumb">
+                <span class="thumb-figure neon"></span>
+              </span>
+              <span>
+                <span class="option-eyebrow text-uppercase">Seasonal</span>
+                <h2 class="outfit-title">Night Runner</h2>
+                <p class="outfit-desc">Reflective tech with neon trims for nighttime ops.</p>
+              </span>
+              <i class="bi bi-plus-circle"></i>
+            </button>
+            <button type="button" class="outfit-card" aria-pressed="false">
+              <span class="outfit-thumb">
+                <span class="thumb-figure bold"></span>
+              </span>
+              <span>
+                <span class="option-eyebrow text-uppercase">Seasonal</span>
+                <h2 class="outfit-title">Boardwalk</h2>
+                <p class="outfit-desc">Casual denim layers with pastel pops.</p>
+              </span>
+              <i class="bi bi-plus-circle"></i>
+            </button>
+          </div>
+        </section>
+      </div>
+      <div class="viewer-column">
+        <div class="viewer-header">
+          <div class="viewer-title" id="viewerTitle">Appearance</div>
+          <div class="viewer-actions">
+            <button type="button" class="btn btn-outline-light rounded-pill px-4">Discard Changes</button>
+            <button type="button" class="btn btn-primary rounded-pill px-4">Save &amp; Close</button>
+          </div>
+        </div>
+        <div class="viewer-stage">
+          <div class="avatar-spotlight">
+            <div class="avatar-figure">
+              <span class="avatar-head"></span>
+              <span class="avatar-torso"></span>
+              <div class="avatar-legs">
+                <span class="avatar-leg"></span>
+                <span class="avatar-leg right"></span>
+              </div>
+            </div>
+            <div class="ground-glow"></div>
+          </div>
+          <div class="color-rail" aria-label="Color options">
+            <span class="rail-label">Color</span>
+            <div class="rail-swatches">
+              <button type="button" class="rail-swatch active" style="--swatch-color:#f7d7c4;" aria-label="Porcelain"></button>
+              <button type="button" class="rail-swatch" style="--swatch-color:#e8ba8c;" aria-label="Warm Sand"></button>
+              <button type="button" class="rail-swatch" style="--swatch-color:#d79b6c;" aria-label="Copper"></button>
+              <button type="button" class="rail-swatch" style="--swatch-color:#c98158;" aria-label="Amber"></button>
+              <button type="button" class="rail-swatch" style="--swatch-color:#b16945;" aria-label="Chestnut"></button>
+              <button type="button" class="rail-swatch" style="--swatch-color:#945236;" aria-label="Mocha"></button>
+              <button type="button" class="rail-swatch" style="--swatch-color:#6f3926;" aria-label="Mahogany"></button>
+              <button type="button" class="rail-swatch" style="--swatch-color:#4b2619;" aria-label="Espresso"></button>
             </div>
           </div>
         </div>
-      </section>
-
-      <section class="viewer-pane">
-        <div class="viewer-wrapper" id="viewerWrapper">
-          <div id="viewer"></div>
-          <div class="viewer-overlay">
-            <span class="overlay-eyebrow">Active Set</span>
-            <span class="overlay-value">Champion Signal</span>
-            <label for="colorInput">Primary Color</label>
-            <input type="color" id="colorInput" value="#9c7bff" aria-label="Choose avatar color">
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </main>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    const panelTriggers = document.querySelectorAll('[data-panel-trigger]');
+    const panels = document.querySelectorAll('[data-panel]');
+    const viewerTitle = document.getElementById('viewerTitle');
 
-
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
-        "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/loaders/GLTFLoader.js",
-        "three/examples/jsm/loaders/DRACOLoader.js": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/loaders/DRACOLoader.js"
-      }
-    }
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script type="module">
-    import * as THREE from 'three';
-    import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-    import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    const JSZipLib = window.JSZip;
-
-    const viewerWrapper = document.getElementById('viewerWrapper');
-    const viewer = document.getElementById('viewer');
-    viewer.appendChild(renderer.domElement);
-
-    function resizeRenderer() {
-      const width = viewerWrapper.clientWidth;
-      const height = viewerWrapper.clientHeight;
-      renderer.setSize(width, height, false);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-    }
-
-    resizeRenderer();
-
-    const hemisphere = new THREE.HemisphereLight(0xffffff, 0x2b1a63, 1.05);
-    scene.add(hemisphere);
-
-    const keyLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    keyLight.position.set(4, 6, 6);
-    scene.add(keyLight);
-
-    const rimLight = new THREE.DirectionalLight(0x7c5bff, 0.9);
-    rimLight.position.set(-4, 5, -6);
-    scene.add(rimLight);
-
-    const modelGroup = new THREE.Group();
-    scene.add(modelGroup);
-
-    function slugify(value) {
-      if (!value && value !== 0) {
-        return null;
-      }
-      return String(value)
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '') || null;
-    }
-
-    function deriveSlotFromSource(source) {
-      if (!source) {
-        return null;
-      }
-      const path = source.entry || source.url;
-      if (!path) {
-        return null;
-      }
-      const filename = path.split('/').pop() || '';
-      if (!filename) {
-        return null;
-      }
-      const withoutExt = filename.replace(/\.[^/.]+$/, '');
-      const base = withoutExt.replace(/[._-]?\d+$/i, '');
-      return slugify(base);
-    }
-
-    function resolveSlotId(entry) {
-      if (!entry) {
-        return null;
-      }
-      if (entry.slot) {
-        return slugify(entry.slot);
-      }
-      if (entry.group) {
-        return slugify(entry.group);
-      }
-      if (entry.category) {
-        return slugify(entry.category);
-      }
-      const fromSource = deriveSlotFromSource(entry.source || {});
-      if (fromSource) {
-        return fromSource;
-      }
-      if (entry.eyebrow) {
-        return slugify(entry.eyebrow);
-      }
-      if (entry.badge && entry.title) {
-        return slugify(`${entry.badge}-${entry.title}`);
-      }
-      return null;
-    }
-
-    const heroBodyPieces = [
-      { key: 'head', source: { url: 'Head.001.glb' }, tint: true },
-      { key: 'face', source: { url: 'Face.001.glb' }, tint: true },
-      { key: 'eyes', source: { url: 'Eyes.001.glb' }, tint: false },
-      { key: 'brows', source: { url: 'EyeBrow.001.glb' }, tint: false },
-      { key: 'nose', source: { url: 'Nose.001.glb' }, tint: true },
-    ];
-
-    heroBodyPieces.forEach((piece) => {
-      piece.slot = piece.slot || deriveSlotFromSource(piece.source) || slugify(piece.key);
+    panelTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const target = trigger.dataset.panelTrigger;
+        panelTriggers.forEach((btn) => {
+          const isActive = btn === trigger;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+        panels.forEach((panel) => {
+          const matches = panel.dataset.panel === target;
+          panel.classList.toggle('d-none', !matches);
+        });
+        if (viewerTitle && trigger.dataset.panelLabel) {
+          viewerTitle.textContent = trigger.dataset.panelLabel;
+        }
+      });
     });
 
-    let avatar;
-    let activeAvatarId = null;
-    let activeAvatarCard = null;
-    const avatarAttachments = new Map();
-    const extras = new Map();
-    const slotSelections = new Map();
-    const tintTargets = new Set();
-    const skinnedRoots = new Set();
-    const assetRegistry = new Map();
-    const assetManifestUrl = 'assets-manifest.json';
-    let assetManifestPromise = null;
-    let activePoseName = null;
-    let activePoseCard = null;
-    let poseClipMapPromise = null;
-    const cardThumbnailUrlCache = new Map();
-    let avatarLoadToken = 0;
-    const loader = new GLTFLoader();
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/libs/draco/');
-    loader.setDRACOLoader(dracoLoader);
-
-    const zipFileCache = new Map();
-    const zipEntryCache = new Map();
-    function createAssetCard(entry) {
-      if (!entry || !entry.id) {
-        return null;
-      }
-      const card = document.createElement('div');
-      card.className = 'asset-card';
-      if (entry.selected) {
-        card.classList.add('selected');
-      }
-      if (entry.locked) {
-        card.classList.add('locked');
-      }
-      const dataset = card.dataset;
-      dataset.id = entry.id;
-      dataset.type = entry.type || 'extra';
-      dataset.locked = entry.locked ? 'true' : 'false';
-      const slotId = resolveSlotId(entry);
-      if (slotId) {
-        dataset.slot = slotId;
-      }
-      dataset.exclusive = entry.exclusive === false ? 'false' : 'true';
-
-      const source = entry.source || {};
-      if (source.url) {
-        dataset.url = source.url;
-      }
-      if (source.zip) {
-        dataset.zip = source.zip;
-      }
-      if (source.entry) {
-        dataset.entry = source.entry;
-      }
-
-      const thumbnail = entry.thumbnail || {};
-      if (thumbnail.url) {
-        dataset.thumb = thumbnail.url;
-      }
-      if (thumbnail.zip) {
-        dataset.thumbZip = thumbnail.zip;
-      }
-      if (thumbnail.entry) {
-        dataset.thumbEntry = thumbnail.entry;
-      }
-      if (!thumbnail.url && !thumbnail.zip) {
-        dataset.thumb = 'public/images/wawasensei-white.png';
-      }
-
-      if (entry.pose) {
-        dataset.pose = entry.pose;
-      }
-
-      const labels = entry.labels || {};
-      const icons = entry.icons || {};
-      dataset.labelActive = labels.active || 'Equipped';
-      dataset.labelInactive = labels.inactive || 'Tap to equip';
-      dataset.iconActive = icons.active || 'bi-check2-circle';
-      dataset.iconInactive = icons.inactive || 'bi-plus-circle';
-
-      card.setAttribute('role', 'listitem');
-      card.setAttribute('tabindex', '0');
-      card.setAttribute('aria-pressed', entry.selected ? 'true' : 'false');
-
-      const badge = entry.badge || 'Asset';
-      const eyebrow = entry.eyebrow || 'Wardrobe';
-      const title = entry.title || entry.id;
-      const description = entry.description || '';
-      const metaLabel = entry.selected ? dataset.labelActive : dataset.labelInactive;
-      const metaIcon = entry.selected ? dataset.iconActive : dataset.iconInactive;
-
-      card.innerHTML = `
-        <div class="card-status">
-          <span class="status-icon"><i class="bi bi-stars" aria-hidden="true"></i></span>
-          <span class="card-eyebrow">${eyebrow}</span>
-        </div>
-        <div class="card-visual" aria-hidden="true">
-          <span class="card-badge">${badge}</span>
-          <img src="public/images/wawasensei-white.png" alt="${title} thumbnail" aria-hidden="true">
-          <span class="card-watermark" aria-hidden="true">SENSEI</span>
-        </div>
-        <div class="card-body p-0">
-          <h2 class="card-title">${title}</h2>
-          <p class="card-text">${description}</p>
-        </div>
-        <div class="card-meta" data-label-active="${dataset.labelActive}" data-label-inactive="${dataset.labelInactive}" data-icon-active="${dataset.iconActive}" data-icon-inactive="${dataset.iconInactive}">
-          <i class="bi ${metaIcon}" aria-hidden="true"></i>
-          <span>${metaLabel}</span>
-        </div>
-      `;
-
-      return card;
-    }
-
-    function populateAssetGrid(manifest) {
-      const grid = document.getElementById('assetGrid');
-      if (!grid) {
-        return;
-      }
-      assetRegistry.clear();
-      grid.innerHTML = '';
-      manifest.forEach((entry) => {
-        if (!entry || !entry.id) {
-          return;
-        }
-        assetRegistry.set(entry.id, entry);
-        const card = createAssetCard(entry);
-        if (card) {
-          grid.appendChild(card);
-        }
-      });
-    }
-
-    async function loadAssetManifest() {
-      if (!assetManifestUrl) {
-        return [];
-      }
-      if (!assetManifestPromise) {
-        assetManifestPromise = fetch(assetManifestUrl, { cache: 'no-cache' })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Failed to load asset manifest: ${response.status} ${response.statusText}`);
-            }
-            return response.json();
-          })
-          .catch((error) => {
-            console.error('Unable to fetch asset manifest', error);
-            return [];
-          });
-      }
-      return assetManifestPromise;
-    }
-
-    async function bootstrapAssetGrid() {
-      const manifest = await loadAssetManifest();
-      if (!Array.isArray(manifest) || manifest.length === 0) {
-        console.warn('Asset manifest is empty; no selector cards were generated.');
-        return;
-      }
-      populateAssetGrid(manifest);
-      initializeCardInteractions();
-    }
-
-
-    async function getZipFile(zipPath) {
-      if (zipFileCache.has(zipPath)) {
-        return zipFileCache.get(zipPath);
-      }
-      const response = await fetch(zipPath);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch ${zipPath}: ${response.status} ${response.statusText}`);
-      }
-      if (!JSZipLib) {
-        throw new Error('JSZip failed to load');
-      }
-      const buffer = await response.arrayBuffer();
-      const zip = await JSZipLib.loadAsync(buffer);
-      zipFileCache.set(zipPath, zip);
-      return zip;
-    }
-
-    async function getZipEntryBuffer(zipPath, entryPath) {
-      const cacheKey = `${zipPath}::${entryPath}`;
-      if (zipEntryCache.has(cacheKey)) {
-        return zipEntryCache.get(cacheKey);
-      }
-      const zip = await getZipFile(zipPath);
-      const entry = zip.file(entryPath);
-      if (!entry) {
-        throw new Error(`Entry "${entryPath}" not found in ${zipPath}`);
-      }
-      const arrayBuffer = await entry.async('arraybuffer');
-      zipEntryCache.set(cacheKey, arrayBuffer);
-      return arrayBuffer;
-    }
-
-    async function loadGLTFAsset(source) {
-      const { url, zip, entry } = source;
-      if (zip && entry) {
-        const buffer = await getZipEntryBuffer(zip, entry);
-        return new Promise((resolve, reject) => {
-          loader.parse(buffer, '', resolve, reject);
+    document.querySelectorAll('[data-gender]').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-gender]').forEach((btn) => {
+          btn.classList.toggle('active', btn === button);
         });
-      }
-      if (url) {
-        return new Promise((resolve, reject) => {
-          loader.load(url, resolve, undefined, reject);
-        });
-      }
-      throw new Error('No asset source provided');
-    }
-
-    function registerSkinnedRoot(object) {
-      if (!object) return;
-      let hasSkin = false;
-      object.traverse((child) => {
-        if (child.isSkinnedMesh) {
-          hasSkin = true;
-        }
       });
-      if (hasSkin) {
-        skinnedRoots.add(object);
-      }
-    }
-
-    function unregisterSkinnedRoot(object) {
-      if (!object) return;
-      skinnedRoots.delete(object);
-    }
-
-    function resetSkinnedMeshPose(root) {
-      if (!root) return;
-      root.traverse((child) => {
-        if (child.isSkinnedMesh && child.skeleton) {
-          child.skeleton.pose();
-        }
-      });
-    }
-
-    function resetAllSkinnedMeshesPose() {
-      skinnedRoots.forEach((root) => {
-        resetSkinnedMeshPose(root);
-      });
-    }
-
-    async function ensurePoseClipMap() {
-      if (poseClipMapPromise) {
-        return poseClipMapPromise;
-      }
-      poseClipMapPromise = loadGLTFAsset({ url: 'public/models/Poses.glb' })
-        .then((gltf) => {
-          const clipMap = new Map();
-          (gltf.animations || []).forEach((clip) => {
-            clipMap.set(clip.name, clip);
-          });
-          return clipMap;
-        })
-        .catch((error) => {
-          console.error('Failed to load poses', error);
-          return new Map();
-        });
-      return poseClipMapPromise;
-    }
-
-    async function getPoseClip(poseName) {
-      const clipMap = await ensurePoseClipMap();
-      return clipMap.get(poseName);
-    }
-
-    async function applyPoseByName(poseName) {
-      if (!poseName) {
-        return;
-      }
-      const clip = await getPoseClip(poseName);
-      if (!clip) {
-        console.warn(`Pose "${poseName}" not found in poses set`);
-        return;
-      }
-      skinnedRoots.forEach((root) => {
-        const mixer = new THREE.AnimationMixer(root);
-        const action = mixer.clipAction(clip);
-        action.reset();
-        action.setLoop(THREE.LoopOnce, 0);
-        action.clampWhenFinished = true;
-        action.play();
-        mixer.update(Math.max(clip.duration, 0.0001));
-        mixer.stopAllAction();
-        mixer.uncacheClip(clip);
-        mixer.uncacheRoot(root);
-      });
-    }
-
-    async function reapplyActivePose() {
-      if (activePoseName) {
-        await applyPoseByName(activePoseName);
-      }
-    }
-
-    function clearActivePose() {
-      activePoseName = null;
-      resetAllSkinnedMeshesPose();
-    }
-
-    function getMimeTypeFromFilename(filename) {
-      if (!filename) return 'image/png';
-      const lower = filename.toLowerCase();
-      if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) {
-        return 'image/jpeg';
-      }
-      if (lower.endsWith('.png')) {
-        return 'image/png';
-      }
-      return 'application/octet-stream';
-    }
-
-    function assignThumbnailUrl(card, url, img) {
-      const existing = cardThumbnailUrlCache.get(card);
-      if (existing) {
-        URL.revokeObjectURL(existing);
-      }
-      cardThumbnailUrlCache.set(card, url);
-      img.src = url;
-    }
-
-    async function loadCardThumbnail(card) {
-      const img = card.querySelector('.card-visual img');
-      if (!img) {
-        return;
-      }
-      const thumbZip = card.dataset.thumbZip;
-      const thumbEntry = card.dataset.thumbEntry;
-      const thumbUrl = card.dataset.thumb;
-      if (thumbZip && thumbEntry) {
-        try {
-          const buffer = await getZipEntryBuffer(thumbZip, thumbEntry);
-          const blob = new Blob([buffer], { type: getMimeTypeFromFilename(thumbEntry) });
-          const objectUrl = URL.createObjectURL(blob);
-          assignThumbnailUrl(card, objectUrl, img);
-        } catch (error) {
-          console.error(`Failed to load thumbnail "${thumbEntry}" from ${thumbZip}`, error);
-        }
-        return;
-      }
-      if (thumbUrl) {
-        img.src = thumbUrl;
-      }
-    }
-
-    window.addEventListener('beforeunload', () => {
-      cardThumbnailUrlCache.forEach((url) => URL.revokeObjectURL(url));
-      cardThumbnailUrlCache.clear();
     });
 
-    function frame(object) {
-      object.position.set(0, 0, 0);
-      object.rotation.set(0, 0, 0);
-      object.updateMatrixWorld(true);
-      const box = new THREE.Box3().setFromObject(object);
-      const size = box.getSize(new THREE.Vector3());
-      if (size.lengthSq() === 0) {
-        return;
-      }
-      const center = box.getCenter(new THREE.Vector3());
-      object.position.set(-center.x, -center.y, -center.z);
-      const maxDim = Math.max(size.x, size.y, size.z);
-      const fov = camera.fov * (Math.PI / 180);
-      let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-      cameraZ *= 1.6;
-      camera.position.set(0, size.y * 0.45, cameraZ);
-      camera.lookAt(0, 0.6, 0);
-    }
-
-    function applyColor(target, color) {
-      if (!target) return;
-      target.traverse((child) => {
-        if (child.isMesh && child.material) {
-          if (Array.isArray(child.material)) {
-            child.material.forEach((material) => {
-              if (material && material.color) {
-                material.color.set(color);
-              }
-            });
-          } else if (child.material.color) {
-            child.material.color.set(color);
-          }
-        }
-      });
-    }
-
-    function clearAvatarAttachments() {
-      avatarAttachments.forEach((attachment) => {
-        if (attachment && attachment.object) {
-          modelGroup.remove(attachment.object);
-          unregisterSkinnedRoot(attachment.object);
-        }
-      });
-      avatarAttachments.clear();
-    }
-
-    function hideAvatarAttachmentBySlot(slotId) {
-      if (!slotId) {
-        return false;
-      }
-      let changed = false;
-      avatarAttachments.forEach((attachment) => {
-        if (!attachment || attachment.slot !== slotId || attachment.visible === false) {
-          return;
-        }
-        if (attachment.object) {
-          modelGroup.remove(attachment.object);
-          unregisterSkinnedRoot(attachment.object);
-        }
-        attachment.visible = false;
-        changed = true;
-      });
-      return changed;
-    }
-
-    function showAvatarAttachmentBySlot(slotId) {
-      if (!slotId) {
-        return false;
-      }
-      let changed = false;
-      avatarAttachments.forEach((attachment) => {
-        if (!attachment || attachment.slot !== slotId || attachment.visible !== false) {
-          return;
-        }
-        if (attachment.object) {
-          modelGroup.add(attachment.object);
-          registerSkinnedRoot(attachment.object);
-        }
-        attachment.visible = true;
-        changed = true;
-      });
-      return changed;
-    }
-
-    function registerSlotSelection(slotId, details) {
-      if (!slotId || !details) {
-        return;
-      }
-      slotSelections.set(slotId, details);
-      hideAvatarAttachmentBySlot(slotId);
-    }
-
-    function clearSlotSelection(slotId, cardId) {
-      if (!slotId) {
-        return;
-      }
-      const active = slotSelections.get(slotId);
-      if (!active) {
-        return;
-      }
-      if (!cardId || active.cardId === cardId) {
-        slotSelections.delete(slotId);
-      }
-    }
-
-    function enforceSlotExclusivity(slotId, nextCardId) {
-      if (!slotId) {
-        return;
-      }
-      const active = slotSelections.get(slotId);
-      if (!active || active.cardId === nextCardId) {
-        return;
-      }
-      setCardState(active.card, false);
-      removeExtra(active.cardId);
-      slotSelections.delete(slotId);
-    }
-
-    function maybeRestoreDefaultSlot(slotId) {
-      if (!slotId) {
-        return;
-      }
-      if (slotSelections.has(slotId)) {
-        return;
-      }
-      if (showAvatarAttachmentBySlot(slotId)) {
-        if (activePoseName) {
-          reapplyActivePose();
-        } else {
-          resetAllSkinnedMeshesPose();
-        }
-        frame(modelGroup);
-      }
-    }
-
-    function setCardState(card, isSelected) {
-      card.classList.toggle('selected', isSelected);
-      card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-      const meta = card.querySelector('.card-meta');
-      if (meta) {
-        const icon = meta.querySelector('i');
-        const label = meta.querySelector('span');
-        const activeText = card.dataset.labelActive || meta.dataset.labelActive;
-        const inactiveText = card.dataset.labelInactive || meta.dataset.labelInactive;
-        const activeIcon = card.dataset.iconActive || meta.dataset.iconActive;
-        const inactiveIcon = card.dataset.iconInactive || meta.dataset.iconInactive;
-        if (label) {
-          const text = isSelected ? activeText : inactiveText;
-          if (text) {
-            label.textContent = text;
-          }
-        }
-        if (icon) {
-          const iconClass = isSelected ? activeIcon : inactiveIcon;
-          if (iconClass) {
-            icon.className = `bi ${iconClass}`;
-          }
-        }
-      }
-    }
-
-    async function loadAvatar(source) {
-      if (!source || (!source.url && !(source.zip && source.entry))) {
-        console.warn('Avatar source missing or incomplete, skipping load.');
-        return;
-      }
-      const loadToken = ++avatarLoadToken;
-      try {
-        const gltf = await loadGLTFAsset(source);
-        if (loadToken !== avatarLoadToken) {
-          return;
-        }
-        if (avatar) {
-          unregisterSkinnedRoot(avatar);
-          modelGroup.remove(avatar);
-        }
-        clearAvatarAttachments();
-        avatar = gltf.scene;
-        modelGroup.add(avatar);
-        registerSkinnedRoot(avatar);
-        tintTargets.clear();
-        tintTargets.add(avatar);
-        applyColor(avatar, currentColor);
-
-        for (const piece of heroBodyPieces) {
-          try {
-            const attachmentGltf = await loadGLTFAsset(piece.source);
-            if (loadToken !== avatarLoadToken) {
-              return;
-            }
-            const object = attachmentGltf.scene;
-            const attachmentData = {
-              object,
-              slot: piece.slot || deriveSlotFromSource(piece.source) || slugify(piece.key),
-              tint: !!piece.tint,
-              visible: true,
-            };
-            avatarAttachments.set(piece.key, attachmentData);
-            modelGroup.add(object);
-            registerSkinnedRoot(object);
-            if (attachmentData.tint) {
-              tintTargets.add(object);
-              applyColor(object, currentColor);
-            }
-            if (attachmentData.slot && slotSelections.has(attachmentData.slot)) {
-              hideAvatarAttachmentBySlot(attachmentData.slot);
-            }
-          } catch (pieceError) {
-            console.error(`Failed to load core body piece "${piece.key}"`, pieceError);
-          }
-        }
-
-        if (loadToken === avatarLoadToken) {
-          if (activePoseName) {
-            await reapplyActivePose();
-          } else {
-            resetAllSkinnedMeshesPose();
-          }
-          frame(modelGroup);
-        }
-      } catch (error) {
-        if (loadToken === avatarLoadToken) {
-          console.error('Failed to load avatar', error);
-        }
-      }
-    }
-
-    async function loadExtra(source, key, card) {
-      if (!source || (!source.url && !(source.zip && source.entry))) {
-        console.warn(`Skipping extra "${key}" because its source is undefined.`);
-        return false;
-      }
-      if (extras.has(key)) {
-        return true;
-      }
-      try {
-        const gltf = await loadGLTFAsset(source);
-        if (!card.classList.contains('selected')) {
-          return false;
-        }
-        const obj = gltf.scene;
-        extras.set(key, obj);
-        modelGroup.add(obj);
-        registerSkinnedRoot(obj);
-        if (activePoseName) {
-          await applyPoseByName(activePoseName);
-        }
-        frame(modelGroup);
-        return true;
-      } catch (error) {
-        console.error(`Failed to load asset "${key}"`, error);
-        return false;
-      }
-    }
-
-    function removeExtra(key) {
-      const obj = extras.get(key);
-      if (obj) {
-        modelGroup.remove(obj);
-        extras.delete(key);
-        unregisterSkinnedRoot(obj);
-        if (activePoseName) {
-          reapplyActivePose();
-        } else {
-          resetAllSkinnedMeshesPose();
-        }
-        frame(modelGroup);
-      }
-    }
-
-    const colorInput = document.getElementById('colorInput');
-    let currentColor = colorInput ? colorInput.value : '#9c7bff';
-
-    function initializeCardInteractions() {
-      const cards = document.querySelectorAll('#assetGrid .asset-card');
-      cards.forEach((card) => {
-        const cardId = card.dataset.id || card.dataset.entry || card.dataset.url;
-        const registry = cardId ? assetRegistry.get(cardId) : null;
-        const fallbackSource = {
-          url: card.dataset.url || undefined,
-          zip: card.dataset.zip || undefined,
-          entry: card.dataset.entry || undefined,
-        };
-        const resolvedSource = registry?.source || fallbackSource;
-        const assetSource = resolvedSource && (resolvedSource.url || (resolvedSource.zip && resolvedSource.entry))
-          ? resolvedSource
-          : null;
-        const type = registry?.type || card.dataset.type || 'extra';
-        const locked = registry?.locked ?? (card.dataset.locked === 'true');
-        const poseName = registry?.pose || card.dataset.pose || cardId;
-        let slotId = card.dataset.slot || resolveSlotId(registry) || deriveSlotFromSource(resolvedSource) || null;
-        if (slotId) {
-          card.dataset.slot = slotId;
-        }
-        const exclusive = registry?.exclusive === false || card.dataset.exclusive === 'false' ? false : true;
-
-        loadCardThumbnail(card);
-
-        if (type === 'attachment') {
-          setCardState(card, true);
-          card.setAttribute('aria-pressed', 'true');
-          return;
-        }
-
-        const initiallySelected = card.classList.contains('selected');
-        setCardState(card, initiallySelected);
-
-        if (type === 'avatar') {
-          if (!assetSource) {
-            console.warn(`No asset source registered for avatar card "${cardId}"`);
-            return;
-          }
-
-          const selectAvatar = () => {
-            if (activeAvatarId === cardId) {
-              return;
-            }
-            if (activeAvatarCard && activeAvatarCard !== card) {
-              setCardState(activeAvatarCard, false);
-            }
-            activeAvatarCard = card;
-            activeAvatarId = cardId;
-            if (!card.classList.contains('selected')) {
-              setCardState(card, true);
-            }
-            loadAvatar(assetSource);
-          };
-
-          if (!locked) {
-            card.addEventListener('click', selectAvatar);
-            card.addEventListener('keydown', (event) => {
-              if (event.key === ' ' || event.key === 'Enter') {
-                event.preventDefault();
-                selectAvatar();
-              }
-            });
-          }
-
-          if (initiallySelected || (!activeAvatarCard && locked)) {
-            selectAvatar();
-          }
-          return;
-        }
-
-        if (type === 'pose') {
-          const handlePoseToggle = async () => {
-            if (locked) {
-              return;
-            }
-            if (activePoseCard === card) {
-              setCardState(card, false);
-              activePoseCard = null;
-              clearActivePose();
-              frame(modelGroup);
-            } else {
-              if (activePoseCard) {
-                setCardState(activePoseCard, false);
-              }
-              activePoseCard = card;
-              activePoseName = poseName;
-              setCardState(card, true);
-              await applyPoseByName(poseName);
-              frame(modelGroup);
-            }
-          };
-
-          if (!locked) {
-            card.addEventListener('click', handlePoseToggle);
-            card.addEventListener('keydown', (event) => {
-              if (event.key === ' ' || event.key === 'Enter') {
-                event.preventDefault();
-                handlePoseToggle();
-              }
-            });
-          }
-
-          if (initiallySelected) {
-            activePoseCard = card;
-            activePoseName = poseName;
-            applyPoseByName(activePoseName).then(() => {
-              frame(modelGroup);
-            });
-          }
-          return;
-        }
-
-        const handleExtraToggle = async () => {
-          const currentlySelected = card.classList.contains('selected');
-
-          if (currentlySelected) {
-            setCardState(card, false);
-            removeExtra(cardId);
-            if (exclusive && slotId) {
-              clearSlotSelection(slotId, cardId);
-              maybeRestoreDefaultSlot(slotId);
-            }
-            return;
-          }
-
-          if (!assetSource) {
-            console.warn(`No asset source registered for card "${cardId}"`);
-            return;
-          }
-
-          if (exclusive && slotId) {
-            enforceSlotExclusivity(slotId, cardId);
-            hideAvatarAttachmentBySlot(slotId);
-          }
-
-          setCardState(card, true);
-          const loaded = await loadExtra(assetSource, cardId, card);
-          if (!loaded) {
-            setCardState(card, false);
-            if (exclusive && slotId) {
-              clearSlotSelection(slotId, cardId);
-              maybeRestoreDefaultSlot(slotId);
-            }
-            return;
-          }
-
-          if (exclusive && slotId) {
-            registerSlotSelection(slotId, { cardId, card, type: 'extra' });
-          }
-        };
-
-        if (!locked) {
-          card.addEventListener('click', handleExtraToggle);
-          card.addEventListener('keydown', (event) => {
-            if (event.key === ' ' || event.key === 'Enter') {
-              event.preventDefault();
-              handleExtraToggle();
-            }
-          });
-        }
-
-        if (initiallySelected && assetSource) {
-          if (exclusive && slotId) {
-            enforceSlotExclusivity(slotId, cardId);
-            hideAvatarAttachmentBySlot(slotId);
-          }
-          loadExtra(assetSource, cardId, card).then((loaded) => {
-            if (!loaded) {
-              setCardState(card, false);
-              if (exclusive && slotId) {
-                clearSlotSelection(slotId, cardId);
-                maybeRestoreDefaultSlot(slotId);
-              }
-              return;
-            }
-            if (exclusive && slotId) {
-              registerSlotSelection(slotId, { cardId, card, type: 'extra' });
-            }
-          });
-        }
-      });
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    if (colorInput) {
-      colorInput.addEventListener('input', (event) => {
-        currentColor = event.target.value;
-        tintTargets.forEach((target) => {
-          applyColor(target, currentColor);
+    document.querySelectorAll('.bodytype-pill').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.bodytype-pill').forEach((btn) => {
+          btn.classList.toggle('active', btn === button);
         });
       });
-    }
+    });
 
-    bootstrapAssetGrid();
+    document.querySelectorAll('.option-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.option-card').forEach((btn) => {
+          const isActive = btn === card;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      });
+    });
 
-    window.addEventListener('resize', resizeRenderer);
+    document.querySelectorAll('.outfit-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.outfit-card').forEach((btn) => {
+          const isActive = btn === card;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      });
+    });
+
+    document.querySelectorAll('.rail-swatch').forEach((swatch) => {
+      swatch.addEventListener('click', () => {
+        document.querySelectorAll('.rail-swatch').forEach((btn) => {
+          btn.classList.toggle('active', btn === swatch);
+        });
+        const color = getComputedStyle(swatch).getPropertyValue('--swatch-color');
+        document.documentElement.style.setProperty('--skin-tone', color.trim());
+      });
+    });
+
+    document.querySelectorAll('.appearance-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.appearance-tab').forEach((btn) => {
+          btn.classList.toggle('active', btn === tab);
+        });
+      });
+    });
   </script>
 </body>
 </html>
