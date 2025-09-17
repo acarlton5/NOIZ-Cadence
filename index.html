@@ -57,7 +57,7 @@
     }
 
     .main-sidebar {
-      width: 96px;
+      width: 124px;
       border-radius: 48px;
       background: var(--surface-glass);
       border: 1px solid rgba(150, 136, 255, 0.28);
@@ -66,8 +66,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2.6rem 1.25rem 2.2rem;
-      gap: 2.4rem;
+      padding: 2.6rem 1.35rem 2.2rem;
+      gap: 2rem;
     }
 
     .sidebar-brand {
@@ -83,30 +83,37 @@
       letter-spacing: -0.05em;
     }
 
-    .nav-stack,
-    .sidebar-footer {
+    .sidebar-heading {
+      width: 100%;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.62);
+      text-transform: uppercase;
+    }
+
+    .nav-stack {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.15rem;
+      gap: 1.05rem;
       width: 100%;
     }
 
-    .sidebar-footer {
-      margin-top: auto;
-      gap: 1rem;
-    }
-
     .nav-button {
-      width: 58px;
-      height: 58px;
-      border-radius: 22px;
+      width: 74px;
+      height: 74px;
+      border-radius: 24px;
       border: 1px solid transparent;
       background: rgba(255, 255, 255, 0.12);
       color: rgba(255, 255, 255, 0.72);
       font-size: 1.35rem;
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.35rem;
       transition: all 0.25s ease;
     }
 
@@ -121,6 +128,18 @@
       border-color: rgba(255, 255, 255, 0.4);
       color: #ffffff;
       box-shadow: 0 20px 44px rgba(60, 28, 168, 0.52);
+    }
+
+    .nav-button i {
+      font-size: 1.4rem;
+    }
+
+    .nav-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      line-height: 1;
     }
 
     .workspace {
@@ -798,9 +817,25 @@
         gap: 1.8rem;
       }
 
-      .nav-stack,
-      .sidebar-footer {
+      .sidebar-heading {
+        display: none;
+      }
+
+      .nav-stack {
         flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .nav-button {
+        width: 68px;
+        height: 68px;
+        border-radius: 22px;
+      }
+
+      .nav-label {
+        font-size: 0.6rem;
       }
 
       .workspace {
@@ -906,28 +941,37 @@
 </head>
 <body>
   <div class="app-shell">
-    <nav class="main-sidebar" aria-label="Primary">
+    <nav class="main-sidebar" aria-label="Core body slots">
       <div class="sidebar-brand">N</div>
-      <div class="nav-stack">
-        <button type="button" class="nav-button active" aria-label="Appearance">
-          <i class="bi bi-person-fill"></i>
+      <p class="sidebar-heading mb-0">⚙️ Core Body Slots</p>
+      <div class="nav-stack" role="group" aria-label="Core body slot categories">
+        <button type="button" class="nav-button active" data-slot="body_base" aria-pressed="true">
+          <i class="bi bi-person-bounding-box"></i>
+          <span class="nav-label">Body Base</span>
         </button>
-        <button type="button" class="nav-button" aria-label="Wardrobe">
-          <i class="bi bi-hanger"></i>
+        <button type="button" class="nav-button" data-slot="skin" aria-pressed="false">
+          <i class="bi bi-droplet-half"></i>
+          <span class="nav-label">Skin</span>
         </button>
-        <button type="button" class="nav-button" aria-label="Accessories">
-          <i class="bi bi-sunglasses"></i>
+        <button type="button" class="nav-button" data-slot="shirt" aria-pressed="false">
+          <i class="bi bi-collection"></i>
+          <span class="nav-label">Shirt</span>
         </button>
-        <button type="button" class="nav-button" aria-label="Emotes">
-          <i class="bi bi-lightning-charge"></i>
+        <button type="button" class="nav-button" data-slot="jacket" aria-pressed="false">
+          <i class="bi bi-layers"></i>
+          <span class="nav-label">Jacket</span>
         </button>
-      </div>
-      <div class="sidebar-footer">
-        <button type="button" class="nav-button" aria-label="Settings">
-          <i class="bi bi-gear"></i>
+        <button type="button" class="nav-button" data-slot="pants" aria-pressed="false">
+          <i class="bi bi-grid-1x2"></i>
+          <span class="nav-label">Pants</span>
         </button>
-        <button type="button" class="nav-button" aria-label="Help">
-          <i class="bi bi-question-circle"></i>
+        <button type="button" class="nav-button" data-slot="shoes" aria-pressed="false">
+          <i class="bi bi-bag"></i>
+          <span class="nav-label">Shoes</span>
+        </button>
+        <button type="button" class="nav-button" data-slot="gloves" aria-pressed="false">
+          <i class="bi bi-hand-index-thumb"></i>
+          <span class="nav-label">Gloves</span>
         </button>
       </div>
     </nav>
@@ -1070,6 +1114,18 @@
     </main>
   </div>
   <script>
+    const slotButtons = document.querySelectorAll('.nav-stack .nav-button');
+    slotButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        slotButtons.forEach((item) => {
+          item.classList.remove('active');
+          item.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+      });
+    });
+
     const genderButtons = document.querySelectorAll('.gender-toggle .toggle-pill');
     genderButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
