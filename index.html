@@ -248,8 +248,14 @@
 
     .panel-heading {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 1.2rem;
+    }
+
+    .heading-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
     }
 
     .heading-icon {
@@ -280,7 +286,7 @@
     }
 
     .heading-subtext {
-      margin: -1.1rem 0 0;
+      margin: 0.4rem 0 0;
       color: var(--ink-500);
       font-size: 0.95rem;
       max-width: 26rem;
@@ -940,12 +946,12 @@
                 <span class="heading-icon">
                   <i class="bi bi-person-circle"></i>
                 </span>
-                <div>
+                <div class="heading-copy">
                   <p class="heading-eyebrow mb-0">Customize</p>
                   <h1 class="heading-title">Head Type</h1>
+                  <p class="heading-subtext">Select a new head type to update the look of your avatar before choosing outfits.</p>
                 </div>
               </div>
-              <p class="heading-subtext">Select a new head type to update the look of your avatar before choosing outfits.</p>
             </div>
             <div class="option-grid" role="list">
               <button type="button" class="option-card active" role="listitem">
