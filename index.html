@@ -264,13 +264,14 @@
 
     .color-rail {
       position: relative;
-      align-self: center;
-      margin-left: -2.8rem;
-      width: 148px;
-      border-radius: 40px;
+      align-self: stretch;
+      margin: 1.4rem 0 1.4rem -2.6rem;
+      width: 160px;
+      border-radius: 0 42px 42px 0;
       background: linear-gradient(165deg, rgba(30, 12, 90, 0.98) 0%, rgba(54, 20, 128, 0.96) 100%);
       border: 1px solid rgba(176, 160, 255, 0.42);
-      padding: 1.85rem 1.35rem 2.2rem;
+      border-left: none;
+      padding: 2.1rem 1.45rem 2.4rem;
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
@@ -489,6 +490,7 @@
         width: auto;
         justify-content: center;
         border-radius: 32px;
+        border-left: 1px solid rgba(176, 160, 255, 0.42);
         gap: 1.25rem;
         padding: 1.3rem 1.6rem 1.5rem;
         flex-wrap: wrap;
