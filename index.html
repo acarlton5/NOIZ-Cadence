@@ -3,39 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avatar Outfit Editor</title>
+  <title>Noiz Avatar Wardrobe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpe+jISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
+    :root {
+      --bg-gradient: radial-gradient(125% 145% at 12% 8%, #7c4dff 0%, #431aa6 40%, #07001a 100%);
+      --glass-surface: rgba(18, 10, 60, 0.74);
+      --glass-border: rgba(155, 140, 255, 0.32);
+      --panel-surface: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(236, 230, 255, 0.96) 100%);
+      --panel-border: rgba(141, 129, 255, 0.22);
+      --ink-900: #1c1746;
+      --ink-700: #4d4680;
+      --ink-500: #7a75a6;
+      --accent-strong: #6d4bff;
+      --accent-soft: rgba(126, 99, 255, 0.18);
+      --accent-pill: linear-gradient(135deg, #8b6cff 0%, #6342ff 100%);
+      color-scheme: only light;
     }
 
-    :root {
-      --gradient-bg: radial-gradient(125% 145% at 10% 10%, #7b4dff 0%, #3b1696 40%, #060018 100%);
-      --panel-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(238, 234, 255, 0.94) 100%);
-      --panel-border: rgba(141, 129, 255, 0.28);
-      --ink-900: #1e1a4d;
-      --ink-700: #4d4a82;
-      --ink-500: #807cab;
-      --accent: #7655ff;
-      --accent-strong: #5d3fff;
-      --accent-soft: rgba(121, 93, 255, 0.16);
-      --surface-glass: rgba(16, 10, 52, 0.7);
-      --text-light: rgba(255, 255, 255, 0.78);
-      color-scheme: only light;
+    * {
+      box-sizing: border-box;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
       font-family: 'Manrope', sans-serif;
-      background: var(--gradient-bg);
+      background: var(--bg-gradient);
       color: #ffffff;
     }
 
@@ -44,1582 +42,719 @@
       font-family: inherit;
     }
 
-    button {
-      cursor: pointer;
-    }
-
     .app-shell {
       min-height: 100vh;
       display: flex;
+      gap: 3rem;
+      padding: 3.6rem 4rem;
       align-items: stretch;
-      gap: 2.8rem;
-      padding: 3.2rem 3.8rem;
     }
 
     .main-sidebar {
-      width: 124px;
-      border-radius: 48px;
-      background: var(--surface-glass);
-      border: 1px solid rgba(150, 136, 255, 0.28);
-      box-shadow: 0 30px 70px rgba(8, 0, 30, 0.55);
-      backdrop-filter: blur(28px);
+      width: 120px;
+      border-radius: 44px;
+      background: var(--glass-surface);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(32px);
+      box-shadow: 0 32px 80px rgba(6, 0, 28, 0.55);
+      padding: 2.6rem 1.4rem 2.4rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2.6rem 1.35rem 2.2rem;
-      gap: 2rem;
+      justify-content: space-between;
     }
 
     .sidebar-brand {
-      width: 58px;
-      height: 58px;
-      border-radius: 20px;
+      width: 62px;
+      height: 62px;
+      border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.28);
-      background: linear-gradient(150deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.05) 100%);
+      background: linear-gradient(140deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 100%);
       display: grid;
       place-items: center;
       font-weight: 800;
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       letter-spacing: -0.05em;
     }
 
-    .sidebar-heading {
-      width: 100%;
-      text-align: center;
-      font-size: 0.68rem;
-      letter-spacing: 0.32em;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.62);
-      text-transform: uppercase;
-    }
-
-    .nav-stack {
+    .sidebar-nav,
+    .sidebar-utility {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.05rem;
-      width: 100%;
     }
 
-    .nav-button {
+    .sidebar-button {
       width: 74px;
       height: 74px;
       border-radius: 24px;
       border: 1px solid transparent;
       background: rgba(255, 255, 255, 0.12);
-      color: rgba(255, 255, 255, 0.72);
-      font-size: 1.35rem;
+      color: rgba(255, 255, 255, 0.75);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      gap: 0.35rem;
+      justify-content: center;
+      font-size: 1.4rem;
       transition: all 0.25s ease;
     }
 
-    .nav-button:hover {
-      border-color: rgba(255, 255, 255, 0.38);
+    .sidebar-button span {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 6px 16px rgba(10, 0, 32, 0.4));
+    }
+
+    .sidebar-button:hover,
+    .sidebar-button:focus-visible {
       color: #ffffff;
-      box-shadow: 0 18px 32px rgba(10, 0, 46, 0.36);
+      border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 18px 32px rgba(12, 0, 40, 0.35);
+      outline: none;
     }
 
-    .nav-button.active {
-      background: linear-gradient(150deg, #7a5cff 0%, #5435ff 100%);
-      border-color: rgba(255, 255, 255, 0.4);
+    .sidebar-button.active {
+      background: linear-gradient(135deg, #7d5cff 0%, #5436ff 100%);
+      border-color: rgba(255, 255, 255, 0.5);
       color: #ffffff;
-      box-shadow: 0 20px 44px rgba(60, 28, 168, 0.52);
-    }
-
-    .nav-button i {
-      font-size: 1.4rem;
-    }
-
-    .tooltip {
-      --bs-tooltip-bg: transparent;
-      --bs-tooltip-color: #ffffff;
-      --bs-tooltip-padding-x: 0.75rem;
-      --bs-tooltip-padding-y: 0.5rem;
-      --bs-tooltip-border-radius: 0.75rem;
-      --bs-tooltip-opacity: 1;
-    }
-
-    .tooltip.show {
-      opacity: 1;
-    }
-
-    .tooltip .tooltip-inner {
-      background: linear-gradient(150deg, #7a5cff 0%, #5435ff 100%);
-      box-shadow: 0 12px 28px rgba(6, 0, 32, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.32);
+      box-shadow: 0 20px 44px rgba(62, 26, 168, 0.52);
     }
 
     .workspace {
       flex: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 760px) minmax(0, 460px);
-      gap: 2.8rem;
-      align-items: stretch;
-    }
-
-    .panel-column {
       display: flex;
+      gap: 3rem;
       align-items: stretch;
     }
 
-    .panel-stack {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 112px;
-      align-items: stretch;
-      width: 100%;
+    .panel-wrapper {
       position: relative;
-      gap: 0;
+      flex: 1 1 0;
+      max-width: 760px;
+      display: flex;
     }
 
-    .panel-card {
-      background: var(--panel-gradient);
+    .body-panel {
+      background: var(--panel-surface);
       color: var(--ink-900);
-      border-radius: 48px 0 0 48px;
+      border-radius: 48px;
       border: 1px solid var(--panel-border);
-      border-right: none;
-      box-shadow: 0 48px 120px rgba(24, 12, 70, 0.32);
-      padding: 2.8rem 3rem;
+      box-shadow: 0 48px 120px rgba(24, 12, 70, 0.28);
+      padding: 3.2rem 3.25rem;
       display: flex;
       flex-direction: column;
-      gap: 2.35rem;
+      gap: 2.6rem;
       width: 100%;
-      flex: 1;
-      min-height: 0;
-      height: 705px;
     }
 
-    .panel-scroll {
-      flex: 1;
-      min-height: 0;
-      overflow-y: auto;
-      padding-right: 0.35rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2.35rem;
+    .panel-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: #8078d9;
+      font-weight: 700;
     }
 
-    .panel-scroll::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .panel-scroll::-webkit-scrollbar-track {
-      background: rgba(138, 122, 255, 0.12);
-      border-radius: 999px;
-    }
-
-    .panel-scroll::-webkit-scrollbar-thumb {
-      background: rgba(118, 93, 255, 0.6);
-      border-radius: 999px;
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1.5rem;
-      flex-wrap: wrap;
+    .panel-title {
+      font-size: 2.9rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
       margin-bottom: 0.6rem;
     }
 
-    .panel-action {
+    .panel-lede,
+    .panel-description {
+      margin: 0;
+      color: var(--ink-700);
+      font-size: 1.02rem;
+      max-width: 32rem;
+    }
+
+    .panel-description {
+      color: var(--ink-500);
+    }
+
+    .pill-group {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      border-radius: 999px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      padding: 0.6rem 1.45rem;
-      border: 1px solid transparent;
-      transition: all 0.25s ease;
-    }
-
-    .panel-action i {
-      font-size: 1rem;
-    }
-
-    .btn-save {
-      background: linear-gradient(140deg, #8f76ff 0%, #5c3fff 100%);
-      border-color: rgba(255, 255, 255, 0.55);
-      color: #ffffff;
-      box-shadow: 0 18px 40px rgba(84, 58, 210, 0.35);
-    }
-
-    .btn-save:hover {
-      box-shadow: 0 24px 48px rgba(84, 58, 210, 0.45);
-      transform: translateY(-2px);
-    }
-
-    .btn-discard {
-      background: rgba(255, 119, 146, 0.18);
-      border-color: rgba(255, 163, 187, 0.52);
-      color: #ff4d78;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    }
-
-    .btn-discard:hover {
-      background: rgba(255, 119, 146, 0.3);
-      color: #ff225d;
-      transform: translateY(-2px);
-    }
-
-    .panel-action:focus-visible {
-      outline: 2px solid rgba(255, 255, 255, 0.85);
-      outline-offset: 3px;
-    }
-
-    .gender-toggle {
-      display: inline-flex;
-      gap: 0.4rem;
+      gap: 0.55rem;
       padding: 0.45rem;
       border-radius: 999px;
-      background: rgba(136, 124, 255, 0.16);
-      border: 1px solid rgba(152, 138, 255, 0.32);
+      background: rgba(140, 126, 255, 0.16);
+      border: 1px solid rgba(150, 136, 255, 0.32);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     }
 
-    .toggle-pill {
+    .pill-button {
       border: none;
       border-radius: 999px;
+      padding: 0.65rem 1.55rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
       background: transparent;
       color: var(--ink-700);
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      padding: 0.6rem 1.55rem;
       transition: all 0.25s ease;
     }
 
-    .toggle-pill.active {
-      background: linear-gradient(140deg, #8f76ff 0%, #5d3eff 100%);
+    .pill-button.active {
+      background: var(--accent-pill);
       color: #ffffff;
-      box-shadow: 0 14px 26px rgba(82, 58, 200, 0.32);
-    }
-
-    .panel-heading {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.2rem;
-    }
-
-    .heading-copy {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .heading-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 20px;
-      background: rgba(124, 109, 255, 0.18);
-      color: #6a57d3;
-      display: grid;
-      place-items: center;
-      font-size: 1.6rem;
-    }
-
-    .heading-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.34em;
-      font-weight: 700;
-      color: #746fd6;
-      text-transform: uppercase;
-      margin-bottom: 0.35rem;
-    }
-
-    .heading-title {
-      font-size: 2.68rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      margin: 0;
-    }
-
-    .heading-subtext {
-      margin: 0.4rem 0 0;
-      color: var(--ink-500);
-      font-size: 0.95rem;
-      max-width: 26rem;
-    }
-
-    .panel-intro {
-      margin: 0;
-      font-size: 1.02rem;
-      color: var(--ink-700);
-      max-width: 28rem;
+      box-shadow: 0 16px 34px rgba(90, 58, 210, 0.32);
     }
 
     .subcategory-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
     }
 
     .subcategory-card {
-      border: 1.5px solid rgba(132, 124, 255, 0.2);
-      border-radius: 34px;
-      background: rgba(255, 255, 255, 0.92);
-      box-shadow: 0 20px 48px rgba(36, 18, 110, 0.14);
-      padding: 1.6rem 1.75rem;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1.5px solid rgba(132, 124, 255, 0.26);
+      box-shadow: 0 24px 60px rgba(32, 20, 90, 0.16);
+      padding: 1.75rem 2rem;
       display: flex;
       flex-direction: column;
       gap: 0.9rem;
-      text-align: left;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       color: inherit;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+      min-height: 180px;
     }
 
     .subcategory-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 26px 60px rgba(36, 18, 110, 0.22);
+      transform: translateY(-6px);
       border-color: rgba(118, 93, 255, 0.6);
+      box-shadow: 0 30px 68px rgba(36, 18, 110, 0.25);
     }
 
-    .subcategory-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
+    .subcategory-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #a39bdc;
+      font-weight: 700;
     }
 
-    .subcategory-name {
-      font-size: 1.28rem;
+    .subcategory-title {
+      font-size: 1.32rem;
       font-weight: 700;
       margin: 0;
     }
 
-    .subcategory-slots {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      justify-content: flex-end;
+    .subcategory-copy {
+      margin: 0;
+      color: var(--ink-700);
+      font-size: 0.95rem;
+      line-height: 1.45;
     }
 
-    .slot-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.25rem 0.8rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
+    .subcategory-meta {
+      margin: 0;
+      font-size: 0.82rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      background: rgba(121, 93, 255, 0.14);
-      border: 1px solid rgba(121, 93, 255, 0.28);
-      color: var(--ink-700);
-      font-weight: 700;
+      color: #9c95dd;
     }
 
-    .subcategory-description {
-      margin: 0;
-      font-size: 0.98rem;
-      color: var(--ink-700);
-    }
-
-    .subcategory-examples {
-      margin: 0;
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
-      color: var(--ink-500);
+    .slot-rail {
+      position: absolute;
+      inset: 50% auto auto 100%;
+      transform: translate(-36px, -50%);
+      width: 140px;
+      border-radius: 36px;
+      background: linear-gradient(160deg, rgba(26, 12, 88, 0.95) 0%, rgba(48, 22, 134, 0.95) 100%);
+      border: 1px solid rgba(163, 148, 255, 0.38);
+      padding: 1.8rem 1.2rem;
       display: flex;
-      gap: 0.4rem;
-      align-items: baseline;
+      flex-direction: column;
+      gap: 0.9rem;
+      color: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 32px 70px rgba(12, 0, 44, 0.55);
     }
 
-    .subcategory-examples span {
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 0.74rem;
-      color: var(--ink-700);
-    }
-
-    .slot-matrix {
-      margin-top: 2rem;
-      border-radius: 30px;
-      border: 1px solid rgba(132, 124, 255, 0.3);
-      background: rgba(255, 255, 255, 0.88);
-      box-shadow: 0 16px 36px rgba(32, 18, 90, 0.16);
-      overflow: hidden;
-    }
-
-    .slot-matrix-heading {
-      padding: 1.15rem 1.6rem;
-      font-size: 0.82rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--ink-700);
-      background: rgba(121, 93, 255, 0.08);
-      border-bottom: 1px solid rgba(132, 124, 255, 0.24);
-    }
-
-    .slot-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.92rem;
-    }
-
-    .slot-table th,
-    .slot-table td {
-      padding: 0.9rem 1.6rem;
-      border-bottom: 1px solid rgba(132, 124, 255, 0.16);
-      text-align: left;
-    }
-
-    .slot-table th {
+    .slot-rail h3 {
       font-size: 0.78rem;
-      letter-spacing: 0.26em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--ink-700);
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0 0 0.4rem;
     }
 
-    .slot-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .panel-footer,
-    .footer-label,
-    .bodytype-toggle,
-    .bodytype-pill {
-      display: none;
+    .slot-chip {
+      border-radius: 999px;
+      border: 1px solid rgba(208, 199, 255, 0.45);
+      padding: 0.5rem 0.9rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
+      color: #f5f3ff;
+      font-weight: 600;
     }
 
     .viewer-column {
+      width: 420px;
       display: flex;
-      justify-content: center;
-      align-items: stretch;
     }
 
-    .viewer-stage {
+    .viewer-card {
       position: relative;
-      width: 100%;
-      max-width: 620px;
-      border-radius: 56px;
-      padding: 3.2rem 3.4rem 6rem;
-      background: radial-gradient(140% 140% at 16% 12%, rgba(139, 105, 255, 0.92) 0%, rgba(82, 48, 200, 0.9) 38%, rgba(16, 8, 60, 0.96) 100%);
-      border: 1px solid rgba(148, 134, 255, 0.42);
-      box-shadow: 0 60px 160px rgba(8, 0, 46, 0.74), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      flex: 1;
+      border-radius: 44px;
+      background: linear-gradient(160deg, rgba(72, 45, 188, 0.92) 0%, rgba(34, 12, 92, 0.94) 100%);
+      border: 1px solid rgba(169, 149, 255, 0.3);
+      box-shadow: 0 48px 120px rgba(14, 0, 60, 0.55);
+      padding: 2.6rem 2.8rem 2.4rem;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      gap: 2.2rem;
       overflow: hidden;
-      min-height: 640px;
     }
 
-    .viewer-stage::before,
-    .viewer-stage::after {
+    .viewer-card::before {
       content: '';
       position: absolute;
+      inset: -20% 10% 35% 10%;
       border-radius: 50%;
-      filter: blur(140px);
-      opacity: 0.65;
-      pointer-events: none;
+      background: radial-gradient(60% 60% at 50% 30%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
+      filter: blur(0.5px);
+      opacity: 0.6;
     }
 
-    .viewer-stage::before {
-      width: 60%;
-      height: 60%;
-      top: -22%;
-      left: -18%;
-      background: rgba(204, 184, 255, 0.9);
-    }
-
-    .viewer-stage::after {
-      width: 64%;
-      height: 64%;
-      bottom: -22%;
-      right: -16%;
-      background: rgba(80, 42, 190, 0.78);
-    }
-
-    .stage-header {
-      position: absolute;
-      top: 2.1rem;
-      left: 2.4rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.5rem 1.1rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      font-size: 0.68rem;
-      letter-spacing: 0.32em;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-light);
+    .viewer-top {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      position: relative;
       z-index: 2;
     }
 
-    .stage-header i {
-      font-size: 1rem;
-    }
-
-    .stage-tagline {
-      margin: 5.2rem 2.6rem 0;
-      max-width: 22rem;
-      font-size: 0.96rem;
-      color: rgba(255, 255, 255, 0.78);
-      letter-spacing: 0.02em;
-    }
-
-    .stage-actions {
-      position: absolute;
-      top: 2.1rem;
-      right: 2.4rem;
-      display: flex;
-      gap: 0.75rem;
-      z-index: 2;
-    }
-
-    .stage-action {
-      width: 48px;
-      height: 48px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      background: rgba(255, 255, 255, 0.16);
-      color: #ffffff;
-      display: grid;
-      place-items: center;
-      font-size: 1.2rem;
-      transition: transform 0.25s ease, background 0.25s ease;
-    }
-
-    .stage-action:hover {
-      background: rgba(255, 255, 255, 0.24);
-      transform: translateY(-2px);
-    }
-
-    .avatar-spotlight {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.8rem;
-    }
-
-    .avatar-base {
-      width: 260px;
-      height: 34px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(140, 238, 255, 0.6) 0%, rgba(32, 122, 255, 0) 72%);
-      filter: blur(3px);
-      position: relative;
-    }
-
-    .avatar-base::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: radial-gradient(circle, rgba(26, 32, 96, 0.55) 0%, rgba(6, 0, 28, 0) 70%);
-      filter: blur(18px);
-    }
-
-    .avatar-body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.9rem;
-    }
-
-    .avatar-head {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      background: linear-gradient(140deg, #f3d7c0 0%, #e5a882 100%);
-      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.35);
-      position: relative;
-    }
-
-    .avatar-head::after {
-      content: '';
-      position: absolute;
-      top: -6px;
-      left: 12px;
-      width: 72px;
-      height: 44px;
-      border-radius: 40px 40px 18px 18px;
-      background: linear-gradient(140deg, #c99a5c 0%, #8a5a29 100%);
-    }
-
-    .avatar-face {
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 58px;
-      height: 34px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.85);
+    .viewer-badges {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 0.55rem;
+      gap: 1rem;
     }
 
-    .avatar-eye {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #3a2a1a;
+    .badge-stack {
+      display: inline-flex;
+      gap: 0.55rem;
+      align-items: center;
+      background: rgba(36, 18, 104, 0.55);
+      border: 1px solid rgba(188, 176, 255, 0.4);
+      border-radius: 999px;
+      padding: 0.45rem 0.55rem;
     }
 
-    .avatar-torso {
-      width: 206px;
-      height: 200px;
-      border-radius: 120px 120px 48px 48px;
-      background: linear-gradient(150deg, #f4f4f6 0%, #bcdcff 55%, #4fa3ff 100%);
+    .badge-pill {
+      border: none;
+      border-radius: 999px;
+      padding: 0.55rem 1.35rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 700;
+      transition: all 0.25s ease;
+    }
+
+    .badge-pill.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .viewer-label {
+      margin: 0;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 700;
+    }
+
+    .avatar-stage {
       position: relative;
-      box-shadow: 0 24px 40px rgba(0, 0, 0, 0.25);
-    }
-
-    .avatar-torso::before {
-      content: '';
-      position: absolute;
-      inset: 26px 38px;
-      border-radius: 70px;
-      background: linear-gradient(150deg, rgba(255, 255, 255, 0.9) 0%, rgba(208, 228, 255, 0.8) 100%);
-      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.45);
-    }
-
-    .avatar-torso::after {
-      content: '';
-      position: absolute;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 52px;
-      border-radius: 28px;
-      background: linear-gradient(150deg, #ffe08f 0%, #ff9c45 100%);
-      box-shadow: 0 18px 26px rgba(0, 0, 0, 0.25);
-    }
-
-    .avatar-belt {
-      position: absolute;
-      bottom: 72px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 176px;
-      height: 32px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(52, 42, 96, 0.85) 0%, rgba(22, 16, 58, 0.9) 100%);
-      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
-    }
-
-    .avatar-legs {
+      z-index: 2;
       display: flex;
-      gap: 24px;
+      justify-content: center;
+      align-items: center;
+      padding: 1.2rem 0;
+    }
+
+    .avatar-figure {
       position: relative;
-      margin-top: 18px;
+      width: 220px;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
     }
 
-    .avatar-leg {
-      width: 78px;
-      height: 150px;
-      border-radius: 50px;
-      background: linear-gradient(180deg, #34b8ff 0%, #0d63ac 100%);
-      box-shadow: 0 20px 32px rgba(0, 0, 0, 0.28);
-      position: relative;
+    .avatar-figure .head {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffdf9f 0%, #f2b36d 100%);
+      border: 6px solid rgba(255, 255, 255, 0.6);
     }
 
-    .avatar-leg.right {
-      background: linear-gradient(180deg, #6bff7b 0%, #249c2f 100%);
+    .avatar-figure .torso {
+      width: 150px;
+      height: 110px;
+      border-radius: 48px;
+      background: linear-gradient(135deg, #6fd6ff 0%, #428eff 100%);
+      border: 6px solid rgba(255, 255, 255, 0.45);
     }
 
-    .avatar-leg::after {
-      content: '';
-      position: absolute;
-      bottom: -18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 86px;
-      height: 30px;
-      border-radius: 18px 18px 14px 14px;
-      background: linear-gradient(150deg, #ff726a 0%, #f94242 100%);
-      box-shadow: 0 16px 22px rgba(0, 0, 0, 0.25);
+    .avatar-figure .belt {
+      width: 100px;
+      height: 26px;
+      border-radius: 14px;
+      background: rgba(18, 6, 88, 0.72);
+    }
+
+    .avatar-figure .legs {
+      width: 150px;
+      height: 80px;
+      border-radius: 44px;
+      background: linear-gradient(135deg, #8a6cff 0%, #513bff 100%);
+      border: 6px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .avatar-figure .feet {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    .avatar-figure .feet span {
+      width: 60px;
+      height: 26px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #22214a 0%, #08021c 100%);
+      border: 4px solid rgba(255, 255, 255, 0.2);
     }
 
     .tone-rail {
       position: relative;
+      z-index: 2;
+      border-radius: 28px;
+      background: rgba(24, 12, 92, 0.6);
+      border: 1px solid rgba(194, 184, 255, 0.35);
+      padding: 0.95rem 1.1rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 2.4rem 1.25rem;
-      width: 132px;
-      border-radius: 0 48px 48px 0;
-      background: linear-gradient(195deg, rgba(18, 10, 74, 0.95) 0%, rgba(9, 4, 42, 0.98) 100%);
-      border: 1px solid rgba(154, 142, 255, 0.32);
-      border-left: none;
-      box-shadow: 0 28px 68px rgba(6, 0, 30, 0.5);
-      backdrop-filter: blur(22px);
-      align-self: stretch;
-      height: 100%;
-      min-height: 640px;
-      margin-left: -1px;
-      z-index: 1;
-    }
-
-    .tone-rail::before {
-      content: '';
-      position: absolute;
-      left: -14px;
-      top: 32px;
-      bottom: 32px;
-      width: 22px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, rgba(148, 136, 255, 0.32) 0%, rgba(86, 64, 200, 0.32) 100%);
-      opacity: 0.75;
-      filter: blur(12px);
-      pointer-events: none;
-    }
-
-    .tone-rail-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.34em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.78);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.38rem 1.1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
-    }
-
-    .slot-chip-list {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
       gap: 0.75rem;
-      width: 100%;
     }
 
-    .slot-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.55rem 0.6rem;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.26);
-      color: rgba(255, 255, 255, 0.88);
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
-      transition: background 0.25s ease, transform 0.25s ease;
-    }
-
-    .slot-chip:hover {
-      background: rgba(255, 255, 255, 0.22);
-      transform: translateY(-2px);
-    }
-
-    .rail-footnote {
+    .tone-rail h4 {
       margin: 0;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.58);
-      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.55);
     }
 
-    .stage-footer {
-      position: absolute;
-      left: 2.6rem;
-      right: 2.6rem;
-      bottom: 2.6rem;
+    .tone-swatches {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.55rem;
+    }
+
+    .tone-swatch {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tone-swatch:hover {
+      transform: translateY(-4px);
+    }
+
+    .tone-swatch.active {
+      border-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    .viewer-footer {
       display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 0.85rem 1.2rem;
-      border-radius: 999px;
-      background: rgba(6, 0, 34, 0.6);
-      border: 1px solid rgba(182, 172, 255, 0.35);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 18px 40px rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(16px);
+      justify-content: center;
+      gap: 1.2rem;
+      position: relative;
       z-index: 2;
     }
 
-    .stage-footer .panel-action {
-      flex: 1;
-      justify-content: center;
+    .viewer-footer .btn {
+      border-radius: 999px;
+      padding: 0.8rem 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       font-size: 0.78rem;
-      padding: 0.65rem 1.4rem;
+      border: 1px solid transparent;
     }
 
-    @media (max-width: 1439.98px) {
-      .app-shell {
-        padding: 2.8rem 2.6rem;
-        gap: 2.4rem;
-      }
-
-      .workspace {
-        grid-template-columns: minmax(0, 700px) minmax(0, 420px);
-        gap: 2.4rem;
-      }
-
-      .panel-card {
-        padding: 2.4rem 2.5rem;
-        border-radius: 44px 0 0 44px;
-      }
-
-      .viewer-stage {
-        padding: 3rem 3rem 5.6rem;
-        border-radius: 52px;
-      }
+    .btn-save {
+      background: linear-gradient(135deg, #8f76ff 0%, #5b3fff 100%);
+      border-color: rgba(255, 255, 255, 0.55);
+      box-shadow: 0 18px 42px rgba(64, 38, 180, 0.35);
+      color: #ffffff;
     }
 
-    @media (max-width: 1199.98px) {
+    .btn-save:hover {
+      background: linear-gradient(135deg, #9c84ff 0%, #6b4cff 100%);
+      box-shadow: 0 24px 54px rgba(64, 38, 180, 0.45);
+    }
+
+    .btn-discard {
+      background: rgba(255, 138, 171, 0.22);
+      border-color: rgba(255, 184, 205, 0.55);
+      color: #ff6c9a;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    .btn-discard:hover {
+      background: rgba(255, 138, 171, 0.3);
+      color: #ff4d7f;
+    }
+
+    @media (max-width: 1360px) {
       .app-shell {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .main-sidebar {
-        flex-direction: row;
-        width: auto;
-        border-radius: 36px;
-        padding: 1.8rem 2.2rem;
-        justify-content: space-between;
-        gap: 1.8rem;
-      }
-
-      .sidebar-heading {
-        display: none;
-      }
-
-      .nav-stack {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-      }
-
-      .nav-button {
-        width: 68px;
-        height: 68px;
-        border-radius: 22px;
-      }
-
-      .workspace {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
+        padding: 2.6rem;
         gap: 2.2rem;
       }
 
-      .panel-stack {
-        display: flex;
+      .workspace {
         flex-direction: column;
-        align-items: stretch;
-        gap: 1.6rem;
       }
 
-      .panel-card,
-      .viewer-stage {
-        min-height: auto;
+      .panel-wrapper {
+        max-width: none;
       }
 
-      .panel-card {
-        height: auto;
-        max-height: none;
-        border-radius: 44px;
-        border-right: 1px solid var(--panel-border);
-      }
-
-      .panel-scroll {
-        overflow: visible;
-        padding-right: 0;
-      }
-
-      .viewer-stage {
-        padding: 2.8rem 2.4rem;
-      }
-
-      .stage-tagline {
-        margin: 4.6rem 2.2rem 0;
-      }
-
-      .tone-rail {
+      .slot-rail {
         position: static;
-        flex-direction: column;
-        width: 100%;
-        border-radius: 44px;
-        padding: 1.6rem 1.8rem;
-        margin-top: 0;
-        margin-left: 0;
-        height: auto;
-        min-height: auto;
-        align-self: stretch;
-        border-left: 1px solid rgba(154, 142, 255, 0.32);
-      }
-
-      .tone-rail::before {
-        display: none;
-      }
-
-      .tone-rail-label {
-        padding: 0.4rem 1.4rem;
-      }
-
-      .slot-chip-list {
+        transform: none;
         flex-direction: row;
-        flex-wrap: wrap;
+        width: auto;
         justify-content: center;
+        border-radius: 30px;
       }
 
-      .panel-column,
       .viewer-column {
         width: 100%;
       }
 
-      .stage-footer {
-        position: static;
-        margin-top: 1.8rem;
-        width: 100%;
-        align-self: stretch;
-      }
-
-      .stage-footer .panel-action {
+      .viewer-card {
         width: 100%;
       }
     }
 
-    @media (max-width: 767.98px) {
-      .panel-card {
+    @media (max-width: 992px) {
+      .app-shell {
+        flex-direction: column;
+        padding: 2.2rem 1.8rem;
+      }
+
+      .main-sidebar {
+        flex-direction: row;
+        width: 100%;
+        height: auto;
         border-radius: 32px;
-        padding: 2rem 1.8rem;
+        padding: 1.4rem;
+        justify-content: space-between;
+        gap: 1.6rem;
       }
 
-      .subcategory-grid {
-        grid-template-columns: 1fr;
+      .sidebar-nav,
+      .sidebar-utility {
+        flex-direction: row;
       }
 
-      .viewer-stage {
-        padding: 2.2rem 1.6rem;
-        border-radius: 36px;
+      .workspace {
+        width: 100%;
       }
 
-      .stage-tagline {
-        margin: 4.2rem 1.8rem 0;
+      .panel-wrapper {
+        flex-direction: column;
       }
 
-      .tone-rail {
-        gap: 1.2rem;
-      }
-
-      .stage-footer {
-        gap: 0.65rem;
-        padding: 0.85rem 1rem;
-        border-radius: 28px;
+      .slot-rail {
+        margin-top: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <nav class="main-sidebar" aria-label="Avatar slot categories">
+    <aside class="main-sidebar text-center text-white">
       <div class="sidebar-brand">N</div>
-      <div class="nav-stack" role="group" aria-label="Avatar slot categories">
-        <button type="button" class="nav-button active" data-category="body" aria-pressed="true" aria-label="Body" data-bs-toggle="tooltip" data-bs-placement="right" title="Body">
-          <i class="bi bi-person-standing"></i>
+      <div class="sidebar-nav">
+        <button type="button" class="sidebar-button active" aria-label="Body">
+          <span>🧍</span>
         </button>
-        <button type="button" class="nav-button" data-category="apparel" aria-pressed="false" aria-label="Apparel" data-bs-toggle="tooltip" data-bs-placement="right" title="Apparel">
-          <i class="bi bi-hanger"></i>
+        <button type="button" class="sidebar-button" aria-label="Apparel">
+          <span>🧢</span>
         </button>
-        <button type="button" class="nav-button" data-category="headwear" aria-pressed="false" aria-label="Headwear" data-bs-toggle="tooltip" data-bs-placement="right" title="Headwear">
-          <i class="bi bi-incognito"></i>
+        <button type="button" class="sidebar-button" aria-label="Headwear">
+          <span>🧠</span>
         </button>
-        <button type="button" class="nav-button" data-category="gear" aria-pressed="false" aria-label="Gear" data-bs-toggle="tooltip" data-bs-placement="right" title="Gear">
-          <i class="bi bi-tools"></i>
+        <button type="button" class="sidebar-button" aria-label="Gear">
+          <span>💪</span>
         </button>
-        <button type="button" class="nav-button" data-category="props" aria-pressed="false" aria-label="Props and Effects" data-bs-toggle="tooltip" data-bs-placement="right" title="Props &amp; Effects">
-          <i class="bi bi-stars"></i>
+        <button type="button" class="sidebar-button" aria-label="Props">
+          <span>🌟</span>
         </button>
       </div>
-    </nav>
-    <main class="workspace">
-      <section class="panel-column">
-        <div class="panel-stack">
-          <div class="panel-card">
-            <div class="panel-heading">
-              <span class="heading-icon">
-                <i id="categoryIconGlyph" class="bi bi-person-standing"></i>
-              </span>
-              <div class="heading-copy">
-                <p class="heading-eyebrow mb-0" id="categoryEyebrow">Avatar Section</p>
-                <h1 class="heading-title" id="categoryTitle">Body</h1>
-                <p class="heading-subtext" id="categoryDescription">Dial in the avatar's base mesh, skin, and face styling before layering outfits.</p>
-              </div>
+      <div class="sidebar-utility">
+        <button type="button" class="sidebar-button" aria-label="Settings">
+          <span>⚙️</span>
+        </button>
+        <button type="button" class="sidebar-button" aria-label="Help">
+          <span>❔</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <div class="panel-wrapper">
+        <section class="body-panel">
+          <div class="d-flex flex-column gap-3">
+            <span class="panel-eyebrow">Avatar Section</span>
+            <div>
+              <h1 class="panel-title">Body</h1>
+              <p class="panel-lede">Dial in the avatar's base mesh, skin, and face styling before layering outfits.</p>
             </div>
-            <p class="panel-intro" id="categoryIntro">Swap between foundational body options to set the tone for the rest of your look.</p>
-            <div class="panel-scroll">
-              <div class="subcategory-grid" id="subcategoryGrid" role="list"></div>
-              <div class="slot-matrix">
-                <div class="slot-matrix-heading">Slot Mapping</div>
-                <table class="slot-table" aria-label="Slot mapping" id="slotTable">
-                  <thead>
-                    <tr>
-                      <th scope="col">Slot ID</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Examples</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
+            <p class="panel-description">Swap between foundational body options to set the tone for the rest of the fit.</p>
+            <div class="pill-group" data-toggle-group>
+              <button type="button" class="pill-button active">Body Base</button>
+              <button type="button" class="pill-button">Skin</button>
             </div>
           </div>
-        <aside class="tone-rail" aria-label="Slot summary">
-          <span class="tone-rail-label" id="railLabel">Slots</span>
-          <div class="slot-chip-list" id="slotChipList"></div>
-          <p class="rail-footnote" id="railFootnote">Core slots for this section.</p>
+
+          <div class="subcategory-grid">
+            <article class="subcategory-card">
+              <span class="subcategory-eyebrow">Primary</span>
+              <h2 class="subcategory-title">Base Body</h2>
+              <p class="subcategory-copy">Choose the foundational mesh that defines your character's silhouette.</p>
+              <p class="subcategory-meta">Examples: Default body mesh</p>
+            </article>
+            <article class="subcategory-card">
+              <span class="subcategory-eyebrow">Material</span>
+              <h2 class="subcategory-title">Skin Styles</h2>
+              <p class="subcategory-copy">Apply thematic skin materials without swapping the mesh.</p>
+              <p class="subcategory-meta">Examples: human, hologram, alien</p>
+            </article>
+            <article class="subcategory-card">
+              <span class="subcategory-eyebrow">Face</span>
+              <h2 class="subcategory-title">Eye Styles</h2>
+              <p class="subcategory-copy">Swap between expressive eyes, lenses, and glow treatments.</p>
+              <p class="subcategory-meta">Examples: cyber lenses, sleepy eyes</p>
+            </article>
+            <article class="subcategory-card">
+              <span class="subcategory-eyebrow">Expression</span>
+              <h2 class="subcategory-title">Mouth Styles</h2>
+              <p class="subcategory-copy">Pick smiles, fangs, or stylized mouths to lock in the vibe.</p>
+              <p class="subcategory-meta">Examples: grin, vampire fangs</p>
+            </article>
+            <article class="subcategory-card">
+              <span class="subcategory-eyebrow">Hair</span>
+              <h2 class="subcategory-title">Hair Styles</h2>
+              <p class="subcategory-copy">Layer signature cuts, braids, and textures that complement the outfit.</p>
+              <p class="subcategory-meta">Examples: pixie, braids, hologram fade</p>
+            </article>
+            <article class="subcategory-card">
+              <span class="subcategory-eyebrow">Details</span>
+              <h2 class="subcategory-title">Face Stickers</h2>
+              <p class="subcategory-copy">Add blush, stickers, and markings to personalize the base look.</p>
+              <p class="subcategory-meta">Examples: star blush, cyber freckles</p>
+            </article>
+          </div>
+        </section>
+
+        <aside class="slot-rail">
+          <h3>Body Slots</h3>
+          <span class="slot-chip">body_base</span>
+          <span class="slot-chip">skin</span>
+          <span class="slot-chip">eyes</span>
+          <span class="slot-chip">mouth</span>
+          <span class="slot-chip">hair</span>
         </aside>
       </div>
-    </section>
-      <section class="viewer-column" aria-label="Avatar preview">
-        <div class="viewer-stage">
-          <div class="stage-header">
-            <i class="bi bi-person-standing" id="stageIcon"></i>
-            <span id="stageLabel">Body</span>
-          </div>
-          <p class="stage-tagline" id="stageTagline">Base body, skin, and face styling.</p>
-          <div class="stage-actions">
-            <button type="button" class="stage-action" aria-label="Randomize">
-              <i class="bi bi-stars"></i>
-            </button>
-            <button type="button" class="stage-action" aria-label="Rotate">
-              <i class="bi bi-arrow-repeat"></i>
-            </button>
-          </div>
-          <div class="avatar-spotlight">
-            <div class="avatar-body">
-              <div class="avatar-head">
-                <div class="avatar-face">
-                  <span class="avatar-eye"></span>
-                  <span class="avatar-eye"></span>
-                </div>
+
+      <div class="viewer-column">
+        <section class="viewer-card text-white">
+          <div class="viewer-top">
+            <div class="viewer-badges">
+              <div class="badge-stack" data-toggle-group>
+                <button type="button" class="badge-pill active">Neutral</button>
+                <button type="button" class="badge-pill">Feminine</button>
+                <button type="button" class="badge-pill">Masculine</button>
               </div>
-              <div class="avatar-torso">
-                <div class="avatar-belt"></div>
-              </div>
-              <div class="avatar-legs">
-                <div class="avatar-leg"></div>
-                <div class="avatar-leg right"></div>
+              <p class="viewer-label mb-0">Body</p>
+            </div>
+            <div class="badge-stack" data-toggle-group>
+              <button type="button" class="badge-pill active">Preset A</button>
+              <button type="button" class="badge-pill">Preset B</button>
+              <button type="button" class="badge-pill">Preset C</button>
+            </div>
+          </div>
+
+          <div class="avatar-stage">
+            <div class="avatar-figure">
+              <div class="head"></div>
+              <div class="torso"></div>
+              <div class="belt"></div>
+              <div class="legs"></div>
+              <div class="feet">
+                <span></span>
+                <span></span>
               </div>
             </div>
-            <div class="avatar-base"></div>
           </div>
-          <div class="stage-footer">
-            <button type="button" class="btn panel-action btn-save">
-              <i class="bi bi-cloud-arrow-down"></i>
-              Save
-            </button>
-            <button type="button" class="btn panel-action btn-discard">
-              <i class="bi bi-x-circle"></i>
-              Discard
-            </button>
+
+          <div class="tone-rail">
+            <h4>Skin Tones</h4>
+            <div class="tone-swatches" data-toggle-group>
+              <button type="button" class="tone-swatch active" style="background: #f8d7b5"></button>
+              <button type="button" class="tone-swatch" style="background: #f0b798"></button>
+              <button type="button" class="tone-swatch" style="background: #d19074"></button>
+              <button type="button" class="tone-swatch" style="background: #b46d52"></button>
+              <button type="button" class="tone-swatch" style="background: #8d4b37"></button>
+              <button type="button" class="tone-swatch" style="background: #633226"></button>
+              <button type="button" class="tone-swatch" style="background: #45231c"></button>
+              <button type="button" class="tone-swatch" style="background: #2d1914"></button>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+
+          <div class="viewer-footer">
+            <button type="button" class="btn btn-save">Save</button>
+            <button type="button" class="btn btn-discard">Discard</button>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
   <script>
-    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-
-    const categoryContent = {
-      body: {
-        icon: 'bi-person-standing',
-        emoji: '🧍',
-        title: 'Body',
-        eyebrow: 'Avatar Section',
-        description: "Dial in the avatar's base mesh, skin, and face styling before layering outfits.",
-        intro: 'Swap between foundational body options to set the tone for the rest of your look.',
-        stageTagline: 'Base mesh, skin, and facial styling presets.',
-        footnote: 'Slots powering body customization.',
-        slots: [
-          {
-            id: 'body_base',
-            description: 'Underlying mesh variants that define silhouette.',
-            examples: 'Default body mesh',
-          },
-          {
-            id: 'skin',
-            description: 'Material overrides that recolor the base mesh.',
-            examples: 'Vampire, hologram, alien',
-          },
-          {
-            id: 'eyes',
-            description: 'Overlays for iris, pupil, and sclera styling.',
-            examples: 'Glow eyes, heterochromia, anime irises',
-          },
-          {
-            id: 'mouth',
-            description: 'Decals and mouth shapes to adjust expression.',
-            examples: 'Fanged smile, cyber grin, neon lips',
-          },
-          {
-            id: 'hair',
-            description: 'Hair meshes and presets to crown the look.',
-            examples: 'Long curls, pixie cut, twin buns',
-          },
-        ],
-        subcategories: [
-          {
-            name: 'Base Body',
-            description: 'Choose the foundational mesh that defines your character silhouette.',
-            examples: 'Default body mesh',
-            slotRefs: ['body_base'],
-          },
-          {
-            name: 'Skin Styles',
-            description: 'Apply thematic skin materials without swapping the mesh.',
-            examples: 'Vampire, hologram, alien',
-            slotRefs: ['skin'],
-          },
-          {
-            name: 'Eye Styles',
-            description: 'Remix eyes with animated pupils and color variations.',
-            examples: 'Glow eyes, heterochromia, anime irises',
-            slotRefs: ['eyes'],
-          },
-          {
-            name: 'Mouth Styles',
-            description: 'Swap mouth decals to match different moods and vibes.',
-            examples: 'Fanged smile, cyber grin, kawaii blush',
-            slotRefs: ['mouth'],
-          },
-          {
-            name: 'Hair Styles',
-            description: 'Select from preset hair meshes to match your persona.',
-            examples: 'Long curls, pixie cut, twin buns',
-            slotRefs: ['hair'],
-          },
-        ],
-      },
-      apparel: {
-        icon: 'bi-hanger',
-        emoji: '🧢',
-        title: 'Apparel',
-        eyebrow: 'Wardrobe',
-        description: 'Layer clothing pieces and accessories to build a full outfit.',
-        intro: 'Mix and match apparel categories to outfit your avatar from top to toe.',
-        stageTagline: 'Coordinate tops, outfits, bottoms, and accessories.',
-        footnote: 'Slots dedicated to wearable apparel.',
-        slots: [
-          {
-            id: 'torso',
-            description: 'Primary tops worn over the body base.',
-            examples: 'Graphic tees, armor plating, hoodies',
-          },
-          {
-            id: 'jacket',
-            description: 'Full-body outfits that override top and bottom slots.',
-            examples: 'Bodysuits, jumpsuits, robes',
-          },
-          {
-            id: 'bottoms',
-            description: 'Legwear paired with tops or outfits.',
-            examples: 'Jeans, skirts, joggers',
-          },
-          {
-            id: 'shoes',
-            description: 'Footwear to ground the look.',
-            examples: 'Sneakers, boots, sandals',
-          },
-          {
-            id: 'neck',
-            description: 'Accessories wrapping the neck area.',
-            examples: 'Scarves, chokers, ties',
-          },
-          {
-            id: 'left_wrist',
-            description: 'Accessories worn on the left wrist.',
-            examples: 'Bracelets, bangles, smartwatches',
-          },
-          {
-            id: 'right_wrist',
-            description: 'Accessories worn on the right wrist.',
-            examples: 'Bracelets, cuffs, watches',
-          },
-        ],
-        subcategories: [
-          {
-            name: 'Tops',
-            description: 'Layer shirts, tees, armor, and vests onto the torso slot.',
-            examples: 'Graphic tees, armor plating, hoodies',
-            slotRefs: ['torso'],
-          },
-          {
-            name: 'Outfits',
-            description: 'Suit up in full ensembles that override both top and bottom layers.',
-            examples: 'Bodysuits, jumpsuits, robes',
-            slotRefs: ['jacket'],
-          },
-          {
-            name: 'Bottoms',
-            description: 'Pick pants, skirts, and legwear to balance the silhouette.',
-            examples: 'Jeans, skirts, joggers',
-            slotRefs: ['bottoms'],
-          },
-          {
-            name: 'Shoes',
-            description: 'Finish the fit with footwear that sets the tone.',
-            examples: 'Sneakers, boots, sandals',
-            slotRefs: ['shoes'],
-          },
-          {
-            name: 'Neckwear',
-            description: 'Layer scarves and chokers for added personality.',
-            examples: 'Scarves, chokers, ties',
-            slotRefs: ['neck'],
-          },
-          {
-            name: 'Wristwear',
-            description: 'Accessorize either wrist with bands, cuffs, or wearable tech.',
-            examples: 'Bracelets, bangles, watches',
-            slotRefs: ['left_wrist', 'right_wrist'],
-          },
-        ],
-      },
-      headwear: {
-        icon: 'bi-incognito',
-        emoji: '🧠',
-        title: 'Headwear',
-        eyebrow: 'Accessories',
-        description: 'Style everything above the shoulders with statement pieces.',
-        intro: 'Crown the avatar with hats, halos, and expressive facial overlays.',
-        stageTagline: 'Stack hats, halos, headphones, and facial details.',
-        footnote: 'Slots covering the head and face.',
-        slots: [
-          {
-            id: 'hat',
-            description: 'Primary hat layer for crowns, caps, and helmets.',
-            examples: 'Snapbacks, royal crowns, wizard hats',
-          },
-          {
-            id: 'hair_accessory',
-            description: 'Attachments that clip onto hair meshes.',
-            examples: 'Horns, halos, mini wings',
-          },
-          {
-            id: 'face_accessory',
-            description: 'Accessories that sit on the face layer.',
-            examples: 'Glasses, visors, blush stickers',
-          },
-          {
-            id: 'mouth',
-            description: 'Face-covering gear that occupies the mouth slot.',
-            examples: 'Masks, respirators, fang guards',
-          },
-        ],
-        subcategories: [
-          {
-            name: 'Hats & Crowns',
-            description: 'Iconic toppers that instantly set the mood.',
-            examples: 'Snapbacks, royal crowns, helmets',
-            slotRefs: ['hat'],
-          },
-          {
-            name: 'Horns',
-            description: 'Mythic horn sets for dramatic silhouettes.',
-            examples: 'Dragon horns, ram spirals, neon spikes',
-            slotRefs: ['hair_accessory'],
-          },
-          {
-            name: 'Halos',
-            description: 'Floating halos and aura rings to highlight the avatar.',
-            examples: 'Angel halo, glitch ring, neon disc',
-            slotRefs: ['hair_accessory'],
-          },
-          {
-            name: 'Headphones',
-            description: 'Immersive audio gear that frames the head.',
-            examples: 'Studio cans, VR visors, cat-ear headphones',
-            slotRefs: ['hair_accessory'],
-          },
-          {
-            name: 'Hair Accessories',
-            description: 'Clips and bows that accent existing hair styles.',
-            examples: 'Bows, barrettes, mini wings',
-            slotRefs: ['hair_accessory'],
-          },
-          {
-            name: 'Glasses & Visors',
-            description: 'Lenses and visors that sit across the eyes.',
-            examples: 'Aviators, sci-fi HUD visor, reading glasses',
-            slotRefs: ['face_accessory'],
-          },
-          {
-            name: 'Face Stickers & Blush',
-            description: 'Decals to add expressive flair to cheeks and nose.',
-            examples: 'Heart blush, festival decals, esports paint',
-            slotRefs: ['face_accessory'],
-          },
-          {
-            name: 'Face Masks',
-            description: 'Protective and stylistic masks that cover the mouth.',
-            examples: 'Medical mask, tactical respirator, oni mask',
-            slotRefs: ['mouth'],
-          },
-        ],
-      },
-      gear: {
-        icon: 'bi-tools',
-        emoji: '💪',
-        title: 'Gear',
-        eyebrow: 'Equipment',
-        description: 'Equip utility pieces that add personality and story.',
-        intro: 'Load out the avatar with handhelds, shoulder armor, and back gear.',
-        stageTagline: 'Pose-ready equipment for hands, arms, and back.',
-        footnote: 'Slots for weapons, shields, and support gear.',
-        slots: [
-          {
-            id: 'left_hand',
-            description: 'Items grasped in the left hand.',
-            examples: 'Spellbooks, lanterns, plushies',
-          },
-          {
-            id: 'right_hand',
-            description: 'Items grasped in the right hand.',
-            examples: 'Swords, microphones, gamepads',
-          },
-          {
-            id: 'left_wrist',
-            description: 'Armored or gadget bands on the left arm.',
-            examples: 'Shield bracers, grappling gauntlets',
-          },
-          {
-            id: 'right_wrist',
-            description: 'Armored or gadget bands on the right arm.',
-            examples: 'Energy bracers, wrist communicators',
-          },
-          {
-            id: 'back_upper',
-            description: 'Gear mounted high on the back.',
-            examples: 'Angel wings, banner poles, jetpacks',
-          },
-          {
-            id: 'back_lower',
-            description: 'Gear anchored near the lower back or waist.',
-            examples: 'Tails, capes, utility packs',
-          },
-        ],
-        subcategories: [
-          {
-            name: 'Handhelds',
-            description: 'Props the avatar holds for extra storytelling.',
-            examples: 'Spellbooks, microphones, swords',
-            slotRefs: ['left_hand', 'right_hand'],
-          },
-          {
-            name: 'Shoulder & Arm Gear',
-            description: 'Gadgets and armor mounted to the arms.',
-            examples: 'Shield bracers, grappling gauntlets',
-            slotRefs: ['left_wrist', 'right_wrist'],
-          },
-          {
-            name: 'Back Gear',
-            description: 'Statement pieces attached behind the avatar.',
-            examples: 'Angel wings, banners, mech tails',
-            slotRefs: ['back_upper', 'back_lower'],
-          },
-        ],
-      },
-      props: {
-        icon: 'bi-stars',
-        emoji: '🌟',
-        title: 'Props & Effects',
-        eyebrow: 'Showtime',
-        description: 'Stage floating props, scene pieces, and special effects.',
-        intro: 'Bring the avatar to life with companions, platforms, and auras.',
-        stageTagline: 'Orbiting props, scene elements, and emotes.',
-        footnote: 'Slots for companions, scenery, VFX, and emotes.',
-        slots: [
-          {
-            id: 'prop_companion_a',
-            description: 'Primary orbiting or pet companion slot.',
-            examples: 'Floating drone, mini mascot',
-          },
-          {
-            id: 'prop_companion_b',
-            description: 'Secondary companion slot for layered props.',
-            examples: 'Pet sprite, sparkle buddy',
-          },
-          {
-            id: 'prop_scene_a',
-            description: 'Scene prop slot for platforms or ground elements.',
-            examples: 'Magic circle, stage riser',
-          },
-          {
-            id: 'prop_scene_b',
-            description: 'Additional scene prop layer for backdrops.',
-            examples: 'Floating sigil, hologram wall',
-          },
-          {
-            id: 'vfx',
-            description: 'Ambient visual effects layered over the avatar.',
-            examples: 'Aura glow, particle trails, shimmer',
-          },
-          {
-            id: 'emote',
-            description: 'Animated actions, poses, or dances.',
-            examples: 'Victory pose, dance loop, wave',
-          },
-        ],
-        subcategories: [
-          {
-            name: 'Props',
-            description: 'Orbiting buddies and companion props that float nearby.',
-            examples: 'Floating drone, pet sprite, mascot buddy',
-            slotRefs: ['prop_companion_a', 'prop_companion_b'],
-          },
-          {
-            name: 'Scene Props',
-            description: 'Platforms and backdrop elements that anchor the scene.',
-            examples: 'Magic circle, stage riser, hologram wall',
-            slotRefs: ['prop_scene_a', 'prop_scene_b'],
-          },
-          {
-            name: 'VFX',
-            description: 'Ambient visual effects that surround the avatar.',
-            examples: 'Aura glow, particle trails, shimmer',
-            slotRefs: ['vfx'],
-          },
-          {
-            name: 'Emotes',
-            description: 'Poses and dances that animate the character.',
-            examples: 'Victory pose, dance loop, wave',
-            slotRefs: ['emote'],
-          },
-        ],
-      },
-    };
-
-    const navButtons = document.querySelectorAll('.nav-stack .nav-button');
-    const categoryIconGlyph = document.getElementById('categoryIconGlyph');
-    const categoryEyebrow = document.getElementById('categoryEyebrow');
-    const categoryTitle = document.getElementById('categoryTitle');
-    const categoryDescription = document.getElementById('categoryDescription');
-    const categoryIntro = document.getElementById('categoryIntro');
-    const subcategoryGrid = document.getElementById('subcategoryGrid');
-    const slotTableBody = document.querySelector('#slotTable tbody');
-    const slotChipList = document.getElementById('slotChipList');
-    const railLabel = document.getElementById('railLabel');
-    const railFootnote = document.getElementById('railFootnote');
-    const stageIcon = document.getElementById('stageIcon');
-    const stageLabel = document.getElementById('stageLabel');
-    const stageTagline = document.getElementById('stageTagline');
-
-    function renderCategory(key) {
-      const category = categoryContent[key];
-      if (!category) {
-        return;
-      }
-
-      categoryIconGlyph.className = `bi ${category.icon}`;
-      categoryEyebrow.textContent = category.eyebrow;
-      categoryTitle.textContent = category.title;
-      categoryDescription.textContent = category.description;
-      categoryIntro.textContent = category.intro;
-      stageIcon.className = `bi ${category.icon}`;
-      stageLabel.textContent = `${category.emoji} ${category.title}`;
-      stageTagline.textContent = category.stageTagline;
-      railLabel.textContent = `${category.title} Slots`;
-      railFootnote.textContent = category.footnote;
-
-      subcategoryGrid.innerHTML = '';
-      slotTableBody.innerHTML = '';
-      slotChipList.innerHTML = '';
-
-      category.slots.forEach((slot) => {
-        const chip = document.createElement('span');
-        chip.className = 'slot-chip';
-        chip.textContent = slot.id;
-        slotChipList.appendChild(chip);
-
-        const row = document.createElement('tr');
-        const slotCell = document.createElement('td');
-        slotCell.textContent = slot.id;
-        const descCell = document.createElement('td');
-        descCell.textContent = slot.description;
-        const exampleCell = document.createElement('td');
-        exampleCell.textContent = slot.examples;
-        row.append(slotCell, descCell, exampleCell);
-        slotTableBody.appendChild(row);
-      });
-
-      category.subcategories.forEach((item) => {
-        const card = document.createElement('article');
-        card.className = 'subcategory-card';
-        card.setAttribute('role', 'listitem');
-
-        const header = document.createElement('div');
-        header.className = 'subcategory-header';
-
-        const name = document.createElement('h2');
-        name.className = 'subcategory-name';
-        name.textContent = item.name;
-
-        const slotContainer = document.createElement('div');
-        slotContainer.className = 'subcategory-slots';
-
-        item.slotRefs.forEach((slotId) => {
-          const badge = document.createElement('span');
-          badge.className = 'slot-badge';
-          badge.textContent = slotId;
-          slotContainer.appendChild(badge);
+    document.querySelectorAll('[data-toggle-group]').forEach(function (group) {
+      var buttons = group.querySelectorAll('button');
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          buttons.forEach(function (btn) {
+            btn.classList.remove('active');
+          });
+          button.classList.add('active');
         });
-
-        header.append(name, slotContainer);
-
-        const description = document.createElement('p');
-        description.className = 'subcategory-description';
-        description.textContent = item.description;
-
-        const examples = document.createElement('p');
-        examples.className = 'subcategory-examples';
-        const examplesLabel = document.createElement('span');
-        examplesLabel.textContent = 'Examples';
-        examples.append(examplesLabel, document.createTextNode(`: ${item.examples}`));
-
-        card.append(header, description, examples);
-        subcategoryGrid.appendChild(card);
-      });
-    }
-
-    navButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        navButtons.forEach((item) => {
-          item.classList.remove('active');
-          item.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-        renderCategory(btn.dataset.category);
       });
     });
-
-    renderCategory('body');
   </script>
 </body>
 </html>
