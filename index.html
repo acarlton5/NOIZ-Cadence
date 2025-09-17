@@ -258,7 +258,7 @@
       color: #9c95dd;
     }
 
-    .slot-rail {
+    .color-rail {
       position: absolute;
       inset: 50% auto auto 100%;
       transform: translate(-36px, -50%);
@@ -266,32 +266,63 @@
       border-radius: 36px;
       background: linear-gradient(160deg, rgba(26, 12, 88, 0.95) 0%, rgba(48, 22, 134, 0.95) 100%);
       border: 1px solid rgba(163, 148, 255, 0.38);
-      padding: 1.8rem 1.2rem;
+      padding: 1.6rem 1.2rem 1.9rem;
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
+      gap: 1.1rem;
       color: rgba(255, 255, 255, 0.82);
       box-shadow: 0 32px 70px rgba(12, 0, 44, 0.55);
+      align-items: center;
     }
 
-    .slot-rail h3 {
+    .color-icon {
+      width: 66px;
+      height: 66px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.06) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .color-icon span {
+      font-size: 1.5rem;
+      filter: drop-shadow(0 10px 24px rgba(10, 0, 36, 0.35));
+    }
+
+    .color-label {
+      margin: 0;
       font-size: 0.78rem;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.6);
-      margin: 0 0 0.4rem;
+      text-align: center;
     }
 
-    .slot-chip {
-      border-radius: 999px;
-      border: 1px solid rgba(208, 199, 255, 0.45);
-      padding: 0.5rem 0.9rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.08);
-      color: #f5f3ff;
-      font-weight: 600;
+    .color-swatches {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .color-swatch {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .color-swatch:hover {
+      transform: translateY(-4px);
+    }
+
+    .color-swatch.active {
+      border-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 18px 32px rgba(8, 0, 30, 0.4);
     }
 
     .viewer-column {
@@ -321,59 +352,6 @@
       background: radial-gradient(60% 60% at 50% 30%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
       filter: blur(0.5px);
       opacity: 0.6;
-    }
-
-    .viewer-top {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .viewer-badges {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .badge-stack {
-      display: inline-flex;
-      gap: 0.55rem;
-      align-items: center;
-      background: rgba(36, 18, 104, 0.55);
-      border: 1px solid rgba(188, 176, 255, 0.4);
-      border-radius: 999px;
-      padding: 0.45rem 0.55rem;
-    }
-
-    .badge-pill {
-      border: none;
-      border-radius: 999px;
-      padding: 0.55rem 1.35rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.7);
-      font-weight: 700;
-      transition: all 0.25s ease;
-    }
-
-    .badge-pill.active {
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
-    }
-
-    .viewer-label {
-      margin: 0;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-weight: 700;
     }
 
     .avatar-stage {
@@ -439,50 +417,6 @@
       border: 4px solid rgba(255, 255, 255, 0.2);
     }
 
-    .tone-rail {
-      position: relative;
-      z-index: 2;
-      border-radius: 28px;
-      background: rgba(24, 12, 92, 0.6);
-      border: 1px solid rgba(194, 184, 255, 0.35);
-      padding: 0.95rem 1.1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .tone-rail h4 {
-      margin: 0;
-      font-size: 0.78rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.55);
-    }
-
-    .tone-swatches {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.55rem;
-    }
-
-    .tone-swatch {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .tone-swatch:hover {
-      transform: translateY(-4px);
-    }
-
-    .tone-swatch.active {
-      border-color: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
-    }
-
     .viewer-footer {
       display: flex;
       justify-content: center;
@@ -539,13 +473,25 @@
         max-width: none;
       }
 
-      .slot-rail {
+      .color-rail {
         position: static;
         transform: none;
         flex-direction: row;
         width: auto;
         justify-content: center;
         border-radius: 30px;
+        gap: 1.25rem;
+        padding: 1.2rem 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .color-icon {
+        width: 58px;
+        height: 58px;
+      }
+
+      .color-swatches {
+        grid-template-columns: repeat(auto-fit, minmax(44px, 1fr));
       }
 
       .viewer-column {
@@ -586,8 +532,9 @@
         flex-direction: column;
       }
 
-      .slot-rail {
+      .color-rail {
         margin-top: 1.5rem;
+        justify-content: flex-start;
       }
     }
   </style>
@@ -679,34 +626,22 @@
           </div>
         </section>
 
-        <aside class="slot-rail">
-          <h3>Body Slots</h3>
-          <span class="slot-chip">body_base</span>
-          <span class="slot-chip">skin</span>
-          <span class="slot-chip">eyes</span>
-          <span class="slot-chip">mouth</span>
-          <span class="slot-chip">hair</span>
+        <aside class="color-rail">
+          <div class="color-icon"><span class="bi bi-person-fill"></span></div>
+          <p class="color-label mb-0">Body Base</p>
+          <div class="color-swatches" data-toggle-group>
+            <button type="button" class="color-swatch active" style="background: linear-gradient(135deg, #fef5c3 0%, #f2b36d 100%);"></button>
+            <button type="button" class="color-swatch" style="background: linear-gradient(135deg, #c8d9ff 0%, #6a8bff 100%);"></button>
+            <button type="button" class="color-swatch" style="background: linear-gradient(135deg, #ffe0f2 0%, #ff92c2 100%);"></button>
+            <button type="button" class="color-swatch" style="background: linear-gradient(135deg, #d7ffe8 0%, #5cdfb2 100%);"></button>
+            <button type="button" class="color-swatch" style="background: linear-gradient(135deg, #fde5b2 0%, #f69f63 100%);"></button>
+            <button type="button" class="color-swatch" style="background: linear-gradient(135deg, #f3e5ff 0%, #a074ff 100%);"></button>
+          </div>
         </aside>
       </div>
 
       <div class="viewer-column">
         <section class="viewer-card text-white">
-          <div class="viewer-top">
-            <div class="viewer-badges">
-              <div class="badge-stack" data-toggle-group>
-                <button type="button" class="badge-pill active">Neutral</button>
-                <button type="button" class="badge-pill">Feminine</button>
-                <button type="button" class="badge-pill">Masculine</button>
-              </div>
-              <p class="viewer-label mb-0">Body</p>
-            </div>
-            <div class="badge-stack" data-toggle-group>
-              <button type="button" class="badge-pill active">Preset A</button>
-              <button type="button" class="badge-pill">Preset B</button>
-              <button type="button" class="badge-pill">Preset C</button>
-            </div>
-          </div>
-
           <div class="avatar-stage">
             <div class="avatar-figure">
               <div class="head"></div>
@@ -719,21 +654,6 @@
               </div>
             </div>
           </div>
-
-          <div class="tone-rail">
-            <h4>Skin Tones</h4>
-            <div class="tone-swatches" data-toggle-group>
-              <button type="button" class="tone-swatch active" style="background: #f8d7b5"></button>
-              <button type="button" class="tone-swatch" style="background: #f0b798"></button>
-              <button type="button" class="tone-swatch" style="background: #d19074"></button>
-              <button type="button" class="tone-swatch" style="background: #b46d52"></button>
-              <button type="button" class="tone-swatch" style="background: #8d4b37"></button>
-              <button type="button" class="tone-swatch" style="background: #633226"></button>
-              <button type="button" class="tone-swatch" style="background: #45231c"></button>
-              <button type="button" class="tone-swatch" style="background: #2d1914"></button>
-            </div>
-          </div>
-
           <div class="viewer-footer">
             <button type="button" class="btn btn-save">Save</button>
             <button type="button" class="btn btn-discard">Discard</button>
