@@ -135,7 +135,7 @@
     }
 
     .tooltip {
-      --bs-tooltip-bg: rgba(16, 12, 46, 0.92);
+      --bs-tooltip-bg: transparent;
       --bs-tooltip-color: #ffffff;
       --bs-tooltip-padding-x: 0.75rem;
       --bs-tooltip-padding-y: 0.5rem;
@@ -148,8 +148,9 @@
     }
 
     .tooltip .tooltip-inner {
+      background: linear-gradient(150deg, #7a5cff 0%, #5435ff 100%);
       box-shadow: 0 12px 28px rgba(6, 0, 32, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.32);
     }
 
     .workspace {
