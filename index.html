@@ -134,6 +134,24 @@
       font-size: 1.4rem;
     }
 
+    .tooltip {
+      --bs-tooltip-bg: rgba(16, 12, 46, 0.92);
+      --bs-tooltip-color: #ffffff;
+      --bs-tooltip-padding-x: 0.75rem;
+      --bs-tooltip-padding-y: 0.5rem;
+      --bs-tooltip-border-radius: 0.75rem;
+      --bs-tooltip-opacity: 1;
+    }
+
+    .tooltip.show {
+      opacity: 1;
+    }
+
+    .tooltip .tooltip-inner {
+      box-shadow: 0 12px 28px rgba(6, 0, 32, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
     .workspace {
       flex: 1;
       display: grid;
