@@ -322,116 +322,147 @@
       max-width: 26rem;
     }
 
-    .option-grid {
+    .panel-intro {
+      margin: 0;
+      font-size: 1.02rem;
+      color: var(--ink-700);
+      max-width: 28rem;
+    }
+
+    .subcategory-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.25rem;
     }
 
-    .option-card {
+    .subcategory-card {
       border: 1.5px solid rgba(132, 124, 255, 0.2);
       border-radius: 34px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       box-shadow: 0 20px 48px rgba(36, 18, 110, 0.14);
-      padding: 1.45rem 1.6rem;
+      padding: 1.6rem 1.75rem;
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 0.9rem;
       text-align: left;
       color: inherit;
       transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
     }
 
-    .option-card:hover {
+    .subcategory-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 26px 60px rgba(36, 18, 110, 0.24);
+      box-shadow: 0 26px 60px rgba(36, 18, 110, 0.22);
+      border-color: rgba(118, 93, 255, 0.6);
     }
 
-    .option-card.active {
-      border-color: var(--accent);
-      background: linear-gradient(150deg, rgba(130, 116, 255, 0.16) 0%, rgba(255, 255, 255, 0.98) 100%);
-      box-shadow: 0 30px 62px rgba(78, 48, 190, 0.32);
-    }
-
-    .option-avatar {
+    .subcategory-header {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: flex-start;
       gap: 1rem;
     }
 
-    .option-icon {
-      width: 66px;
-      height: 66px;
-      border-radius: 22px;
-      border: 2px dashed rgba(121, 105, 210, 0.65);
-      background: rgba(126, 114, 255, 0.12);
-      color: #6c58d2;
-      display: grid;
-      place-items: center;
-      font-size: 1.8rem;
-    }
-
-    .option-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .option-name {
+    .subcategory-name {
       font-size: 1.28rem;
       font-weight: 700;
+      margin: 0;
     }
 
-    .option-detail {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-500);
-    }
-
-    .panel-footer {
-      margin-top: auto;
+    .subcategory-slots {
       display: flex;
-      flex-direction: column;
-      gap: 1.4rem;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: flex-end;
     }
 
-    .footer-label {
-      font-size: 0.72rem;
-      letter-spacing: 0.32em;
-      font-weight: 700;
-      color: #746fd6;
-      text-transform: uppercase;
-    }
-
-    .bodytype-toggle {
+    .slot-badge {
       display: inline-flex;
-      gap: 0.65rem;
-      padding: 0.55rem 0.6rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem 0.8rem;
       border-radius: 999px;
-      background: rgba(137, 128, 255, 0.14);
-      border: 1px solid rgba(148, 136, 255, 0.28);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(121, 93, 255, 0.14);
+      border: 1px solid rgba(121, 93, 255, 0.28);
+      color: var(--ink-700);
+      font-weight: 700;
     }
 
-    .bodytype-pill {
-      border: none;
-      border-radius: 999px;
-      background: transparent;
-      padding: 0.55rem 1.55rem;
+    .subcategory-description {
+      margin: 0;
+      font-size: 0.98rem;
+      color: var(--ink-700);
+    }
+
+    .subcategory-examples {
+      margin: 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      color: var(--ink-500);
+      display: flex;
+      gap: 0.4rem;
+      align-items: baseline;
+    }
+
+    .subcategory-examples span {
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.12em;
+      font-size: 0.74rem;
+      color: var(--ink-700);
+    }
+
+    .slot-matrix {
+      margin-top: 2rem;
+      border-radius: 30px;
+      border: 1px solid rgba(132, 124, 255, 0.3);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 16px 36px rgba(32, 18, 90, 0.16);
+      overflow: hidden;
+    }
+
+    .slot-matrix-heading {
+      padding: 1.15rem 1.6rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
       font-weight: 700;
       color: var(--ink-700);
-      transition: all 0.25s ease;
+      background: rgba(121, 93, 255, 0.08);
+      border-bottom: 1px solid rgba(132, 124, 255, 0.24);
     }
 
-    .bodytype-pill.active {
-      background: linear-gradient(150deg, #8f76ff 0%, #5a36ff 100%);
-      color: #ffffff;
-      box-shadow: 0 16px 28px rgba(80, 54, 200, 0.3);
+    .slot-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    .slot-table th,
+    .slot-table td {
+      padding: 0.9rem 1.6rem;
+      border-bottom: 1px solid rgba(132, 124, 255, 0.16);
+      text-align: left;
+    }
+
+    .slot-table th {
+      font-size: 0.78rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-700);
+    }
+
+    .slot-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .panel-footer,
+    .footer-label,
+    .bodytype-toggle,
+    .bodytype-pill {
+      display: none;
     }
 
     .viewer-column {
@@ -503,6 +534,14 @@
 
     .stage-header i {
       font-size: 1rem;
+    }
+
+    .stage-tagline {
+      margin: 5.2rem 2.6rem 0;
+      max-width: 22rem;
+      font-size: 0.96rem;
+      color: rgba(255, 255, 255, 0.78);
+      letter-spacing: 0.02em;
     }
 
     .stage-actions {
@@ -689,9 +728,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.2rem;
-      padding: 2.3rem 1.15rem;
-      width: 112px;
+      gap: 1.5rem;
+      padding: 2.4rem 1.25rem;
+      width: 132px;
       border-radius: 0 48px 48px 0;
       background: linear-gradient(195deg, rgba(18, 10, 74, 0.95) 0%, rgba(9, 4, 42, 0.98) 100%);
       border: 1px solid rgba(154, 142, 255, 0.32);
@@ -734,37 +773,44 @@
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
     }
 
-    .tone-rail-swatches {
+    .slot-chip-list {
       display: flex;
       flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .slot-chip {
+      display: inline-flex;
       align-items: center;
-      gap: 0.85rem;
-      margin-top: 0.4rem;
+      justify-content: center;
+      padding: 0.55rem 0.6rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      color: rgba(255, 255, 255, 0.88);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      transition: background 0.25s ease, transform 0.25s ease;
     }
 
-    .tone-swatch {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      background: var(--tone, #ffffff);
-      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.38);
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    .slot-chip:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
     }
 
-    .tone-swatch:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.42);
-    }
-
-    .tone-swatch.active {
-      border-color: #ffffff;
-      box-shadow: 0 20px 36px rgba(0, 0, 0, 0.48);
-    }
-
-    .tone-swatch:focus-visible {
-      outline: 2px solid rgba(255, 255, 255, 0.85);
-      outline-offset: 3px;
+    .rail-footnote {
+      margin: 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.58);
+      line-height: 1.6;
     }
 
     .stage-footer {
@@ -873,13 +919,16 @@
         padding: 2.8rem 2.4rem;
       }
 
+      .stage-tagline {
+        margin: 4.6rem 2.2rem 0;
+      }
+
       .tone-rail {
         position: static;
-        flex-direction: row;
+        flex-direction: column;
         width: 100%;
-        justify-content: center;
-        border-radius: 999px;
-        padding: 1.15rem 1.6rem;
+        border-radius: 44px;
+        padding: 1.6rem 1.8rem;
         margin-top: 0;
         margin-left: 0;
         height: auto;
@@ -893,10 +942,10 @@
       }
 
       .tone-rail-label {
-        padding: 0.35rem 1.1rem;
+        padding: 0.4rem 1.4rem;
       }
 
-      .tone-rail-swatches {
+      .slot-chip-list {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
@@ -925,7 +974,7 @@
         padding: 2rem 1.8rem;
       }
 
-      .option-grid {
+      .subcategory-grid {
         grid-template-columns: 1fr;
       }
 
@@ -934,8 +983,12 @@
         border-radius: 36px;
       }
 
+      .stage-tagline {
+        margin: 4.2rem 1.8rem 0;
+      }
+
       .tone-rail {
-        gap: 1rem;
+        gap: 1.2rem;
       }
 
       .stage-footer {
@@ -951,44 +1004,20 @@
     <nav class="main-sidebar" aria-label="Avatar slot categories">
       <div class="sidebar-brand">N</div>
       <div class="nav-stack" role="group" aria-label="Avatar slot categories">
-        <button type="button" class="nav-button active" data-slot="head_accessory" aria-pressed="true" aria-label="Head Accessory" data-bs-toggle="tooltip" data-bs-placement="right" title="Head Accessory">
+        <button type="button" class="nav-button active" data-category="body" aria-pressed="true" aria-label="Body" data-bs-toggle="tooltip" data-bs-placement="right" title="Body">
+          <i class="bi bi-person-standing"></i>
+        </button>
+        <button type="button" class="nav-button" data-category="apparel" aria-pressed="false" aria-label="Apparel" data-bs-toggle="tooltip" data-bs-placement="right" title="Apparel">
+          <i class="bi bi-hanger"></i>
+        </button>
+        <button type="button" class="nav-button" data-category="headwear" aria-pressed="false" aria-label="Headwear" data-bs-toggle="tooltip" data-bs-placement="right" title="Headwear">
+          <i class="bi bi-incognito"></i>
+        </button>
+        <button type="button" class="nav-button" data-category="gear" aria-pressed="false" aria-label="Gear" data-bs-toggle="tooltip" data-bs-placement="right" title="Gear">
+          <i class="bi bi-tools"></i>
+        </button>
+        <button type="button" class="nav-button" data-category="props" aria-pressed="false" aria-label="Props and Effects" data-bs-toggle="tooltip" data-bs-placement="right" title="Props &amp; Effects">
           <i class="bi bi-stars"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="glasses" aria-pressed="false" aria-label="Glasses" data-bs-toggle="tooltip" data-bs-placement="right" title="Glasses">
-          <i class="bi bi-eyeglasses"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="hair" aria-pressed="false" aria-label="Hair" data-bs-toggle="tooltip" data-bs-placement="right" title="Hair">
-          <i class="bi bi-scissors"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="back_accessory" aria-pressed="false" aria-label="Back Accessory" data-bs-toggle="tooltip" data-bs-placement="right" title="Back Accessory">
-          <i class="bi bi-backpack2"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="left_arm_accessory" aria-pressed="false" aria-label="Left Arm" data-bs-toggle="tooltip" data-bs-placement="right" title="Left Arm">
-          <i class="bi bi-hand-index-thumb"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="right_arm_accessory" aria-pressed="false" aria-label="Right Arm" data-bs-toggle="tooltip" data-bs-placement="right" title="Right Arm">
-          <i class="bi bi-hand-index"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="neck_accessory" aria-pressed="false" aria-label="Neck Accessory" data-bs-toggle="tooltip" data-bs-placement="right" title="Neck Accessory">
-          <i class="bi bi-gem"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="ground_prop" aria-pressed="false" aria-label="Ground Prop" data-bs-toggle="tooltip" data-bs-placement="right" title="Ground Prop">
-          <i class="bi bi-cone-striped"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="accent_left" aria-pressed="false" aria-label="Accent Left" data-bs-toggle="tooltip" data-bs-placement="right" title="Accent Left">
-          <i class="bi bi-arrow-left-circle"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="accent_right" aria-pressed="false" aria-label="Accent Right" data-bs-toggle="tooltip" data-bs-placement="right" title="Accent Right">
-          <i class="bi bi-arrow-right-circle"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="orbiting_prop" aria-pressed="false" aria-label="Orbiting Prop" data-bs-toggle="tooltip" data-bs-placement="right" title="Orbiting Prop">
-          <i class="bi bi-tropical-storm"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="vfx" aria-pressed="false" aria-label="VFX" data-bs-toggle="tooltip" data-bs-placement="right" title="VFX">
-          <i class="bi bi-magic"></i>
-        </button>
-        <button type="button" class="nav-button" data-slot="emote" aria-pressed="false" aria-label="Emote" data-bs-toggle="tooltip" data-bs-placement="right" title="Emote">
-          <i class="bi bi-emoji-smile"></i>
         </button>
       </div>
     </nav>
@@ -996,100 +1025,46 @@
       <section class="panel-column">
         <div class="panel-stack">
           <div class="panel-card">
-            <div class="panel-header">
-              <div class="gender-toggle" role="group" aria-label="Body presentation">
-                <button type="button" class="toggle-pill active" aria-pressed="true">Masculine</button>
-                <button type="button" class="toggle-pill" aria-pressed="false">Feminine</button>
+            <div class="panel-heading">
+              <span class="heading-icon">
+                <i id="categoryIconGlyph" class="bi bi-person-standing"></i>
+              </span>
+              <div class="heading-copy">
+                <p class="heading-eyebrow mb-0" id="categoryEyebrow">Avatar Section</p>
+                <h1 class="heading-title" id="categoryTitle">Body</h1>
+                <p class="heading-subtext" id="categoryDescription">Dial in the avatar's base mesh, skin, and face styling before layering outfits.</p>
               </div>
             </div>
-            <div>
-              <div class="panel-heading">
-                <span class="heading-icon">
-                  <i class="bi bi-person-circle"></i>
-                </span>
-                <div class="heading-copy">
-                  <p class="heading-eyebrow mb-0">Customize</p>
-                  <h1 class="heading-title">Head Type</h1>
-                  <p class="heading-subtext">Select a new head type to update the look of your avatar before choosing outfits.</p>
-                </div>
-              </div>
-            </div>
-            <div class="option-grid" role="list">
-              <button type="button" class="option-card active" role="listitem">
-                <div class="option-avatar">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-smile"></i>
-                  </span>
-                  <div class="option-meta">
-                    <span class="option-name">Head 5</span>
-                    <span class="option-detail">Balanced</span>
-                  </div>
-                </div>
-              </button>
-              <button type="button" class="option-card" role="listitem">
-                <div class="option-avatar">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-neutral"></i>
-                  </span>
-                  <div class="option-meta">
-                    <span class="option-name">Head 7</span>
-                    <span class="option-detail">Angular</span>
-                  </div>
-                </div>
-              </button>
-              <button type="button" class="option-card" role="listitem">
-                <div class="option-avatar">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-sunglasses"></i>
-                  </span>
-                  <div class="option-meta">
-                    <span class="option-name">Head 11</span>
-                    <span class="option-detail">Heroic</span>
-                  </div>
-                </div>
-              </button>
-              <button type="button" class="option-card" role="listitem">
-                <div class="option-avatar">
-                  <span class="option-icon">
-                    <i class="bi bi-emoji-smile-upside-down"></i>
-                  </span>
-                  <div class="option-meta">
-                    <span class="option-name">Head 14</span>
-                    <span class="option-detail">Round</span>
-                  </div>
-                </div>
-              </button>
-            </div>
-            <div class="panel-footer">
-              <span class="footer-label">Body Type</span>
-              <div class="bodytype-toggle" role="group" aria-label="Body type">
-                <button type="button" class="bodytype-pill active">Light Build</button>
-                <button type="button" class="bodytype-pill">Athletic Build</button>
-                <button type="button" class="bodytype-pill">Plus Build</button>
-              </div>
+            <p class="panel-intro" id="categoryIntro">Swap between foundational body options to set the tone for the rest of your look.</p>
+            <div class="subcategory-grid" id="subcategoryGrid" role="list"></div>
+            <div class="slot-matrix">
+              <div class="slot-matrix-heading">Slot Mapping</div>
+              <table class="slot-table" aria-label="Slot mapping" id="slotTable">
+                <thead>
+                  <tr>
+                    <th scope="col">Slot ID</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Examples</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
           </div>
-        <aside class="tone-rail" aria-label="Skin tone selector">
-          <span class="tone-rail-label">Color</span>
-          <div class="tone-rail-swatches">
-            <button type="button" class="tone-swatch active" style="--tone: #f1d0b8;" aria-label="Tone 1" aria-pressed="true"></button>
-            <button type="button" class="tone-swatch" style="--tone: #e7b18a;" aria-label="Tone 2" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #d59573;" aria-label="Tone 3" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #c27b5b;" aria-label="Tone 4" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #a7634a;" aria-label="Tone 5" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #8b513e;" aria-label="Tone 6" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #6c3f32;" aria-label="Tone 7" aria-pressed="false"></button>
-            <button type="button" class="tone-swatch" style="--tone: #523129;" aria-label="Tone 8" aria-pressed="false"></button>
-          </div>
+        <aside class="tone-rail" aria-label="Slot summary">
+          <span class="tone-rail-label" id="railLabel">Slots</span>
+          <div class="slot-chip-list" id="slotChipList"></div>
+          <p class="rail-footnote" id="railFootnote">Core slots for this section.</p>
         </aside>
       </div>
     </section>
       <section class="viewer-column" aria-label="Avatar preview">
         <div class="viewer-stage">
           <div class="stage-header">
-            <i class="bi bi-person-badge"></i>
-            Head Type
+            <i class="bi bi-person-standing" id="stageIcon"></i>
+            <span id="stageLabel">Body</span>
           </div>
+          <p class="stage-tagline" id="stageTagline">Base body, skin, and face styling.</p>
           <div class="stage-actions">
             <button type="button" class="stage-action" aria-label="Randomize">
               <i class="bi bi-stars"></i>
@@ -1137,57 +1112,480 @@
       new bootstrap.Tooltip(tooltipTriggerEl);
     });
 
-    const slotButtons = document.querySelectorAll('.nav-stack .nav-button');
-    slotButtons.forEach((btn) => {
+    const categoryContent = {
+      body: {
+        icon: 'bi-person-standing',
+        emoji: '🧍',
+        title: 'Body',
+        eyebrow: 'Avatar Section',
+        description: "Dial in the avatar's base mesh, skin, and face styling before layering outfits.",
+        intro: 'Swap between foundational body options to set the tone for the rest of your look.',
+        stageTagline: 'Base mesh, skin, and facial styling presets.',
+        footnote: 'Slots powering body customization.',
+        slots: [
+          {
+            id: 'body_base',
+            description: 'Underlying mesh variants that define silhouette.',
+            examples: 'Default body mesh',
+          },
+          {
+            id: 'skin',
+            description: 'Material overrides that recolor the base mesh.',
+            examples: 'Vampire, hologram, alien',
+          },
+          {
+            id: 'eyes',
+            description: 'Overlays for iris, pupil, and sclera styling.',
+            examples: 'Glow eyes, heterochromia, anime irises',
+          },
+          {
+            id: 'mouth',
+            description: 'Decals and mouth shapes to adjust expression.',
+            examples: 'Fanged smile, cyber grin, neon lips',
+          },
+          {
+            id: 'hair',
+            description: 'Hair meshes and presets to crown the look.',
+            examples: 'Long curls, pixie cut, twin buns',
+          },
+        ],
+        subcategories: [
+          {
+            name: 'Base Body',
+            description: 'Choose the foundational mesh that defines your character silhouette.',
+            examples: 'Default body mesh',
+            slotRefs: ['body_base'],
+          },
+          {
+            name: 'Skin Styles',
+            description: 'Apply thematic skin materials without swapping the mesh.',
+            examples: 'Vampire, hologram, alien',
+            slotRefs: ['skin'],
+          },
+          {
+            name: 'Eye Styles',
+            description: 'Remix eyes with animated pupils and color variations.',
+            examples: 'Glow eyes, heterochromia, anime irises',
+            slotRefs: ['eyes'],
+          },
+          {
+            name: 'Mouth Styles',
+            description: 'Swap mouth decals to match different moods and vibes.',
+            examples: 'Fanged smile, cyber grin, kawaii blush',
+            slotRefs: ['mouth'],
+          },
+          {
+            name: 'Hair Styles',
+            description: 'Select from preset hair meshes to match your persona.',
+            examples: 'Long curls, pixie cut, twin buns',
+            slotRefs: ['hair'],
+          },
+        ],
+      },
+      apparel: {
+        icon: 'bi-hanger',
+        emoji: '🧢',
+        title: 'Apparel',
+        eyebrow: 'Wardrobe',
+        description: 'Layer clothing pieces and accessories to build a full outfit.',
+        intro: 'Mix and match apparel categories to outfit your avatar from top to toe.',
+        stageTagline: 'Coordinate tops, outfits, bottoms, and accessories.',
+        footnote: 'Slots dedicated to wearable apparel.',
+        slots: [
+          {
+            id: 'torso',
+            description: 'Primary tops worn over the body base.',
+            examples: 'Graphic tees, armor plating, hoodies',
+          },
+          {
+            id: 'jacket',
+            description: 'Full-body outfits that override top and bottom slots.',
+            examples: 'Bodysuits, jumpsuits, robes',
+          },
+          {
+            id: 'bottoms',
+            description: 'Legwear paired with tops or outfits.',
+            examples: 'Jeans, skirts, joggers',
+          },
+          {
+            id: 'shoes',
+            description: 'Footwear to ground the look.',
+            examples: 'Sneakers, boots, sandals',
+          },
+          {
+            id: 'neck',
+            description: 'Accessories wrapping the neck area.',
+            examples: 'Scarves, chokers, ties',
+          },
+          {
+            id: 'left_wrist',
+            description: 'Accessories worn on the left wrist.',
+            examples: 'Bracelets, bangles, smartwatches',
+          },
+          {
+            id: 'right_wrist',
+            description: 'Accessories worn on the right wrist.',
+            examples: 'Bracelets, cuffs, watches',
+          },
+        ],
+        subcategories: [
+          {
+            name: 'Tops',
+            description: 'Layer shirts, tees, armor, and vests onto the torso slot.',
+            examples: 'Graphic tees, armor plating, hoodies',
+            slotRefs: ['torso'],
+          },
+          {
+            name: 'Outfits',
+            description: 'Suit up in full ensembles that override both top and bottom layers.',
+            examples: 'Bodysuits, jumpsuits, robes',
+            slotRefs: ['jacket'],
+          },
+          {
+            name: 'Bottoms',
+            description: 'Pick pants, skirts, and legwear to balance the silhouette.',
+            examples: 'Jeans, skirts, joggers',
+            slotRefs: ['bottoms'],
+          },
+          {
+            name: 'Shoes',
+            description: 'Finish the fit with footwear that sets the tone.',
+            examples: 'Sneakers, boots, sandals',
+            slotRefs: ['shoes'],
+          },
+          {
+            name: 'Neckwear',
+            description: 'Layer scarves and chokers for added personality.',
+            examples: 'Scarves, chokers, ties',
+            slotRefs: ['neck'],
+          },
+          {
+            name: 'Wristwear',
+            description: 'Accessorize either wrist with bands, cuffs, or wearable tech.',
+            examples: 'Bracelets, bangles, watches',
+            slotRefs: ['left_wrist', 'right_wrist'],
+          },
+        ],
+      },
+      headwear: {
+        icon: 'bi-incognito',
+        emoji: '🧠',
+        title: 'Headwear',
+        eyebrow: 'Accessories',
+        description: 'Style everything above the shoulders with statement pieces.',
+        intro: 'Crown the avatar with hats, halos, and expressive facial overlays.',
+        stageTagline: 'Stack hats, halos, headphones, and facial details.',
+        footnote: 'Slots covering the head and face.',
+        slots: [
+          {
+            id: 'hat',
+            description: 'Primary hat layer for crowns, caps, and helmets.',
+            examples: 'Snapbacks, royal crowns, wizard hats',
+          },
+          {
+            id: 'hair_accessory',
+            description: 'Attachments that clip onto hair meshes.',
+            examples: 'Horns, halos, mini wings',
+          },
+          {
+            id: 'face_accessory',
+            description: 'Accessories that sit on the face layer.',
+            examples: 'Glasses, visors, blush stickers',
+          },
+          {
+            id: 'mouth',
+            description: 'Face-covering gear that occupies the mouth slot.',
+            examples: 'Masks, respirators, fang guards',
+          },
+        ],
+        subcategories: [
+          {
+            name: 'Hats & Crowns',
+            description: 'Iconic toppers that instantly set the mood.',
+            examples: 'Snapbacks, royal crowns, helmets',
+            slotRefs: ['hat'],
+          },
+          {
+            name: 'Horns',
+            description: 'Mythic horn sets for dramatic silhouettes.',
+            examples: 'Dragon horns, ram spirals, neon spikes',
+            slotRefs: ['hair_accessory'],
+          },
+          {
+            name: 'Halos',
+            description: 'Floating halos and aura rings to highlight the avatar.',
+            examples: 'Angel halo, glitch ring, neon disc',
+            slotRefs: ['hair_accessory'],
+          },
+          {
+            name: 'Headphones',
+            description: 'Immersive audio gear that frames the head.',
+            examples: 'Studio cans, VR visors, cat-ear headphones',
+            slotRefs: ['hair_accessory'],
+          },
+          {
+            name: 'Hair Accessories',
+            description: 'Clips and bows that accent existing hair styles.',
+            examples: 'Bows, barrettes, mini wings',
+            slotRefs: ['hair_accessory'],
+          },
+          {
+            name: 'Glasses & Visors',
+            description: 'Lenses and visors that sit across the eyes.',
+            examples: 'Aviators, sci-fi HUD visor, reading glasses',
+            slotRefs: ['face_accessory'],
+          },
+          {
+            name: 'Face Stickers & Blush',
+            description: 'Decals to add expressive flair to cheeks and nose.',
+            examples: 'Heart blush, festival decals, esports paint',
+            slotRefs: ['face_accessory'],
+          },
+          {
+            name: 'Face Masks',
+            description: 'Protective and stylistic masks that cover the mouth.',
+            examples: 'Medical mask, tactical respirator, oni mask',
+            slotRefs: ['mouth'],
+          },
+        ],
+      },
+      gear: {
+        icon: 'bi-tools',
+        emoji: '💪',
+        title: 'Gear',
+        eyebrow: 'Equipment',
+        description: 'Equip utility pieces that add personality and story.',
+        intro: 'Load out the avatar with handhelds, shoulder armor, and back gear.',
+        stageTagline: 'Pose-ready equipment for hands, arms, and back.',
+        footnote: 'Slots for weapons, shields, and support gear.',
+        slots: [
+          {
+            id: 'left_hand',
+            description: 'Items grasped in the left hand.',
+            examples: 'Spellbooks, lanterns, plushies',
+          },
+          {
+            id: 'right_hand',
+            description: 'Items grasped in the right hand.',
+            examples: 'Swords, microphones, gamepads',
+          },
+          {
+            id: 'left_wrist',
+            description: 'Armored or gadget bands on the left arm.',
+            examples: 'Shield bracers, grappling gauntlets',
+          },
+          {
+            id: 'right_wrist',
+            description: 'Armored or gadget bands on the right arm.',
+            examples: 'Energy bracers, wrist communicators',
+          },
+          {
+            id: 'back_upper',
+            description: 'Gear mounted high on the back.',
+            examples: 'Angel wings, banner poles, jetpacks',
+          },
+          {
+            id: 'back_lower',
+            description: 'Gear anchored near the lower back or waist.',
+            examples: 'Tails, capes, utility packs',
+          },
+        ],
+        subcategories: [
+          {
+            name: 'Handhelds',
+            description: 'Props the avatar holds for extra storytelling.',
+            examples: 'Spellbooks, microphones, swords',
+            slotRefs: ['left_hand', 'right_hand'],
+          },
+          {
+            name: 'Shoulder & Arm Gear',
+            description: 'Gadgets and armor mounted to the arms.',
+            examples: 'Shield bracers, grappling gauntlets',
+            slotRefs: ['left_wrist', 'right_wrist'],
+          },
+          {
+            name: 'Back Gear',
+            description: 'Statement pieces attached behind the avatar.',
+            examples: 'Angel wings, banners, mech tails',
+            slotRefs: ['back_upper', 'back_lower'],
+          },
+        ],
+      },
+      props: {
+        icon: 'bi-stars',
+        emoji: '🌟',
+        title: 'Props & Effects',
+        eyebrow: 'Showtime',
+        description: 'Stage floating props, scene pieces, and special effects.',
+        intro: 'Bring the avatar to life with companions, platforms, and auras.',
+        stageTagline: 'Orbiting props, scene elements, and emotes.',
+        footnote: 'Slots for companions, scenery, VFX, and emotes.',
+        slots: [
+          {
+            id: 'prop_companion_a',
+            description: 'Primary orbiting or pet companion slot.',
+            examples: 'Floating drone, mini mascot',
+          },
+          {
+            id: 'prop_companion_b',
+            description: 'Secondary companion slot for layered props.',
+            examples: 'Pet sprite, sparkle buddy',
+          },
+          {
+            id: 'prop_scene_a',
+            description: 'Scene prop slot for platforms or ground elements.',
+            examples: 'Magic circle, stage riser',
+          },
+          {
+            id: 'prop_scene_b',
+            description: 'Additional scene prop layer for backdrops.',
+            examples: 'Floating sigil, hologram wall',
+          },
+          {
+            id: 'vfx',
+            description: 'Ambient visual effects layered over the avatar.',
+            examples: 'Aura glow, particle trails, shimmer',
+          },
+          {
+            id: 'emote',
+            description: 'Animated actions, poses, or dances.',
+            examples: 'Victory pose, dance loop, wave',
+          },
+        ],
+        subcategories: [
+          {
+            name: 'Props',
+            description: 'Orbiting buddies and companion props that float nearby.',
+            examples: 'Floating drone, pet sprite, mascot buddy',
+            slotRefs: ['prop_companion_a', 'prop_companion_b'],
+          },
+          {
+            name: 'Scene Props',
+            description: 'Platforms and backdrop elements that anchor the scene.',
+            examples: 'Magic circle, stage riser, hologram wall',
+            slotRefs: ['prop_scene_a', 'prop_scene_b'],
+          },
+          {
+            name: 'VFX',
+            description: 'Ambient visual effects that surround the avatar.',
+            examples: 'Aura glow, particle trails, shimmer',
+            slotRefs: ['vfx'],
+          },
+          {
+            name: 'Emotes',
+            description: 'Poses and dances that animate the character.',
+            examples: 'Victory pose, dance loop, wave',
+            slotRefs: ['emote'],
+          },
+        ],
+      },
+    };
+
+    const navButtons = document.querySelectorAll('.nav-stack .nav-button');
+    const categoryIconGlyph = document.getElementById('categoryIconGlyph');
+    const categoryEyebrow = document.getElementById('categoryEyebrow');
+    const categoryTitle = document.getElementById('categoryTitle');
+    const categoryDescription = document.getElementById('categoryDescription');
+    const categoryIntro = document.getElementById('categoryIntro');
+    const subcategoryGrid = document.getElementById('subcategoryGrid');
+    const slotTableBody = document.querySelector('#slotTable tbody');
+    const slotChipList = document.getElementById('slotChipList');
+    const railLabel = document.getElementById('railLabel');
+    const railFootnote = document.getElementById('railFootnote');
+    const stageIcon = document.getElementById('stageIcon');
+    const stageLabel = document.getElementById('stageLabel');
+    const stageTagline = document.getElementById('stageTagline');
+
+    function renderCategory(key) {
+      const category = categoryContent[key];
+      if (!category) {
+        return;
+      }
+
+      categoryIconGlyph.className = `bi ${category.icon}`;
+      categoryEyebrow.textContent = category.eyebrow;
+      categoryTitle.textContent = category.title;
+      categoryDescription.textContent = category.description;
+      categoryIntro.textContent = category.intro;
+      stageIcon.className = `bi ${category.icon}`;
+      stageLabel.textContent = `${category.emoji} ${category.title}`;
+      stageTagline.textContent = category.stageTagline;
+      railLabel.textContent = `${category.title} Slots`;
+      railFootnote.textContent = category.footnote;
+
+      subcategoryGrid.innerHTML = '';
+      slotTableBody.innerHTML = '';
+      slotChipList.innerHTML = '';
+
+      category.slots.forEach((slot) => {
+        const chip = document.createElement('span');
+        chip.className = 'slot-chip';
+        chip.textContent = slot.id;
+        slotChipList.appendChild(chip);
+
+        const row = document.createElement('tr');
+        const slotCell = document.createElement('td');
+        slotCell.textContent = slot.id;
+        const descCell = document.createElement('td');
+        descCell.textContent = slot.description;
+        const exampleCell = document.createElement('td');
+        exampleCell.textContent = slot.examples;
+        row.append(slotCell, descCell, exampleCell);
+        slotTableBody.appendChild(row);
+      });
+
+      category.subcategories.forEach((item) => {
+        const card = document.createElement('article');
+        card.className = 'subcategory-card';
+        card.setAttribute('role', 'listitem');
+
+        const header = document.createElement('div');
+        header.className = 'subcategory-header';
+
+        const name = document.createElement('h2');
+        name.className = 'subcategory-name';
+        name.textContent = item.name;
+
+        const slotContainer = document.createElement('div');
+        slotContainer.className = 'subcategory-slots';
+
+        item.slotRefs.forEach((slotId) => {
+          const badge = document.createElement('span');
+          badge.className = 'slot-badge';
+          badge.textContent = slotId;
+          slotContainer.appendChild(badge);
+        });
+
+        header.append(name, slotContainer);
+
+        const description = document.createElement('p');
+        description.className = 'subcategory-description';
+        description.textContent = item.description;
+
+        const examples = document.createElement('p');
+        examples.className = 'subcategory-examples';
+        const examplesLabel = document.createElement('span');
+        examplesLabel.textContent = 'Examples';
+        examples.append(examplesLabel, document.createTextNode(`: ${item.examples}`));
+
+        card.append(header, description, examples);
+        subcategoryGrid.appendChild(card);
+      });
+    }
+
+    navButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        slotButtons.forEach((item) => {
+        navButtons.forEach((item) => {
           item.classList.remove('active');
           item.setAttribute('aria-pressed', 'false');
         });
         btn.classList.add('active');
         btn.setAttribute('aria-pressed', 'true');
+        renderCategory(btn.dataset.category);
       });
     });
 
-    const genderButtons = document.querySelectorAll('.gender-toggle .toggle-pill');
-    genderButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        genderButtons.forEach((item) => {
-          item.classList.remove('active');
-          item.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-      });
-    });
-
-    const headOptions = document.querySelectorAll('.option-card');
-    headOptions.forEach((option) => {
-      option.addEventListener('click', () => {
-        headOptions.forEach((item) => item.classList.remove('active'));
-        option.classList.add('active');
-      });
-    });
-
-    const bodyButtons = document.querySelectorAll('.bodytype-pill');
-    bodyButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        bodyButtons.forEach((item) => item.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
-
-    const toneSwatches = document.querySelectorAll('.tone-swatch');
-    toneSwatches.forEach((swatch) => {
-      swatch.addEventListener('click', () => {
-        toneSwatches.forEach((item) => {
-          item.classList.remove('active');
-          item.setAttribute('aria-pressed', 'false');
-        });
-        swatch.classList.add('active');
-        swatch.setAttribute('aria-pressed', 'true');
-      });
-    });
+    renderCategory('body');
   </script>
 </body>
 </html>
