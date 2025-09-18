@@ -1,0 +1,15 @@
+{
+    "Type": "Live2D Expression",
+    "Parameters": [
+        {
+            "Id": "ParamQuestionMark",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamDespressed",
+            "Value": 1.0,
+            "Blend": "Add"
+        }
+    ]
+}

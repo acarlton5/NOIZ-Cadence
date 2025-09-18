@@ -1,0 +1,25 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "CrimsonKitsune.moc3",
+		"Textures": [
+			"CrimsonKitsune.8192/texture_00.png",
+			"CrimsonKitsune.8192/texture_01.png",
+			"CrimsonKitsune.8192/texture_02.png"
+		],
+		"Physics": "CrimsonKitsune.physics3.json",
+		"DisplayInfo": "CrimsonKitsune.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		}
+	]
+}

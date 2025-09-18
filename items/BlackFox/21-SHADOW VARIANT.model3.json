@@ -1,0 +1,33 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "21-SHADOW VARIANT.moc3",
+		"Textures": [
+			"21-SHADOW VARIANT.4096/texture_00.png",
+			"21-SHADOW VARIANT.4096/texture_01.png",
+			"21-SHADOW VARIANT.4096/texture_02.png",
+			"21-SHADOW VARIANT.4096/texture_03.png",
+			"21-SHADOW VARIANT.4096/texture_04.png",
+			"21-SHADOW VARIANT.4096/texture_05.png",
+			"21-SHADOW VARIANT.4096/texture_06.png",
+			"21-SHADOW VARIANT.4096/texture_07.png"
+		],
+		"Physics": "21-SHADOW VARIANT.physics3.json",
+		"DisplayInfo": "21-SHADOW VARIANT.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	]
+}
