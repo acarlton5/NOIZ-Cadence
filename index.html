@@ -339,6 +339,7 @@
   let currentExpressionPackets = [];
   const activeToggleData = new Map();
   const expressionCache = new Map();
+  let modelBounds = null;
   let modelLoadToken = 0;
 
   function fingerprint(obj) {
@@ -366,12 +367,36 @@
     window.addEventListener('resize', () => positionModel(), { passive: true });
   }
 
+  function refreshModelBounds() {
+    if (!live2dModel) {
+      modelBounds = null;
+      return;
+    }
+    try {
+      const bounds = live2dModel.getLocalBounds();
+      if (
+        bounds &&
+        Number.isFinite(bounds.width) && bounds.width > 0 &&
+        Number.isFinite(bounds.height) && bounds.height > 0
+      ) {
+        modelBounds = bounds;
+      }
+    } catch (err) {
+      modelBounds = null;
+    }
+  }
+
   function positionModel() {
     if (!app || !live2dModel || !currentModelConfig) return;
     const layout = currentModelConfig.layout || {};
     const canvasInfo = live2dModel.internalModel && live2dModel.internalModel.canvasinfo;
-    const nativeWidth = layout.canvasWidth || layout.canvas || (canvasInfo ? canvasInfo.CanvasWidth : 2000);
-    const nativeHeight = layout.canvasHeight || layout.canvas || (canvasInfo ? canvasInfo.CanvasHeight : nativeWidth);
+    const fallbackWidth = layout.canvasWidth || layout.canvas || (canvasInfo ? canvasInfo.CanvasWidth : 2000);
+    const fallbackHeight = layout.canvasHeight || layout.canvas || (canvasInfo ? canvasInfo.CanvasHeight : fallbackWidth);
+    const bounds = modelBounds || (() => {
+      try { return live2dModel.getLocalBounds(); } catch (err) { return null; }
+    })();
+    const contentWidth = bounds && Number.isFinite(bounds.width) && bounds.width > 0 ? bounds.width : fallbackWidth;
+    const contentHeight = bounds && Number.isFinite(bounds.height) && bounds.height > 0 ? bounds.height : fallbackHeight;
     const baseScale = layout.scale || 1;
     const anchorX = typeof layout.anchorX === 'number' ? layout.anchorX : 0.5;
     const anchorY = typeof layout.anchorY === 'number' ? layout.anchorY : 0.9;
@@ -385,44 +410,50 @@
     const stageHeight = app.renderer.height;
     const usableWidth = Math.max(1, stageWidth - marginX * 2);
     const usableHeight = Math.max(1, stageHeight - marginTop - marginBottom);
-    const widthScale = Math.max(0, usableWidth / Math.max(1, nativeWidth));
-    const heightScale = Math.max(0, usableHeight / Math.max(1, nativeHeight));
+    const widthScale = Math.max(0, usableWidth / Math.max(1, contentWidth));
+    const heightScale = Math.max(0, usableHeight / Math.max(1, contentHeight));
     const fitScale = Math.min(widthScale, heightScale) || 0;
     let scale = fitScale * baseScale;
     scale = Math.max(0, Math.min(scale, widthScale, heightScale));
     live2dModel.scale.set(scale);
     if (live2dModel.anchor && typeof live2dModel.anchor.set === 'function') {
-      live2dModel.anchor.set(anchorX, anchorY);
-    } else if (live2dModel.pivot && typeof live2dModel.pivot.set === 'function') {
-      const width = live2dModel.width / scale;
-      const height = live2dModel.height / scale;
-      live2dModel.pivot.set(width * anchorX, height * anchorY);
+      live2dModel.anchor.set(0, 0);
     }
-    const width = live2dModel.width;
-    const height = live2dModel.height;
+    const pivotX = bounds ? bounds.x + contentWidth * anchorX : contentWidth * anchorX;
+    const pivotY = bounds ? bounds.y + contentHeight * anchorY : contentHeight * anchorY;
+    if (live2dModel.pivot && typeof live2dModel.pivot.set === 'function') {
+      live2dModel.pivot.set(pivotX, pivotY);
+    }
     const areaRight = stageWidth - marginX;
     const areaBottom = stageHeight - marginBottom;
     const areaLeft = marginX;
     const areaTop = marginTop;
-    let x = stageWidth * alignX + offsetX;
-    let y = areaBottom - height * (1 - anchorY) + offsetY;
-    const left = x - width * anchorX;
-    const right = x + width * (1 - anchorX);
-    const top = y - height * anchorY;
-    const bottom = y + height * (1 - anchorY);
-    if (left < areaLeft) {
-      x += areaLeft - left;
-    }
-    if (right > areaRight) {
-      x -= right - areaRight;
-    }
-    if (top < areaTop) {
-      y += areaTop - top;
-    }
-    if (bottom > areaBottom) {
-      y -= bottom - areaBottom;
-    }
+    const bottomSpan = bounds ? bounds.y + contentHeight - pivotY : contentHeight * (1 - anchorY);
+    const initialX = areaLeft + usableWidth * alignX + offsetX;
+    let x = initialX;
+    let y = areaBottom - bottomSpan * scale + offsetY;
     live2dModel.position.set(x, y);
+    for (let i = 0; i < 2; i++) {
+      const currentBounds = live2dModel.getBounds();
+      let dx = 0;
+      let dy = 0;
+      if (currentBounds.left < areaLeft) {
+        dx += areaLeft - currentBounds.left;
+      }
+      if (currentBounds.right > areaRight) {
+        dx -= currentBounds.right - areaRight;
+      }
+      if (currentBounds.top < areaTop) {
+        dy += areaTop - currentBounds.top;
+      }
+      if (currentBounds.bottom > areaBottom) {
+        dy -= currentBounds.bottom - areaBottom;
+      }
+      if (dx === 0 && dy === 0) break;
+      x += dx;
+      y += dy;
+      live2dModel.position.set(x, y);
+    }
   }
 
   function captureBaseParameters() {
@@ -468,6 +499,8 @@
     if (coreModel && typeof coreModel.saveParameters === 'function') {
       coreModel.saveParameters();
     }
+    refreshModelBounds();
+    positionModel();
   }
 
   async function fetchJSON(url) {
@@ -720,6 +753,7 @@
       state.toggles = new Set();
       selectedItemId = 'neutral';
       captureBaseParameters();
+      refreshModelBounds();
       positionModel();
       const targetState = sanitizeState(desiredState ? { ...desiredState, modelId } : { modelId, expressionId: 'neutral', toggles: [] });
       await setExpressionState(targetState.expressionId, { skipApply: true, skipRender: true, skipDirty: true, skipSelect: true, skipNotify: true });
@@ -783,7 +817,8 @@
     if (!id || !type) return;
     try {
       if (type === 'expression') {
-        await setExpressionState(id);
+        const targetId = id === state.expressionId && id !== 'neutral' ? 'neutral' : id;
+        await setExpressionState(targetId);
       } else if (type === 'attachment') {
         const enabled = state.toggles.has(id);
         await setToggleState(id, !enabled);
