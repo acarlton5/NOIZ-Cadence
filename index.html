@@ -369,7 +369,9 @@
   function positionModel() {
     if (!app || !live2dModel || !currentModelConfig) return;
     const layout = currentModelConfig.layout || {};
-    const canvas = layout.canvas || 2000;
+    const canvasInfo = live2dModel.internalModel && live2dModel.internalModel.canvasinfo;
+    const nativeWidth = layout.canvasWidth || layout.canvas || (canvasInfo ? canvasInfo.CanvasWidth : 2000);
+    const nativeHeight = layout.canvasHeight || layout.canvas || (canvasInfo ? canvasInfo.CanvasHeight : nativeWidth);
     const baseScale = layout.scale || 1;
     const anchorX = typeof layout.anchorX === 'number' ? layout.anchorX : 0.5;
     const anchorY = typeof layout.anchorY === 'number' ? layout.anchorY : 0.9;
@@ -383,7 +385,11 @@
     const stageHeight = app.renderer.height;
     const usableWidth = Math.max(1, stageWidth - marginX * 2);
     const usableHeight = Math.max(1, stageHeight - marginTop - marginBottom);
-    const scale = Math.min(usableWidth / canvas, usableHeight / canvas) * baseScale;
+    const widthScale = Math.max(0, usableWidth / Math.max(1, nativeWidth));
+    const heightScale = Math.max(0, usableHeight / Math.max(1, nativeHeight));
+    const fitScale = Math.min(widthScale, heightScale) || 0;
+    let scale = fitScale * baseScale;
+    scale = Math.max(0, Math.min(scale, widthScale, heightScale));
     live2dModel.scale.set(scale);
     if (live2dModel.anchor && typeof live2dModel.anchor.set === 'function') {
       live2dModel.anchor.set(anchorX, anchorY);
@@ -392,8 +398,30 @@
       const height = live2dModel.height / scale;
       live2dModel.pivot.set(width * anchorX, height * anchorY);
     }
-    const x = stageWidth * alignX + offsetX;
-    const y = stageHeight - marginBottom - live2dModel.height * (1 - anchorY) + offsetY;
+    const width = live2dModel.width;
+    const height = live2dModel.height;
+    const areaRight = stageWidth - marginX;
+    const areaBottom = stageHeight - marginBottom;
+    const areaLeft = marginX;
+    const areaTop = marginTop;
+    let x = stageWidth * alignX + offsetX;
+    let y = areaBottom - height * (1 - anchorY) + offsetY;
+    const left = x - width * anchorX;
+    const right = x + width * (1 - anchorX);
+    const top = y - height * anchorY;
+    const bottom = y + height * (1 - anchorY);
+    if (left < areaLeft) {
+      x += areaLeft - left;
+    }
+    if (right > areaRight) {
+      x -= right - areaRight;
+    }
+    if (top < areaTop) {
+      y += areaTop - top;
+    }
+    if (bottom > areaBottom) {
+      y -= bottom - areaBottom;
+    }
     live2dModel.position.set(x, y);
   }
 
