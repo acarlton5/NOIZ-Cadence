@@ -1,0 +1,13 @@
+{
+  "id": "skin_dark",
+  "name": "Skin – Deep",
+  "slot": "skin",
+  "fill": "#8a5b3f",
+  "size": [360, 620],
+  "mount": { "offset": [0, 60], "scale": 1 },
+  "tags": ["appearance"],
+  "ipTags": [],
+  "conflicts": { "ip": [], "safety": [] },
+  "locks": { "exclusive_with": [] },
+  "entitlementId": "itm_skin_dark_v1"
+}

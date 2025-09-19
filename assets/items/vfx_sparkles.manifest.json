@@ -1,0 +1,14 @@
+{
+  "id": "vfx_sparkles",
+  "name": "Sparkle Overlay",
+  "slot": "vfx",
+  "fill": "#9fd5ff",
+  "alpha": 0.35,
+  "size": [520, 520],
+  "mount": { "offset": [0, 40], "scale": 1.1, "renderLayer": "front" },
+  "tags": ["vfx"],
+  "ipTags": ["spark"],
+  "conflicts": { "ip": [], "safety": ["minor_only"] },
+  "locks": { "exclusive_with": [] },
+  "entitlementId": "itm_vfx_sparkles_v1"
+}

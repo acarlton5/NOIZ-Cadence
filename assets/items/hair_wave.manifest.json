@@ -1,0 +1,13 @@
+{
+  "id": "hair_wave",
+  "name": "Hair – Wave",
+  "slot": "hair",
+  "fill": "#a47bff",
+  "size": [420, 420],
+  "mount": { "anchor": [0.5, 0.1], "offset": [0, -160], "scale": 1.05 },
+  "tags": ["hair"],
+  "ipTags": ["noiz"],
+  "conflicts": { "ip": [], "safety": [] },
+  "locks": { "exclusive_with": [] },
+  "entitlementId": "itm_hair_wave_v1"
+}

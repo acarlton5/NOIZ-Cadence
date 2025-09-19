@@ -1,0 +1,13 @@
+{
+  "id": "eyes_green",
+  "name": "Eyes – Green",
+  "slot": "eyes",
+  "fill": "#2fd6a0",
+  "size": [120, 50],
+  "mount": { "offset": [0, -120], "scale": 1 },
+  "tags": ["appearance"],
+  "ipTags": ["emerald"],
+  "conflicts": { "ip": [], "safety": [] },
+  "locks": { "exclusive_with": [] },
+  "entitlementId": "itm_eyes_green_v1"
+}

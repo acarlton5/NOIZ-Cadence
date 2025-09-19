@@ -1,0 +1,17 @@
+{
+  "id": "hoodie_blue",
+  "name": "Hoodie – Blue",
+  "slot": "torso",
+  "fill": "#4a60ff",
+  "size": [380, 420],
+  "z": 640,
+  "mount": { "offset": [0, 120], "scale": 1 },
+  "variants": [
+    { "id": "hoodie_black", "fill": "#242638", "name": "Hoodie – Black" }
+  ],
+  "tags": ["apparel", "hoodie"],
+  "ipTags": ["noiz"],
+  "conflicts": { "ip": [], "safety": [] },
+  "locks": { "exclusive_with": [] },
+  "entitlementId": "itm_hoodie_blue_v1"
+}

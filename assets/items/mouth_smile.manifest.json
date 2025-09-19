@@ -1,0 +1,13 @@
+{
+  "id": "mouth_smile",
+  "name": "Smile",
+  "slot": "mouth",
+  "fill": "#ff88a5",
+  "size": [110, 34],
+  "mount": { "offset": [0, -40], "scale": 1 },
+  "tags": ["appearance"],
+  "ipTags": [],
+  "conflicts": { "ip": [], "safety": [] },
+  "locks": { "exclusive_with": [] },
+  "entitlementId": "itm_mouth_smile_v1"
+}

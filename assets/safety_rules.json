@@ -1,0 +1,3 @@
+[
+  { "tag": "minor_only", "conflicts_with": ["violence"], "message": "Minor-only cosmetics cannot pair with violent props." }
+]
