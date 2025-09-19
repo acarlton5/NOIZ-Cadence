@@ -479,17 +479,33 @@
 
   function captureBaseParameters() {
     if (!live2dModel || !live2dModel.internalModel) return;
-    const core = live2dModel.internalModel.coreModel;
+    const internal = live2dModel.internalModel;
+    const core = internal.coreModel;
     baseParameters = new Map();
     const ids = typeof core.getParameterIds === 'function' ? core.getParameterIds() : [];
     ids.forEach(id => {
       baseParameters.set(id, core.getParameterValueById(id));
     });
+    if (typeof internal.saveParameters === 'function') {
+      try {
+        internal.saveParameters();
+      } catch (err) {
+        console.warn('Failed to snapshot Live2D parameters', err);
+      }
+    }
   }
 
   function applyParameterState() {
     if (!live2dModel || !live2dModel.internalModel) return;
-    const core = live2dModel.internalModel.coreModel;
+    const internal = live2dModel.internalModel;
+    if (typeof internal.loadParameters === 'function') {
+      try {
+        internal.loadParameters();
+      } catch (err) {
+        console.warn('Failed to restore Live2D parameters', err);
+      }
+    }
+    const core = internal.coreModel;
     baseParameters.forEach((value, id) => {
       core.setParameterValueById(id, value);
     });
@@ -518,6 +534,13 @@
     });
     refreshModelBounds();
     positionModel();
+    if (typeof internal.saveParameters === 'function') {
+      try {
+        internal.saveParameters();
+      } catch (err) {
+        console.warn('Failed to persist Live2D parameters', err);
+      }
+    }
   }
 
   async function fetchJSON(url) {
