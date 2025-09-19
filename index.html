@@ -362,9 +362,7 @@
   const activeToggleData = new Map();
   const expressionCache = new Map();
   const lockedParameterValues = new Map();
-  const lockedPartValues = new Map();
-  const lastLockedParameterIds = new Set();
-  const lastLockedPartIds = new Set();
+  const lockedPartOpacities = new Map();
   let parameterTicker = null;
   let modelBounds = null;
   let modelLoadToken = 0;
@@ -398,20 +396,23 @@
   function ensureParameterTicker() {
     if (!app || parameterTicker) return;
     parameterTicker = () => {
-      if (
-        !live2dModel ||
-        !live2dModel.internalModel ||
-        (lockedParameterValues.size === 0 && lockedPartValues.size === 0)
-      ) {
-        return;
-      }
+      if (!live2dModel || !live2dModel.internalModel) return;
+      if (lockedParameterValues.size === 0 && lockedPartOpacities.size === 0) return;
       const core = live2dModel.internalModel.coreModel;
       lockedParameterValues.forEach((value, id) => {
-        core.setParameterValueById(id, value);
+        try {
+          core.setParameterValueById(id, value);
+        } catch (err) {
+          /* ignore */
+        }
       });
       if (typeof core.setPartOpacityById === 'function') {
-        lockedPartValues.forEach((value, id) => {
-          core.setPartOpacityById(id, value);
+        lockedPartOpacities.forEach((value, id) => {
+          try {
+            core.setPartOpacityById(id, value);
+          } catch (err) {
+            /* ignore */
+          }
         });
       }
     };
@@ -513,15 +514,27 @@
     const core = internal.coreModel;
     baseParameters = new Map();
     baseParts = new Map();
-    const ids = typeof core.getParameterIds === 'function' ? core.getParameterIds() : [];
-    ids.forEach(id => {
-      baseParameters.set(id, core.getParameterValueById(id));
+    const parameterIds = typeof core.getParameterIds === 'function' ? core.getParameterIds() : [];
+    parameterIds.forEach(id => {
+      try {
+        baseParameters.set(id, core.getParameterValueById(id));
+      } catch (err) {
+        baseParameters.set(id, 0);
+      }
     });
     if (typeof core.getPartIds === 'function' && typeof core.getPartOpacityById === 'function') {
-      const partIds = core.getPartIds();
-      partIds.forEach(id => {
-        baseParts.set(id, core.getPartOpacityById(id));
-      });
+      try {
+        const partIds = core.getPartIds();
+        partIds.forEach(id => {
+          try {
+            baseParts.set(id, core.getPartOpacityById(id));
+          } catch (err) {
+            baseParts.set(id, 1);
+          }
+        });
+      } catch (err) {
+        baseParts = new Map();
+      }
     }
     if (typeof internal.saveParameters === 'function') {
       try {
@@ -532,43 +545,129 @@
     }
   }
 
-  function collectPacketOperations(parameterMap, partMap, packets) {
-    packets.forEach(packet => {
-      if (packet && Array.isArray(packet.Parameters)) {
-        packet.Parameters.forEach(param => {
-          const id = param.Id;
-          if (!id || typeof param.Value !== 'number') return;
-          const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
-          if (!parameterMap.has(id)) {
-            parameterMap.set(id, []);
-          }
-          parameterMap.get(id).push({
-            blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
-            value: param.Value
-          });
-        });
+  function applyParameterState() {
+    if (!live2dModel || !live2dModel.internalModel) return;
+    const internal = live2dModel.internalModel;
+    const core = internal.coreModel;
+    if (typeof internal.loadParameters === 'function') {
+      try {
+        internal.loadParameters();
+      } catch (err) {
+        console.warn('Failed to restore Live2D parameters', err);
       }
-      if (packet && Array.isArray(packet.Parts)) {
-        packet.Parts.forEach(part => {
-          const id = part.Id;
-          if (!id || typeof part.Opacity !== 'number') return;
-          const blend = typeof part.Blend === 'string' ? part.Blend : 'Overwrite';
-          if (!partMap.has(id)) {
-            partMap.set(id, []);
-          }
-          partMap.get(id).push({
-            blend: blend === 'Add' || blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Overwrite',
-            value: part.Opacity
-          });
-        });
+    }
+    baseParameters.forEach((value, id) => {
+      try {
+        core.setParameterValueById(id, value);
+      } catch (err) {
+        /* ignore */
       }
     });
+    if (typeof core.setPartOpacityById === 'function') {
+      baseParts.forEach((value, id) => {
+        try {
+          core.setPartOpacityById(id, value);
+        } catch (err) {
+          /* ignore */
+        }
+      });
+    }
+
+    lockedParameterValues.clear();
+    lockedPartOpacities.clear();
+
+    const parameterOperations = new Map();
+    const partOperations = new Map();
+
+    const queuePackets = packets => {
+      packets.forEach(packet => {
+        if (packet && Array.isArray(packet.Parameters)) {
+          packet.Parameters.forEach(param => {
+            const id = param.Id;
+            if (!id || typeof param.Value !== 'number') return;
+            const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
+            if (!parameterOperations.has(id)) {
+              parameterOperations.set(id, []);
+            }
+            parameterOperations.get(id).push({
+              blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
+              value: param.Value
+            });
+          });
+        }
+        if (packet && Array.isArray(packet.Parts)) {
+          packet.Parts.forEach(part => {
+            const id = part.Id;
+            if (!id || typeof part.Opacity !== 'number') return;
+            const blend = typeof part.Blend === 'string' ? part.Blend : 'Overwrite';
+            if (!partOperations.has(id)) {
+              partOperations.set(id, []);
+            }
+            partOperations.get(id).push({
+              blend: blend === 'Add' || blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Overwrite',
+              value: part.Opacity
+            });
+          });
+        }
+      });
+    };
+
+    queuePackets(currentExpressionPackets);
+    state.toggles.forEach(id => {
+      const packets = activeToggleData.get(id);
+      if (packets) {
+        queuePackets(packets);
+      }
+    });
+
+    parameterOperations.forEach((ops, id) => {
+      const baseValue = baseParameters.has(id) ? baseParameters.get(id) : safeGetParameterValue(core, id);
+      const finalValue = clampParameterValue(id, applyOperations(baseValue, ops), core);
+      try {
+        core.setParameterValueById(id, finalValue);
+        lockedParameterValues.set(id, finalValue);
+      } catch (err) {
+        /* ignore */
+      }
+    });
+
+    if (typeof core.setPartOpacityById === 'function') {
+      partOperations.forEach((ops, id) => {
+        const baseValue = baseParts.has(id) ? baseParts.get(id) : safeGetPartOpacity(core, id);
+        const finalValue = clampOpacity(applyOperations(baseValue, ops));
+        try {
+          core.setPartOpacityById(id, finalValue);
+          lockedPartOpacities.set(id, finalValue);
+        } catch (err) {
+          /* ignore */
+        }
+      });
+    }
+
+    if (typeof internal.saveParameters === 'function') {
+      try {
+        internal.saveParameters();
+      } catch (err) {
+        console.warn('Failed to persist Live2D parameters', err);
+      }
+    }
+    refreshModelBounds();
+    positionModel();
   }
 
-  function getBaseParameterValue(id, core) {
-    if (baseParameters.has(id)) {
-      return baseParameters.get(id);
-    }
+  function applyOperations(baseValue, operations) {
+    return operations.reduce((current, op) => {
+      if (op.blend === 'Multiply') {
+        return current * op.value;
+      }
+      if (op.blend === 'Overwrite') {
+        return op.value;
+      }
+      return current + op.value;
+    }, baseValue);
+  }
+
+  function safeGetParameterValue(core, id) {
     try {
       return core.getParameterValueById(id);
     } catch (err) {
@@ -576,10 +675,7 @@
     }
   }
 
-  function getBasePartOpacity(id, core) {
-    if (baseParts.has(id)) {
-      return baseParts.get(id);
-    }
+  function safeGetPartOpacity(core, id) {
     try {
       return typeof core.getPartOpacityById === 'function' ? core.getPartOpacityById(id) : 1;
     } catch (err) {
@@ -603,100 +699,8 @@
     }
   }
 
-  function recomputeLockedParameters() {
-    lockedParameterValues.clear();
-    lockedPartValues.clear();
-    if (!live2dModel || !live2dModel.internalModel) return;
-    const core = live2dModel.internalModel.coreModel;
-    const parameterOperations = new Map();
-    const partOperations = new Map();
-    collectPacketOperations(parameterOperations, partOperations, currentExpressionPackets);
-    state.toggles.forEach(id => {
-      const packets = activeToggleData.get(id);
-      if (packets) {
-        collectPacketOperations(parameterOperations, partOperations, packets);
-      }
-    });
-    parameterOperations.forEach((ops, id) => {
-      const finalValue = ops.reduce((current, op) => {
-        if (op.blend === 'Multiply') {
-          return current * op.value;
-        }
-        if (op.blend === 'Overwrite') {
-          return op.value;
-        }
-        return current + op.value;
-      }, getBaseParameterValue(id, core));
-      lockedParameterValues.set(id, clampParameterValue(id, finalValue, core));
-    });
-    partOperations.forEach((ops, id) => {
-      const finalValue = ops.reduce((current, op) => {
-        if (op.blend === 'Multiply') {
-          return current * op.value;
-        }
-        if (op.blend === 'Overwrite') {
-          return op.value;
-        }
-        return current + op.value;
-      }, getBasePartOpacity(id, core));
-      lockedPartValues.set(id, Math.max(0, Math.min(1, finalValue)));
-    });
-  }
-
-  function applyParameterState() {
-    if (!live2dModel || !live2dModel.internalModel) return;
-    recomputeLockedParameters();
-    const internal = live2dModel.internalModel;
-    const core = internal.coreModel;
-    const nextLockedIds = new Set(lockedParameterValues.keys());
-    const nextLockedPartIds = new Set(lockedPartValues.keys());
-    lastLockedParameterIds.forEach(id => {
-      if (!nextLockedIds.has(id)) {
-        core.setParameterValueById(id, getBaseParameterValue(id, core));
-      }
-    });
-    if (typeof core.setPartOpacityById === 'function') {
-      lastLockedPartIds.forEach(id => {
-        if (!nextLockedPartIds.has(id)) {
-          core.setPartOpacityById(id, getBasePartOpacity(id, core));
-        }
-      });
-    }
-    lockedParameterValues.forEach((value, id) => {
-      core.setParameterValueById(id, value);
-    });
-    if (typeof core.setPartOpacityById === 'function') {
-      lockedPartValues.forEach((value, id) => {
-        core.setPartOpacityById(id, value);
-      });
-    }
-    refreshModelBounds();
-    positionModel();
-    if (typeof internal.saveParameters === 'function') {
-      try {
-        internal.saveParameters();
-      } catch (err) {
-        console.warn('Failed to persist Live2D parameters', err);
-      }
-    }
-    lastLockedParameterIds.clear();
-    nextLockedIds.forEach(id => lastLockedParameterIds.add(id));
-    lastLockedPartIds.clear();
-    nextLockedPartIds.forEach(id => lastLockedPartIds.add(id));
-    if (typeof internal.update === 'function') {
-      try {
-        internal.update();
-      } catch (err) {
-        console.warn('Failed to force Live2D parameter update', err);
-      }
-    }
-    if (typeof live2dModel.update === 'function') {
-      try {
-        live2dModel.update(0);
-      } catch (err) {
-        console.warn('Failed to sync Live2D drawable state', err);
-      }
-    }
+  function clampOpacity(value) {
+    return Math.max(0, Math.min(1, value));
   }
 
   async function fetchJSON(url) {
@@ -954,10 +958,11 @@
       app.stage.addChild(live2dModel);
       currentModelConfig = config;
       baseParameters = new Map();
+      baseParts = new Map();
       currentExpressionPackets = [];
       activeToggleData.clear();
       lockedParameterValues.clear();
-      lastLockedParameterIds.clear();
+      lockedPartOpacities.clear();
       state.modelId = modelId;
       state.expressionId = 'neutral';
       state.toggles = new Set();
@@ -967,18 +972,8 @@
       positionModel();
       const targetState = sanitizeState(desiredState ? { ...desiredState, modelId } : { modelId });
       await setExpressionState(targetState.expressionId, { skipApply: true, skipRender: true, skipDirty: true, skipSelect: true, skipNotify: true });
-      if (targetState.toggles.length) {
-        const togglePromises = targetState.toggles.map(toggleId =>
-          setToggleState(toggleId, true, {
-            skipApply: true,
-            skipRender: true,
-            skipInspector: true,
-            skipDirty: true,
-            skipSelect: true,
-            skipNotify: true
-          })
-        );
-        await Promise.all(togglePromises);
+      for (const toggleId of targetState.toggles) {
+        await setToggleState(toggleId, true, { skipApply: true, skipRender: true, skipInspector: true, skipDirty: true, skipSelect: true, skipNotify: true });
       }
       applyParameterState();
       selectedItemId = state.expressionId;
