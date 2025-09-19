@@ -1,48 +1,53 @@
-# Cadence 2D Runtime
+# Cadence Live2D Wardrobe Prototype
 
-A high-fidelity, web-based **2D avatar system** for NOIZ. Cadence provides a paper-doll wardrobe with VTuber aesthetics rendered with PixiJS. The runtime composites layers defined in JSON manifests; this prototype draws colour-blocked vector stand-ins so no binary art assets are required in-repo.
+This prototype renders existing NOIZ Live2D avatars inside the Bootstrap wardrobe shell. It uses
+[`pixi-live2d-display`](https://github.com/guansss/pixi-live2d-display) on top of PixiJS to load the
+bundled Cubism models and lets you swap expressions, toggle attachments, and persist selections to
+`localStorage`.
 
-## Goals
-- Ship a **fast, cheap, scalable** avatar system that can host thousands of cosmetics.
-- Maintain strict **one-item-per-slot** semantics with conflict tags for brand and safety governance.
-- Reuse the existing Bootstrap wardrobe editor UI and entitlement flow.
-- Keep runtime delivery **license-safe** (no Live2D SDK or GLB requirement).
+## Features
+- Pick between the bundled **Crimson Kitsune** and **Shadow Variant** models (both included under
+  `items/`).
+- Preview idle animation, physics, and cloth/ear motion directly inside the right-hand preview pane.
+- Swap facial expressions from the **Appearance** tab. The runtime applies the matching `.exp3.json`
+  files and blends the parameters with the model’s defaults.
+- Toggle accessories (tails, jewellery, FX props) from the **Outfit** tab. Multiple attachments can be
+  active at once and the inspector shows the current stack.
+- Save and restore the last used model/expression/attachments across reloads (via `localStorage`).
 
-## Tech Stack
-- **UI**: Bootstrap 5, vanilla JavaScript
-- **Renderer**: PixiJS (WebGL with Canvas fallback)
-- **State**: slot→item mapping persisted through Constellation entitlements (localStorage shim in this prototype)
-- **Assets**: JSON manifests describing either raster layers (CDN-hosted PNG/WebP) or procedural colour blocks (used in this repo)
-
-## Runtime Flow
-1. Load the base manifest (`/assets/base/base.manifest.json`) to populate default layers.
-2. Fetch equipped entitlements and hydrate the Pixi stage.
-3. When the user taps a catalogue tile the runtime resolves conflicts, swaps the item for the relevant slot, and posts telemetry events (`equipped`, `blocked`).
-4. Save emits a `{ slot → entitlementId }` payload.
-
-## Conflict Rules
-- Items can declare `exclusive_with`, `ipTags`, and safety constraints. The runtime prevents illegal combinations and offers a replace/cancel modal when conflicts arise.
-- IP combinations are enforced through `assets/ip_matrix.json`.
-- Safety checks originate from `assets/safety_rules.json`.
-
-## Asset Manifests
-Item manifests (`*.manifest.json`) describe the slot, visual styling, z-order hints, optional mount metadata, variants, tags, and entitlement id. Example:
-
-```json
-{
-  "id": "hoodie_blue",
-  "slot": "torso",
-  "fill": "#4a60ff",
-  "size": [380, 420],
-  "mount": { "anchor": [0.5, 0.5], "offset": [0, 120], "scale": 1 },
-  "variants": [
-    { "id": "hoodie_black", "fill": "#242638" }
-  ],
-  "entitlementId": "itm_hoodie_blue_v1"
-}
+## Project Layout
+```
+index.html           # Bootstrap UI + Pixi/Live2D runtime
+items/RedFox/        # Crimson Kitsune Live2D model + expressions
+items/BlackFox/      # Shadow Variant Live2D model + expressions/accessories
 ```
 
-Base manifests define immutable layers (body, default hair, etc.) and live in `/assets/base`. They follow the same schema, allowing either `image` references for CDN art or simple `fill` + `size` pairs for placeholder geometry.
+All assets are pre-packaged Live2D exports (`.model3.json`, `.moc3`, `.exp3.json`, textures, physics).
+No pipeline conversion is required to run the demo.
 
-## Development
-Open `index.html` in a modern browser. The prototype uses localStorage to persist a demo profile. Items, layer order, and conflict matrices live under the `/assets` folder and can be extended to add more cosmetics.
+## Running the Demo
+Open `index.html` in any modern browser. Because the assets live beside the HTML file, no build step
+is required. If you serve the folder from a local web server, make sure it serves static files with
+CORS enabled (or just open the file directly via `file://`).
+
+## Customising Models and Attachments
+Model definitions live inside `index.html` under the `MODEL_CONFIGS` constant. Each entry declares:
+- `model`: path to the `.model3.json`
+- `expressions`: array with `id`, `name`, `icon`, and `files` (a list of `.exp3.json` files to apply)
+- `toggles`: array of attachment definitions with the same structure
+
+To add a new avatar, drop its exported Live2D folder under `items/`, then extend `MODEL_CONFIGS` with
+the proper relative paths. The runtime will automatically surface the expressions/attachments in the
+catalogue UI.
+
+## Persistence Format
+The save payload stored in `localStorage` looks like:
+```json
+{
+  "modelId": "redfox",
+  "expressionId": "love",
+  "toggles": ["sparkleEyes", "necklace"]
+}
+```
+This mirrors the runtime state and can be wired to Constellation entitlements or a backend API in a
+full implementation.

@@ -139,6 +139,14 @@
 
   .btn-discard{ background: transparent; border: 1px solid rgba(255,255,255,.25); color: var(--text); }
   .btn-save{ background: var(--accent); border: none; color:#fff; }
+  .model-select{
+    min-width: 180px;
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.2);
+    color: var(--text);
+  }
+  .model-select:focus{ box-shadow: none; border-color: rgba(255,255,255,.45); }
+  .model-select option{ color:#1d124b; }
 </style>
 </head>
 <body>
@@ -190,9 +198,10 @@
     <div class="d-flex justify-content-between align-items-center mb-2">
       <div>
         <div class="panel-title">Preview</div>
-        <div class="small catalog-sub">PixiJS layered composite</div>
+        <div class="small catalog-sub">Live2D model composite</div>
       </div>
-      <div class="d-flex gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <select id="modelSelect" class="form-select form-select-sm model-select"></select>
         <button id="discardBtn" class="btn btn-sm btn-discard" disabled>DISCARD CHANGES</button>
         <button id="saveBtn" class="btn btn-sm btn-save" disabled>SAVE AND CLOSE</button>
       </div>
@@ -225,28 +234,74 @@
 (() => {
   'use strict';
 
-  [...document.querySelectorAll('[data-bs-toggle="tooltip"]')].forEach(el => new bootstrap.Tooltip(el, {placement:'right'}));
+  [...document.querySelectorAll('[data-bs-toggle="tooltip"]')].forEach(el => new bootstrap.Tooltip(el, { placement: 'right' }));
 
   const messageTarget = window.parent && window.parent !== window ? window.parent : window;
 
-  const ITEM_SECTIONS = {
-    appearance: [
-      { id:'skin_tan', name:'Skin – Tan', slot:'skin', icon:'🧴', manifest:'./assets/items/skin_tan.manifest.json' },
-      { id:'skin_dark', name:'Skin – Deep', slot:'skin', icon:'🧴', manifest:'./assets/items/skin_dark.manifest.json' },
-      { id:'hair_wave', name:'Hair – Wave', slot:'hair', icon:'💇', manifest:'./assets/items/hair_wave.manifest.json' },
-      { id:'eyes_green', name:'Eyes – Green', slot:'eyes', icon:'👁️', manifest:'./assets/items/eyes_green.manifest.json' },
-      { id:'mouth_smile', name:'Smile', slot:'mouth', icon:'😄', manifest:'./assets/items/mouth_smile.manifest.json' }
-    ],
-    outfit: [
-      { id:'hoodie_blue', name:'Hoodie – Blue', slot:'torso', icon:'🧥', manifest:'./assets/items/hoodie_blue.manifest.json' },
-      { id:'jacket_gold', name:'Jacket – Gold', slot:'jacket', icon:'🥇', manifest:'./assets/items/jacket_gold.manifest.json' },
-      { id:'hat_beanie', name:'Beanie Hat', slot:'hat', icon:'🧢', manifest:'./assets/items/hat_beanie.manifest.json' },
-      { id:'vfx_sparkles', name:'Sparkle Overlay', slot:'vfx', icon:'✨', manifest:'./assets/items/vfx_sparkles.manifest.json' }
-    ]
-  };
-
-  const ITEM_BY_ID = new Map();
-  Object.values(ITEM_SECTIONS).forEach(section => section.forEach(item => ITEM_BY_ID.set(item.id, item)));
+  const MODEL_CONFIGS = [
+    {
+      id: 'redfox',
+      name: 'Crimson Kitsune',
+      model: './items/RedFox/CrimsonKitsune.model3.json',
+      layout: { canvas: 2100, scale: 1.05, anchorY: 0.92, offsetY: -40 },
+      expressions: [
+        { id: 'neutral', name: 'Neutral', icon: '🙂', files: [] },
+        { id: 'love', name: 'Love', icon: '💖', files: ['./items/RedFox/Love.exp3.json'] },
+        { id: 'mad', name: 'Mad', icon: '😡', files: ['./items/RedFox/Mad.exp3.json'] },
+        { id: 'confused', name: 'Confused', icon: '😕', files: ['./items/RedFox/Confused.exp3.json'] },
+        { id: 'boring', name: 'Bored', icon: '😐', files: ['./items/RedFox/Boring.exp3.json'] },
+        { id: 'surprised', name: 'Surprised', icon: '😲', files: ['./items/RedFox/Surprised.exp3.json'] },
+        { id: 'shocked', name: 'Shocked', icon: '⚡', files: ['./items/RedFox/Shocked.exp3.json'] }
+      ],
+      toggles: [
+        { id: 'question', name: 'Question Mark FX', icon: '❓', files: ['./items/RedFox/Questionmark.exp3.json'] }
+      ]
+    },
+    {
+      id: 'blackfox',
+      name: 'Shadow Variant',
+      model: './items/BlackFox/21-SHADOW VARIANT.model3.json',
+      layout: { canvas: 2100, scale: 1.1, anchorY: 0.94, offsetY: -20 },
+      expressions: [
+        { id: 'neutral', name: 'Neutral', icon: '🙂', files: [] },
+        { id: 'angry', name: 'Angry', icon: '😤', files: ['./items/BlackFox/ANGRY.exp3.json'] },
+        { id: 'grin', name: 'Grin', icon: '😁', files: ['./items/BlackFox/GRIN.exp3.json'] },
+        { id: 'mischief', name: 'Mischief', icon: '😏', files: ['./items/BlackFox/MISCHIEF.exp3.json'] },
+        { id: 'shock', name: 'Shocked', icon: '😲', files: ['./items/BlackFox/SHOCK.exp3.json'] }
+      ],
+      toggles: [
+        { id: 'sparkleEyes', name: 'Sparkle Eyes', icon: '✨', files: ['./items/BlackFox/SPARKLE EYES.exp3.json'] },
+        { id: 'heartEyes', name: 'Heart Eyes', icon: '💘', files: ['./items/BlackFox/HEART EYES.exp3.json'] },
+        { id: 'armStraps', name: 'Arm Straps', icon: '🦾', files: ['./items/BlackFox/ARM STRAPS.exp3.json'] },
+        { id: 'hipChain', name: 'Hip Chain', icon: '⛓️', files: ['./items/BlackFox/HIP CHAIN.exp3.json'] },
+        { id: 'necklace', name: 'Necklace', icon: '📿', files: ['./items/BlackFox/NECKLACE.exp3.json'] },
+        { id: 'choker', name: 'Choker', icon: '🟣', files: ['./items/BlackFox/CHOKER.exp3.json'] },
+        { id: 'chokerStripes', name: 'Choker Stripes', icon: '🟪', files: ['./items/BlackFox/CHOKER STRIPES.exp3.json'] },
+        { id: 'kitsuneEars', name: 'Kitsune Ears', icon: '🦊', files: ['./items/BlackFox/KITSUNE EARS.exp3.json'] },
+        { id: 'kitsuneEmblem', name: 'Kitsune Emblem', icon: '🎖️', files: ['./items/BlackFox/KITSUNE EMBLEM.exp3.json'] },
+        { id: 'shadowTailSet', name: 'Shadow Tail Pack', icon: '🌙', files: [
+          './items/BlackFox/SHADOW TAIL L-01.exp3.json',
+          './items/BlackFox/SHADOW TAIL L-02.exp3.json',
+          './items/BlackFox/SHADOW TAIL L-03.exp3.json',
+          './items/BlackFox/SHADOW TAIL R-01.exp3.json',
+          './items/BlackFox/SHADOW TAIL R-02.exp3.json',
+          './items/BlackFox/SHADOW TAIL R-03.exp3.json'
+        ] },
+        { id: 'kitsuneTailSet', name: 'Kitsune Tail Pack', icon: '🪶', files: [
+          './items/BlackFox/KITSUNE TAIL L-01.exp3.json',
+          './items/BlackFox/KITSUNE TAIL L-02.exp3.json',
+          './items/BlackFox/KITSUNE TAIL L-03.exp3.json',
+          './items/BlackFox/KITSUNE TAIL R-01.exp3.json',
+          './items/BlackFox/KITSUNE TAIL R-02.exp3.json',
+          './items/BlackFox/KITSUNE TAIL R-03.exp3.json'
+        ] },
+        { id: 'earrings', name: 'Earrings', icon: '💎', files: ['./items/BlackFox/EARRING L.exp3.json', './items/BlackFox/EARRING R.exp3.json'] },
+        { id: 'customShadow', name: 'Custom Shadow Tails', icon: '🌀', files: ['./items/BlackFox/CUSTOM SHADOW TAILS.exp3.json'] }
+      ]
+    }
+  ];
+  const MODEL_BY_ID = new Map(MODEL_CONFIGS.map(config => [config.id, config]));
+  const DEFAULT_MODEL_ID = MODEL_CONFIGS[0].id;
 
   const grid = document.getElementById('grid');
   const search = document.getElementById('search');
@@ -255,529 +310,498 @@
   const variantBar = document.getElementById('variantBar');
   const saveBtn = document.getElementById('saveBtn');
   const discardBtn = document.getElementById('discardBtn');
+  const modelSelect = document.getElementById('modelSelect');
+  const tabAppearance = document.getElementById('tabAppearance');
+  const tabOutfit = document.getElementById('tabOutfit');
 
-  const conflictModalEl = document.getElementById('conflictModal');
-  const conflictModal = new bootstrap.Modal(conflictModalEl);
-  const conflictList = document.getElementById('conflictList');
-  const conflictReplace = document.getElementById('conflictReplace');
-  const conflictCancel = document.getElementById('conflictCancel');
-
-  const manifestCache = new Map();
   const USER_ID = 'demo-user';
-  const state = { equipped: {} };
-  let savedLoadout = {};
-  let savedFingerprint = fingerprint({});
+
+  const state = {
+    modelId: DEFAULT_MODEL_ID,
+    expressionId: 'neutral',
+    toggles: new Set()
+  };
+
+  let savedState = { modelId: DEFAULT_MODEL_ID, expressionId: 'neutral', toggles: [] };
+  let savedFingerprint = fingerprint(savedState);
   let currentSection = 'appearance';
   let selectedItemId = null;
-  let ipMatrix = [];
-  let safetyRules = [];
-  let renderer;
-  let pendingEquip = null;
+
+  let app = null;
+  let live2dModel = null;
+  let currentModelConfig = null;
+  let baseParameters = new Map();
+  let currentExpressionPackets = [];
+  const activeToggleData = new Map();
+  const expressionCache = new Map();
+  let modelLoadToken = 0;
 
   function fingerprint(obj) {
-    const ordered = Object.keys(obj).sort().reduce((acc, key) => {
-      acc[key] = obj[key];
-      return acc;
-    }, {});
-    return JSON.stringify(ordered);
+    return JSON.stringify(obj);
   }
 
-  function normalizeState(st) {
-    const normalized = {};
-    Object.entries(st.equipped).forEach(([slot, entry]) => {
-      if (!entry) return;
-      normalized[slot] = {
-        itemId: entry.itemId,
-        entitlementId: entry.entitlementId,
-        variantId: entry.variantId || null
-      };
+  function normalizeState(target = state) {
+    return {
+      modelId: target.modelId,
+      expressionId: target.expressionId,
+      toggles: Array.from(target.toggles).sort()
+    };
+  }
+
+  function ensureStage() {
+    if (app) return;
+    const stageEl = document.getElementById('stage');
+    app = new PIXI.Application({
+      backgroundAlpha: 0,
+      resizeTo: stageEl,
+      antialias: true,
+      powerPreference: 'high-performance'
     });
-    return normalized;
+    stageEl.appendChild(app.view);
+    window.addEventListener('resize', () => positionModel(), { passive: true });
+  }
+
+  function positionModel() {
+    if (!app || !live2dModel || !currentModelConfig) return;
+    const layout = currentModelConfig.layout || {};
+    const canvas = layout.canvas || 2000;
+    const baseScale = layout.scale || 1;
+    const anchorY = typeof layout.anchorY === 'number' ? layout.anchorY : 0.9;
+    const offsetX = layout.offsetX || 0;
+    const offsetY = layout.offsetY || 0;
+    const scale = Math.min(app.renderer.width / canvas, app.renderer.height / canvas) * baseScale;
+    live2dModel.scale.set(scale);
+    live2dModel.position.set(app.renderer.width / 2 + offsetX, app.renderer.height * anchorY + offsetY);
+  }
+
+  function captureBaseParameters() {
+    if (!live2dModel || !live2dModel.internalModel) return;
+    const core = live2dModel.internalModel.coreModel;
+    baseParameters = new Map();
+    const ids = typeof core.getParameterIds === 'function' ? core.getParameterIds() : [];
+    ids.forEach(id => {
+      baseParameters.set(id, core.getParameterValueById(id));
+    });
+  }
+
+  function applyParameterState() {
+    if (!live2dModel || !live2dModel.internalModel) return;
+    const core = live2dModel.internalModel.coreModel;
+    baseParameters.forEach((value, id) => {
+      core.setParameterValueById(id, value);
+    });
+    const applyPackets = packets => {
+      packets.forEach(packet => {
+        if (!packet || !Array.isArray(packet.Parameters)) return;
+        packet.Parameters.forEach(param => {
+          const id = param.Id;
+          if (!id) return;
+          const blend = param.Blend || 'Add';
+          const value = typeof param.Value === 'number' ? param.Value : 0;
+          const current = core.getParameterValueById(id);
+          let next = current;
+          if (blend === 'Add') next = current + value;
+          else if (blend === 'Multiply') next = current * value;
+          else if (blend === 'Overwrite') next = value;
+          else next = current + value;
+          core.setParameterValueById(id, next);
+        });
+      });
+    };
+    applyPackets(currentExpressionPackets);
+    state.toggles.forEach(id => {
+      const packets = activeToggleData.get(id);
+      if (packets) applyPackets(packets);
+    });
+    const coreModel = live2dModel.internalModel.coreModel;
+    if (coreModel && typeof coreModel.saveParameters === 'function') {
+      coreModel.saveParameters();
+    }
+  }
+
+  async function fetchJSON(url) {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Failed to load ${url}: ${res.status}`);
+    }
+    return res.json();
+  }
+
+  async function loadExpressionSource(src) {
+    if (!src) return null;
+    if (expressionCache.has(src)) return expressionCache.get(src);
+    const data = await fetchJSON(src);
+    expressionCache.set(src, data);
+    return data;
+  }
+
+  async function resolveEntryPackets(entry) {
+    if (!entry) return [];
+    const sources = Array.isArray(entry.files) ? entry.files : entry.file ? [entry.file] : [];
+    const packets = [];
+    for (const src of sources) {
+      try {
+        const data = await loadExpressionSource(src);
+        if (data) packets.push(data);
+      } catch (err) {
+        console.warn(`Failed to load expression ${src}`, err);
+      }
+    }
+    return packets;
+  }
+
+  async function setExpressionState(expressionId, options = {}) {
+    const {
+      skipApply = false,
+      skipRender = false,
+      skipDirty = false,
+      skipSelect = false,
+      skipNotify = false
+    } = options;
+    if (!currentModelConfig) return;
+    const entry = currentModelConfig.expressions.find(item => item.id === expressionId)
+      || currentModelConfig.expressions.find(item => item.id === 'neutral')
+      || currentModelConfig.expressions[0];
+    const packets = await resolveEntryPackets(entry);
+    currentExpressionPackets = packets;
+    state.expressionId = entry.id;
+    if (!skipSelect) {
+      selectedItemId = entry.id;
+    }
+    if (!skipApply) {
+      applyParameterState();
+    }
+    if (!skipRender) {
+      render(search.value);
+    }
+    if (!skipDirty) {
+      updateDirty();
+    }
+    if (!skipNotify) {
+      messageTarget.postMessage({ type: 'expression_changed', modelId: state.modelId, expressionId: state.expressionId }, '*');
+    }
+  }
+
+  async function setToggleState(toggleId, enabled, options = {}) {
+    const {
+      skipApply = false,
+      skipRender = false,
+      skipInspector = false,
+      skipDirty = false,
+      skipSelect = false,
+      skipNotify = false
+    } = options;
+    if (!currentModelConfig) return;
+    const entry = currentModelConfig.toggles.find(item => item.id === toggleId);
+    if (!entry) return;
+    const isActive = state.toggles.has(toggleId);
+    if (enabled === isActive) return;
+    if (enabled) {
+      const packets = await resolveEntryPackets(entry);
+      activeToggleData.set(toggleId, packets);
+      state.toggles.add(toggleId);
+    } else {
+      state.toggles.delete(toggleId);
+      activeToggleData.delete(toggleId);
+    }
+    if (!skipSelect) {
+      selectedItemId = toggleId;
+    }
+    if (!skipApply) {
+      applyParameterState();
+    }
+    if (!skipRender) {
+      render(search.value);
+    }
+    if (!skipInspector) {
+      updateInspector();
+    }
+    if (!skipDirty) {
+      updateDirty();
+    }
+    if (!skipNotify) {
+      messageTarget.postMessage({ type: 'toggle_changed', modelId: state.modelId, toggleId, enabled }, '*');
+    }
+  }
+
+  function render(filter = '') {
+    const config = currentModelConfig;
+    if (!config) {
+      grid.innerHTML = '<div class="text-center text-secondary py-5">Loading model…</div>';
+      return;
+    }
+    const source = currentSection === 'appearance' ? config.expressions : config.toggles;
+    const q = (filter || '').toLowerCase();
+    const items = source.filter(item => !q || item.name.toLowerCase().includes(q));
+    if (!items.length) {
+      const emptyText = currentSection === 'appearance'
+        ? 'No expressions match your search.'
+        : config.toggles.length
+          ? 'No attachments match your search.'
+          : 'This model does not expose modular attachments.';
+      grid.innerHTML = `<div class="text-center text-secondary py-5">${emptyText}</div>`;
+      return;
+    }
+    grid.innerHTML = items.map(item => {
+      const isExpression = currentSection === 'appearance';
+      const isActive = isExpression ? state.expressionId === item.id : state.toggles.has(item.id);
+      const isSelected = selectedItemId === item.id || (isExpression && isActive);
+      const classes = [
+        'tile',
+        isSelected ? 'selected' : '',
+        !isExpression && isActive ? 'equipped' : ''
+      ].filter(Boolean).join(' ');
+      const kind = isExpression ? 'expression' : 'attachment';
+      const icon = item.icon || '🎴';
+      return `<div class="${classes}" data-id="${item.id}" data-type="${kind}">`
+        + `<div class="thumb">${icon}</div>`
+        + `<div class="fw-semibold">${item.name}</div>`
+        + `<small>${kind}</small>`
+        + `</div>`;
+    }).join('');
+  }
+
+  function updateInspector() {
+    const config = currentModelConfig;
+    if (!config || state.toggles.size === 0) {
+      variantBar.classList.add('d-none');
+      variantBar.innerHTML = '';
+      return;
+    }
+    const chips = Array.from(state.toggles).map(id => {
+      const def = config.toggles.find(item => item.id === id);
+      const name = def ? def.name : id;
+      return `<span class="badge bg-light text-dark">${name}</span>`;
+    }).join(' ');
+    variantBar.innerHTML = `
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <h6 class="mb-1 text-uppercase">Attachments</h6>
+          <div class="fw-semibold">${config.name}</div>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-light" data-action="clearAttachments">Clear all</button>
+      </div>
+      <div class="d-flex flex-wrap gap-2">${chips}</div>
+    `;
+    variantBar.classList.remove('d-none');
+  }
+
+  function updateSectionCopy() {
+    const config = currentModelConfig;
+    if (currentSection === 'appearance') {
+      panelTitle.textContent = 'APPEARANCE';
+      panelSub.textContent = config ? `Swap facial expressions for ${config.name}.` : 'Swap facial expressions.';
+    } else {
+      panelTitle.textContent = 'OUTFIT';
+      if (config && config.toggles.length) {
+        panelSub.textContent = `Toggle accessories and FX for ${config.name}.`;
+      } else {
+        panelSub.textContent = config ? `${config.name} has no modular attachments.` : 'Toggle accessories.';
+      }
+    }
   }
 
   function updateDirty() {
-    const dirty = fingerprint(normalizeState(state)) !== savedFingerprint;
+    const dirty = fingerprint(normalizeState()) !== savedFingerprint;
     saveBtn.disabled = !dirty;
     discardBtn.disabled = !dirty;
     return dirty;
   }
 
-  function render(filter='') {
-    const q = (filter || '').toLowerCase();
-    const items = ITEM_SECTIONS[currentSection].filter(item => !q || item.name.toLowerCase().includes(q));
-    if (!items.length) {
-      grid.innerHTML = '<div class="text-center text-secondary py-5">No items match your search.</div>';
-      return;
+  async function loadProfileState(userId) {
+    try {
+      const raw = localStorage.getItem(`cadence-live2d-${userId}`);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : null;
+    } catch (err) {
+      console.warn('Failed to load profile state', err);
+      return null;
     }
-    grid.innerHTML = items.map(item => {
-      const equipped = state.equipped[item.slot]?.itemId === item.id;
-      const selected = selectedItemId === item.id;
-      return `<div class="tile ${selected ? 'selected' : ''} ${equipped ? 'equipped' : ''}" data-id="${item.id}">`
-        + `<div class="thumb">${item.icon || '🎴'}</div>`
-        + `<div class="fw-semibold">${item.name}</div>`
-        + `<small>${item.slot.replace(/_/g,' ')}</small>`
-        + `</div>`;
-    }).join('');
+  }
+
+  async function saveProfileState(userId, payload) {
+    try {
+      localStorage.setItem(`cadence-live2d-${userId}`, JSON.stringify(payload));
+    } catch (err) {
+      console.warn('Failed to save profile state', err);
+    }
+  }
+
+  function sanitizeState(raw) {
+    const fallbackModel = raw && typeof raw === 'object' && MODEL_BY_ID.has(raw.modelId) ? raw.modelId : DEFAULT_MODEL_ID;
+    const config = MODEL_BY_ID.get(fallbackModel);
+    const expressionIds = new Set(config.expressions.map(e => e.id));
+    const expressionId = raw && expressionIds.has(raw.expressionId) ? raw.expressionId : 'neutral';
+    const validToggleIds = new Set(config.toggles.map(t => t.id));
+    const toggles = Array.isArray(raw && raw.toggles) ? raw.toggles.filter(id => validToggleIds.has(id)) : [];
+    toggles.sort();
+    return { modelId: fallbackModel, expressionId, toggles };
+  }
+
+  async function selectModel(modelId, options = {}) {
+    const config = MODEL_BY_ID.get(modelId);
+    if (!config) return;
+    const { state: desiredState, skipDirty = false, skipNotify = false } = options;
+    const token = ++modelLoadToken;
+    modelSelect.disabled = true;
+    ensureStage();
+    grid.innerHTML = '<div class="text-center text-secondary py-5">Loading model…</div>';
+    try {
+      const model = await PIXI.live2d.Live2DModel.from(config.model);
+      if (token !== modelLoadToken) {
+        model.destroy();
+        return;
+      }
+      model.anchor.set(0.5, 0.5);
+      if (live2dModel) {
+        app.stage.removeChild(live2dModel);
+        live2dModel.destroy();
+      }
+      live2dModel = model;
+      app.stage.addChild(live2dModel);
+      currentModelConfig = config;
+      baseParameters = new Map();
+      currentExpressionPackets = [];
+      activeToggleData.clear();
+      state.modelId = modelId;
+      state.expressionId = 'neutral';
+      state.toggles = new Set();
+      selectedItemId = 'neutral';
+      captureBaseParameters();
+      positionModel();
+      const targetState = sanitizeState(desiredState ? { ...desiredState, modelId } : { modelId, expressionId: 'neutral', toggles: [] });
+      await setExpressionState(targetState.expressionId, { skipApply: true, skipRender: true, skipDirty: true, skipSelect: true, skipNotify: true });
+      for (const toggleId of targetState.toggles) {
+        await setToggleState(toggleId, true, { skipApply: true, skipRender: true, skipInspector: true, skipDirty: true, skipSelect: true, skipNotify: true });
+      }
+      applyParameterState();
+      selectedItemId = state.expressionId;
+      updateSectionCopy();
+      render(search.value);
+      updateInspector();
+      updateModelSelectUI();
+      if (!skipDirty) {
+        updateDirty();
+      }
+      if (!skipNotify) {
+        messageTarget.postMessage({ type: 'model_changed', modelId: state.modelId }, '*');
+      }
+    } catch (err) {
+      console.error('Failed to load Live2D model', err);
+      grid.innerHTML = '<div class="text-danger text-center py-5">Failed to load model.</div>';
+    } finally {
+      modelSelect.disabled = false;
+    }
+  }
+
+  async function applySavedState(saved, options = {}) {
+    const sanitized = sanitizeState(saved);
+    await selectModel(sanitized.modelId, { state: sanitized, skipDirty: true, skipNotify: true });
+    if (options.updateSaved !== false) {
+      savedState = sanitized;
+      savedFingerprint = fingerprint(sanitized);
+    }
+    updateDirty();
+  }
+
+  function renderModelSelect() {
+    modelSelect.innerHTML = MODEL_CONFIGS.map(config => `<option value="${config.id}">${config.name}</option>`).join('');
+  }
+
+  function updateModelSelectUI() {
+    if (modelSelect.value !== state.modelId) {
+      modelSelect.value = state.modelId;
+    }
   }
 
   function setSection(next) {
     if (currentSection === next) return;
     currentSection = next;
-    document.getElementById('tabAppearance').classList.toggle('active', next === 'appearance');
-    document.getElementById('tabOutfit').classList.toggle('active', next === 'outfit');
-    if (next === 'appearance') {
-      panelTitle.textContent = 'APPEARANCE';
-      panelSub.textContent = 'Customize your body, skin, hair, and face.';
-    } else {
-      panelTitle.textContent = 'OUTFIT';
-      panelSub.textContent = 'Mix and match clothing, hats, and effects.';
-    }
-    selectedItemId = null;
+    tabAppearance.classList.toggle('active', next === 'appearance');
+    tabOutfit.classList.toggle('active', next === 'outfit');
+    updateSectionCopy();
     render(search.value);
-    showInspector(null);
   }
 
-  async function fetchJSON(url) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
-    return res.json();
-  }
-
-  async function getManifest(itemId) {
-    if (manifestCache.has(itemId)) return manifestCache.get(itemId);
-    const def = ITEM_BY_ID.get(itemId);
-    if (!def) throw new Error(`Unknown item ${itemId}`);
-    const data = await fetchJSON(def.manifest);
-    manifestCache.set(itemId, data);
-    return data;
-  }
-  function createRenderer(layerOrder) {
-    const order = layerOrder || {};
-    let app;
-    let avatarRoot;
-    const containers = new Map();
-    const slotState = new Map();
-    const baseLayers = new Map();
-
-    function parseColor(hex) {
-      if (!hex) return 0xffffff;
-      const normalized = hex.replace('#', '').trim();
-      if (!normalized) return 0xffffff;
-      return parseInt(normalized, 16);
-    }
-
-    function buildVisual(entry) {
-      return {
-        image: entry?.image ?? null,
-        fill: entry?.fill ?? null,
-        alpha: typeof entry?.alpha === 'number' ? entry.alpha : undefined,
-        size: entry?.size ?? null
-      };
-    }
-
-    function mergeVisual(base, override) {
-      const baseVisual = buildVisual(base);
-      if (!override) {
-        return {
-          image: baseVisual.image,
-          fill: baseVisual.fill,
-          alpha: baseVisual.alpha ?? 1,
-          size: baseVisual.size
-        };
-      }
-      const overrideVisual = buildVisual(override);
-      return {
-        image: overrideVisual.image ?? baseVisual.image,
-        fill: overrideVisual.fill ?? baseVisual.fill,
-        alpha: overrideVisual.alpha ?? baseVisual.alpha ?? 1,
-        size: overrideVisual.size ?? baseVisual.size
-      };
-    }
-
-    function normalizeMount(mount) {
-      return {
-        anchor: mount?.anchor ?? [0.5, 0.5],
-        offset: mount?.offset ?? [0, 0],
-        scale: mount?.scale ?? 1,
-        renderLayer: mount?.renderLayer ?? null
-      };
-    }
-
-    function resolveZ(slot, explicit, renderLayer) {
-      let base = typeof explicit === 'number' ? explicit : (order[slot] ?? 600);
-      if (renderLayer === 'behind') base -= 10;
-      if (renderLayer === 'front') base += 10;
-      return base;
-    }
-
-    function ensureSlot(slot, zHint, renderLayer) {
-      if (!containers.has(slot)) {
-        const container = new PIXI.Container();
-        container.sortableChildren = true;
-        container.zIndex = resolveZ(slot, zHint, renderLayer);
-        containers.set(slot, container);
-        avatarRoot.addChild(container);
-      }
-      const container = containers.get(slot);
-      container.zIndex = resolveZ(slot, zHint, renderLayer);
-      return container;
-    }
-
-    function applyVisual(container, visual, mount, basePath) {
-      container.removeChildren();
-      let sprite;
-      if (visual.image) {
-        const src = visual.image.startsWith('http') || visual.image.startsWith('data:')
-          ? visual.image
-          : `${basePath}${visual.image}`;
-        const texture = PIXI.Texture.from(src);
-        sprite = new PIXI.Sprite(texture);
-      } else {
-        sprite = new PIXI.Sprite(PIXI.Texture.WHITE);
-        const size = visual.size ?? [320, 320];
-        sprite.width = size[0];
-        sprite.height = size[1];
-        sprite.tint = parseColor(visual.fill);
-        sprite.alpha = visual.alpha ?? 1;
-      }
-      sprite.anchor.set(mount.anchor[0], mount.anchor[1]);
-      sprite.position.set(400 + mount.offset[0], 400 + mount.offset[1]);
-      sprite.scale.set(mount.scale);
-      container.addChild(sprite);
-      return sprite;
-    }
-
-    function layout() {
-      if (!app || !avatarRoot) return;
-      const w = app.renderer.width;
-      const h = app.renderer.height;
-      const base = 800;
-      const scale = Math.min(w, h) / (base * 1.05);
-      avatarRoot.scale.set(scale);
-      avatarRoot.position.set(w / 2, h * 0.92);
-    }
-
-    return {
-      initStage(stageEl) {
-        app = new PIXI.Application({
-          backgroundAlpha: 0,
-          resizeTo: stageEl,
-          antialias: true,
-          powerPreference: 'high-performance'
-        });
-        stageEl.appendChild(app.view);
-        app.stage.sortableChildren = true;
-        avatarRoot = new PIXI.Container();
-        avatarRoot.sortableChildren = true;
-        avatarRoot.pivot.set(400, 400);
-        app.stage.addChild(avatarRoot);
-        layout();
-        window.addEventListener('resize', layout, { passive: true });
-      },
-      loadBase(baseManifest) {
-        baseManifest.layers.forEach(layer => {
-          const mount = normalizeMount(layer.mount);
-          const visual = mergeVisual(layer, null);
-          baseLayers.set(layer.id, { visual, mount, z: layer.z });
-          const container = ensureSlot(layer.id, layer.z, mount.renderLayer);
-          const sprite = applyVisual(container, visual, mount, './assets/base/');
-          slotState.set(layer.id, { sprite, manifest: null, variantId: null, visual, isBase: true });
-        });
-      },
-      applyItem(manifest, options = {}) {
-        const mount = normalizeMount(manifest.mount || {});
-        const container = ensureSlot(manifest.slot, manifest.z, mount.renderLayer);
-        const variantId = options.variantId ?? null;
-        const variant = variantId ? manifest.variants?.find(v => v.id === variantId) : null;
-        const visual = mergeVisual(manifest, variant);
-        const sprite = applyVisual(container, visual, mount, './assets/items/');
-        slotState.set(manifest.slot, { sprite, manifest, variantId, visual });
-      },
-      removeSlot(slot) {
-        const container = containers.get(slot);
-        if (!container) return;
-        container.removeChildren();
-        slotState.delete(slot);
-        if (baseLayers.has(slot)) {
-          const base = baseLayers.get(slot);
-          const sprite = applyVisual(container, base.visual, base.mount, './assets/base/');
-          slotState.set(slot, { sprite, manifest: null, variantId: null, visual: base.visual, isBase: true });
-        }
-      },
-      setVariant(slot, variantId) {
-        const entry = slotState.get(slot);
-        if (!entry || !entry.manifest) return;
-        const manifest = entry.manifest;
-        const variant = manifest.variants?.find(v => v.id === variantId);
-        if (!variant) return;
-        this.applyItem(manifest, { variantId });
-      },
-      getSlotState(slot) {
-        return slotState.get(slot);
-      }
-    };
-  }
-
-  function checkConflicts(next, state) {
-    const blockers = new Set();
-    const reasons = new Set();
-    const exclusive = new Set(next.locks?.exclusive_with ?? []);
-    const nextIp = next.ipTags ?? [];
-    const nextConflictIp = new Set(next.conflicts?.ip ?? []);
-    const nextSafety = next.conflicts?.safety ?? [];
-    const nextTags = next.tags ?? [];
-
-    Object.entries(state.equipped).forEach(([slot, entry]) => {
-      if (!entry || slot === next.slot) return;
-      const other = entry.manifest;
-      if (!other) return;
-      if (exclusive.has(other.id) || (other.locks?.exclusive_with ?? []).includes(next.id)) {
-        blockers.add(slot);
-        reasons.add(`${next.name} cannot be combined with ${other.name}.`);
-        return;
-      }
-      const otherIp = other.ipTags ?? [];
-      const otherConflictIp = new Set(other.conflicts?.ip ?? []);
-      if (nextConflictIp.size && otherIp.some(tag => nextConflictIp.has(tag))) {
-        blockers.add(slot);
-        reasons.add(`${next.name} conflicts with ${other.name} because of brand rules.`);
-      }
-      if (otherConflictIp.size && nextIp.some(tag => otherConflictIp.has(tag))) {
-        blockers.add(slot);
-        reasons.add(`${next.name} conflicts with ${other.name} because of brand rules.`);
-      }
-      nextIp.forEach(a => {
-        otherIp.forEach(b => {
-          const match = ipMatrix.find(rule => (rule.a === a && rule.b === b) || (rule.a === b && rule.b === a));
-          if (match) {
-            blockers.add(slot);
-            reasons.add(match.reason || `${next.name} cannot pair with ${other.name}.`);
-          }
-        });
-      });
-      const otherSafety = other.conflicts?.safety ?? [];
-      const otherTags = other.tags ?? [];
-      safetyRules.forEach(rule => {
-        if (nextSafety.includes(rule.tag)) {
-          const hit = rule.conflicts_with.some(tag => otherTags.includes(tag) || otherSafety.includes(tag) || (other.ipTags ?? []).includes(tag));
-          if (hit) {
-            blockers.add(slot);
-            reasons.add(rule.message || `${next.name} violates a safety rule with ${other.name}.`);
-          }
-        }
-        if (otherSafety.includes(rule.tag)) {
-          const hit = rule.conflicts_with.some(tag => nextTags.includes(tag) || nextSafety.includes(tag) || nextIp.includes(tag));
-          if (hit) {
-            blockers.add(slot);
-            reasons.add(rule.message || `${next.name} violates a safety rule with ${other.name}.`);
-          }
-        }
-      });
-    });
-
-    return { ok: reasons.size === 0, reasons: Array.from(reasons), blockers: Array.from(blockers) };
-  }
-
-  function showInspector(manifest) {
-    if (!manifest) {
-      variantBar.classList.add('d-none');
-      variantBar.removeAttribute('data-slot');
-      variantBar.innerHTML = '';
-      return;
-    }
-    const equippedEntry = state.equipped[manifest.slot];
-    const activeVariant = equippedEntry?.variantId || null;
-    let html = '<div class="d-flex justify-content-between align-items-center">'
-      + `<div><h6 class="mb-1">Slot</h6><div class="fw-semibold text-uppercase">${manifest.slot.replace(/_/g,' ')}</div></div>`
-      + `<div class="d-flex gap-2"><button type="button" class="btn btn-sm btn-outline-light" data-action="clear" data-slot="${manifest.slot}">Clear slot</button></div>`
-      + '</div>';
-    if (manifest.variants && manifest.variants.length) {
-      html += '<h6 class="mt-3 mb-2">Variants</h6>';
-      html += '<div class="d-flex flex-wrap gap-2">' + manifest.variants.map(variant => {
-        const active = activeVariant === variant.id ? ' active' : '';
-        const name = variant.name || variant.id;
-        return `<button type="button" class="variant-pill${active}" data-action="variant" data-slot="${manifest.slot}" data-variant="${variant.id}">${name}</button>`;
-      }).join('') + '</div>';
-    }
-    variantBar.innerHTML = html;
-    variantBar.classList.remove('d-none');
-    variantBar.dataset.slot = manifest.slot;
-  }
-
-  async function loadProfileEntitlements(userId) {
-    try {
-      const raw = localStorage.getItem(`cadence-equip-${userId}`);
-      if (!raw) return {};
-      const parsed = JSON.parse(raw);
-      return parsed && typeof parsed === 'object' ? parsed : {};
-    } catch (err) {
-      console.warn('Failed to load entitlements', err);
-      return {};
-    }
-  }
-
-  async function saveProfileEntitlements(userId, state) {
-    const payload = normalizeState(state);
-    try {
-      localStorage.setItem(`cadence-equip-${userId}`, JSON.stringify(payload));
-    } catch (err) {
-      console.warn('Failed to save entitlements', err);
-    }
-    return payload;
-  }
-  async function finalizeEquip(manifest, options = {}) {
-    const variantId = options.variantId ?? null;
-    renderer.applyItem(manifest, { variantId });
-    state.equipped[manifest.slot] = {
-      itemId: manifest.id,
-      entitlementId: manifest.entitlementId,
-      manifest,
-      variantId
-    };
-    if (!options.skipRender) {
-      render(search.value);
-    }
-    if (!options.skipDirty) {
-      updateDirty();
-    }
-    if (options.notify !== false) {
-      messageTarget.postMessage({ type: 'equipped', slot: manifest.slot, itemId: manifest.id }, '*');
-    }
-  }
-
-  async function attemptEquip(manifest, options = {}) {
-    let variantId = options.variantId ?? null;
-    const existing = state.equipped[manifest.slot];
-    if (!variantId && existing && existing.itemId === manifest.id) {
-      variantId = existing.variantId || null;
-    }
-    if (!options.skipConflicts) {
-      const conflict = checkConflicts(manifest, state);
-      if (!conflict.ok) {
-        pendingEquip = { manifest, conflict, variantId };
-        conflictList.innerHTML = conflict.reasons.map(reason => `<li>${reason}</li>`).join('');
-        conflictModal.show();
-        messageTarget.postMessage({ type: 'blocked', itemId: manifest.id, reasons: conflict.reasons }, '*');
-        return;
-      }
-    }
-    await finalizeEquip(manifest, { variantId, skipRender: options.skipRender, skipDirty: options.skipDirty, notify: options.notify });
-  }
-
-  async function applySavedLoadout(loadout) {
-    Object.keys(state.equipped).forEach(slot => {
-      renderer.removeSlot(slot);
-      delete state.equipped[slot];
-    });
-    const entries = Object.entries(loadout);
-    for (const [slot, entry] of entries) {
-      if (!entry || !entry.itemId) continue;
-      const manifest = await getManifest(entry.itemId);
-      await finalizeEquip(manifest, { variantId: entry.variantId || null, skipRender: true, skipDirty: true, notify: false });
-    }
-    render(search.value);
-    showInspector(null);
-  }
-
-  grid.addEventListener('click', async (event) => {
+  grid.addEventListener('click', async event => {
     const tile = event.target.closest('.tile');
     if (!tile) return;
     const id = tile.dataset.id;
-    const def = ITEM_BY_ID.get(id);
-    if (!def) return;
-    selectedItemId = id;
-    render(search.value);
-    const manifest = await getManifest(id);
-    showInspector(manifest);
-    await attemptEquip(manifest);
+    const type = tile.dataset.type;
+    if (!id || !type) return;
+    try {
+      if (type === 'expression') {
+        await setExpressionState(id);
+      } else if (type === 'attachment') {
+        const enabled = state.toggles.has(id);
+        await setToggleState(id, !enabled);
+      }
+    } catch (err) {
+      console.error('Failed to update selection', err);
+    }
   });
 
-  variantBar.addEventListener('click', async (event) => {
-    const btn = event.target.closest('[data-action]');
+  variantBar.addEventListener('click', async event => {
+    const btn = event.target.closest('[data-action="clearAttachments"]');
     if (!btn) return;
-    const slot = btn.dataset.slot;
-    if (!slot) return;
-    if (btn.dataset.action === 'clear') {
-      renderer.removeSlot(slot);
-      delete state.equipped[slot];
-      render(search.value);
-      showInspector(null);
-      updateDirty();
-      messageTarget.postMessage({ type: 'equipped', slot, itemId: null }, '*');
-      return;
+    const active = Array.from(state.toggles);
+    if (!active.length) return;
+    for (const id of active) {
+      await setToggleState(id, false, { skipApply: true, skipRender: true, skipInspector: true, skipDirty: true, skipSelect: true });
     }
-    if (btn.dataset.action === 'variant') {
-      const variantId = btn.dataset.variant;
-      const entry = state.equipped[slot];
-      if (!entry || !entry.manifest) return;
-      renderer.setVariant(slot, variantId);
-      entry.variantId = variantId;
-      render(search.value);
-      showInspector(entry.manifest);
-      updateDirty();
+    applyParameterState();
+    render(search.value);
+    updateInspector();
+    updateDirty();
+  });
+
+  tabAppearance.addEventListener('click', () => setSection('appearance'));
+  tabOutfit.addEventListener('click', () => setSection('outfit'));
+
+  search.addEventListener('input', event => {
+    render(event.target.value);
+  });
+
+  modelSelect.addEventListener('change', async event => {
+    const id = event.target.value;
+    if (!MODEL_BY_ID.has(id)) return;
+    try {
+      await selectModel(id);
+    } catch (err) {
+      console.error('Failed to switch model', err);
     }
   });
-
-  conflictReplace.addEventListener('click', async () => {
-    if (!pendingEquip) return;
-    const { manifest, conflict, variantId } = pendingEquip;
-    conflict.blockers.forEach(slot => {
-      renderer.removeSlot(slot);
-      delete state.equipped[slot];
-    });
-    conflictModal.hide();
-    pendingEquip = null;
-    await finalizeEquip(manifest, { variantId });
-    showInspector(manifest);
-  });
-
-  conflictCancel.addEventListener('click', () => {
-    pendingEquip = null;
-  });
-
-  document.getElementById('tabAppearance').addEventListener('click', () => setSection('appearance'));
-  document.getElementById('tabOutfit').addEventListener('click', () => setSection('outfit'));
-  search.addEventListener('input', (event) => render(event.target.value));
 
   saveBtn.addEventListener('click', async () => {
-    const payload = await saveProfileEntitlements(USER_ID, state);
-    savedLoadout = payload;
+    const payload = normalizeState();
+    await saveProfileState(USER_ID, payload);
+    savedState = payload;
     savedFingerprint = fingerprint(payload);
     updateDirty();
-    messageTarget.postMessage({ type: 'save_loadout', equipped: payload }, '*');
+    messageTarget.postMessage({ type: 'save_loadout', payload }, '*');
   });
 
   discardBtn.addEventListener('click', async () => {
-    await applySavedLoadout(savedLoadout);
-    savedFingerprint = fingerprint(savedLoadout);
-    updateDirty();
+    await applySavedState(savedState, { updateSaved: false });
   });
 
   async function bootstrap() {
-    const [layerOrder, baseManifest, matrix, safety, saved] = await Promise.all([
-      fetchJSON('./assets/layer_order.json'),
-      fetchJSON('./assets/base/base.manifest.json'),
-      fetchJSON('./assets/ip_matrix.json'),
-      fetchJSON('./assets/safety_rules.json'),
-      loadProfileEntitlements(USER_ID)
-    ]);
-    renderer = createRenderer(layerOrder);
-    renderer.initStage(document.getElementById('stage'));
-    renderer.loadBase(baseManifest);
-    ipMatrix = Array.isArray(matrix) ? matrix : [];
-    safetyRules = Array.isArray(safety) ? safety : [];
-    savedLoadout = saved;
-    savedFingerprint = fingerprint(savedLoadout);
-    await applySavedLoadout(savedLoadout);
-    render();
+    renderModelSelect();
+    const saved = await loadProfileState(USER_ID);
+    const sanitized = sanitizeState(saved);
+    savedState = sanitized;
+    savedFingerprint = fingerprint(sanitized);
+    await selectModel(sanitized.modelId, { state: sanitized, skipDirty: true, skipNotify: true });
     updateDirty();
     messageTarget.postMessage({ type: 'profile_render' }, '*');
   }
 
   bootstrap().catch(err => {
-    console.error('Failed to bootstrap Cadence runtime', err);
+    console.error('Failed to bootstrap Live2D wardrobe', err);
   });
 })();
+
 </script>
 </body>
 </html>
