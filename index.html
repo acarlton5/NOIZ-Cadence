@@ -371,12 +371,30 @@
     const layout = currentModelConfig.layout || {};
     const canvas = layout.canvas || 2000;
     const baseScale = layout.scale || 1;
+    const anchorX = typeof layout.anchorX === 'number' ? layout.anchorX : 0.5;
     const anchorY = typeof layout.anchorY === 'number' ? layout.anchorY : 0.9;
+    const alignX = typeof layout.alignX === 'number' ? layout.alignX : 0.5;
+    const marginTop = typeof layout.marginTop === 'number' ? layout.marginTop : 24;
+    const marginBottom = typeof layout.marginBottom === 'number' ? layout.marginBottom : 24;
+    const marginX = typeof layout.marginX === 'number' ? layout.marginX : 0;
     const offsetX = layout.offsetX || 0;
     const offsetY = layout.offsetY || 0;
-    const scale = Math.min(app.renderer.width / canvas, app.renderer.height / canvas) * baseScale;
+    const stageWidth = app.renderer.width;
+    const stageHeight = app.renderer.height;
+    const usableWidth = Math.max(1, stageWidth - marginX * 2);
+    const usableHeight = Math.max(1, stageHeight - marginTop - marginBottom);
+    const scale = Math.min(usableWidth / canvas, usableHeight / canvas) * baseScale;
     live2dModel.scale.set(scale);
-    live2dModel.position.set(app.renderer.width / 2 + offsetX, app.renderer.height * anchorY + offsetY);
+    if (live2dModel.anchor && typeof live2dModel.anchor.set === 'function') {
+      live2dModel.anchor.set(anchorX, anchorY);
+    } else if (live2dModel.pivot && typeof live2dModel.pivot.set === 'function') {
+      const width = live2dModel.width / scale;
+      const height = live2dModel.height / scale;
+      live2dModel.pivot.set(width * anchorX, height * anchorY);
+    }
+    const x = stageWidth * alignX + offsetX;
+    const y = stageHeight - marginBottom - live2dModel.height * (1 - anchorY) + offsetY;
+    live2dModel.position.set(x, y);
   }
 
   function captureBaseParameters() {
