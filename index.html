@@ -809,8 +809,18 @@
       positionModel();
       const targetState = sanitizeState(desiredState ? { ...desiredState, modelId } : { modelId });
       await setExpressionState(targetState.expressionId, { skipApply: true, skipRender: true, skipDirty: true, skipSelect: true, skipNotify: true });
-      for (const toggleId of targetState.toggles) {
-        await setToggleState(toggleId, true, { skipApply: true, skipRender: true, skipInspector: true, skipDirty: true, skipSelect: true, skipNotify: true });
+      if (targetState.toggles.length) {
+        const togglePromises = targetState.toggles.map(toggleId =>
+          setToggleState(toggleId, true, {
+            skipApply: true,
+            skipRender: true,
+            skipInspector: true,
+            skipDirty: true,
+            skipSelect: true,
+            skipNotify: true
+          })
+        );
+        await Promise.all(togglePromises);
       }
       applyParameterState();
       selectedItemId = state.expressionId;
