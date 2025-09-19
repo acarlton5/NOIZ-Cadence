@@ -252,6 +252,9 @@
       name: 'Crimson Kitsune',
       model: './items/RedFox/CrimsonKitsune.model3.json',
       layout: { canvas: 2100, scale: 1.05, anchorY: 0.92, offsetY: -40 },
+      defaults: {
+        toggles: []
+      },
       expressions: [
         { id: 'neutral', name: 'Neutral', icon: '🙂', files: [] },
         { id: 'love', name: 'Love', icon: '💖', files: ['./items/RedFox/Love.exp3.json'] },
@@ -270,6 +273,21 @@
       name: 'Shadow Variant',
       model: './items/BlackFox/21-SHADOW VARIANT.model3.json',
       layout: { canvas: 2100, scale: 1.1, anchorY: 0.94, offsetY: -20 },
+      defaults: {
+        toggles: [
+          'sparkleEyes',
+          'heartEyes',
+          'armStraps',
+          'hipChain',
+          'necklace',
+          'choker',
+          'chokerStripes',
+          'kitsuneEars',
+          'kitsuneEmblem',
+          'shadowTailSet',
+          'kitsuneTailSet'
+        ]
+      },
       expressions: [
         { id: 'neutral', name: 'Neutral', icon: '🙂', files: [] },
         { id: 'angry', name: 'Angry', icon: '😤', files: ['./items/BlackFox/ANGRY.exp3.json'] },
@@ -498,10 +516,6 @@
       const packets = activeToggleData.get(id);
       if (packets) applyPackets(packets);
     });
-    const coreModel = live2dModel.internalModel.coreModel;
-    if (coreModel && typeof coreModel.saveParameters === 'function') {
-      coreModel.saveParameters();
-    }
     refreshModelBounds();
     positionModel();
   }
@@ -592,7 +606,7 @@
       activeToggleData.delete(toggleId);
     }
     if (!skipSelect) {
-      selectedItemId = toggleId;
+      selectedItemId = enabled ? toggleId : null;
     }
     if (!skipApply) {
       applyParameterState();
@@ -723,9 +737,19 @@
     const expressionIds = new Set(config.expressions.map(e => e.id));
     const expressionId = raw && expressionIds.has(raw.expressionId) ? raw.expressionId : 'neutral';
     const validToggleIds = new Set(config.toggles.map(t => t.id));
-    const toggles = Array.isArray(raw && raw.toggles) ? raw.toggles.filter(id => validToggleIds.has(id)) : [];
-    toggles.sort();
-    return { modelId: fallbackModel, expressionId, toggles };
+    let toggles;
+    if (raw && Array.isArray(raw.toggles)) {
+      toggles = raw.toggles.filter(id => validToggleIds.has(id));
+    } else if (raw && raw.toggles === undefined && config.defaults && Array.isArray(config.defaults.toggles)) {
+      toggles = config.defaults.toggles.filter(id => validToggleIds.has(id));
+    } else if (!raw && config.defaults && Array.isArray(config.defaults.toggles)) {
+      toggles = config.defaults.toggles.filter(id => validToggleIds.has(id));
+    } else {
+      toggles = [];
+    }
+    const unique = Array.from(new Set(toggles));
+    unique.sort();
+    return { modelId: fallbackModel, expressionId, toggles: unique };
   }
 
   async function selectModel(modelId, options = {}) {
@@ -760,7 +784,7 @@
       captureBaseParameters();
       refreshModelBounds();
       positionModel();
-      const targetState = sanitizeState(desiredState ? { ...desiredState, modelId } : { modelId, expressionId: 'neutral', toggles: [] });
+      const targetState = sanitizeState(desiredState ? { ...desiredState, modelId } : { modelId });
       await setExpressionState(targetState.expressionId, { skipApply: true, skipRender: true, skipDirty: true, skipSelect: true, skipNotify: true });
       for (const toggleId of targetState.toggles) {
         await setToggleState(toggleId, true, { skipApply: true, skipRender: true, skipInspector: true, skipDirty: true, skipSelect: true, skipNotify: true });
