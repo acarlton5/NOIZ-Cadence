@@ -26,9 +26,10 @@ All assets are pre-packaged Live2D exports (`.model3.json`, `.moc3`, `.exp3.json
 No pipeline conversion is required to run the demo.
 
 ## Running the Demo
-Open `index.html` in any modern browser. Because the assets live beside the HTML file, no build step
-is required. If you serve the folder from a local web server, make sure it serves static files with
-CORS enabled (or just open the file directly via `file://`).
+Serve the folder from a local web server (for example `python -m http.server 8080` from the project
+root) and open `http://localhost:8080/index.html`. The runtime streams `.model3.json`, `.moc3`, and
+`.exp3.json` files via `fetch`, so browsers will block direct `file://` access. No additional build
+step is required beyond running a static file server.
 
 ## Customising Models and Attachments
 Model definitions live inside `index.html` under the `MODEL_CONFIGS` constant. Each entry declares:
