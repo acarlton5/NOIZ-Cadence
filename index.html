@@ -93,7 +93,10 @@
     box-shadow: 0 2px 10px rgba(0,0,0,.18);
     cursor:pointer; transition:transform .12s, box-shadow .12s, outline .12s;
     outline:2px solid transparent; position:relative;
+    border:0; width:100%; text-align:left;
+    display:block; font:inherit;
   }
+  .tile:focus-visible{ outline-color: var(--tile-outline); outline-offset:-2px; }
   .tile:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,.25); }
   .tile.selected{ outline-color: var(--tile-outline); outline-offset: -2px; }
   .tile .thumb{
@@ -629,19 +632,21 @@
     grid.innerHTML = items.map(item => {
       const isExpression = currentSection === 'appearance';
       const isActive = isExpression ? state.expressionId === item.id : state.toggles.has(item.id);
-      const isSelected = selectedItemId === item.id || (isExpression && isActive);
+      const isSelected = selectedItemId === item.id || isActive;
+      const showEquipped = !isExpression && isActive;
       const classes = [
         'tile',
         isSelected ? 'selected' : '',
-        !isExpression && isActive ? 'equipped' : ''
+        showEquipped ? 'equipped' : ''
       ].filter(Boolean).join(' ');
       const kind = isExpression ? 'expression' : 'attachment';
       const icon = item.icon || '🎴';
-      return `<div class="${classes}" data-id="${item.id}" data-type="${kind}">`
+      const equippedLabel = isActive ? 'true' : 'false';
+      return `<button type="button" class="${classes}" data-id="${item.id}" data-type="${kind}" data-equipped="${equippedLabel}" aria-pressed="${equippedLabel}">`
         + `<div class="thumb">${icon}</div>`
         + `<div class="fw-semibold">${item.name}</div>`
         + `<small>${kind}</small>`
-        + `</div>`;
+        + `</button>`;
     }).join('');
   }
 
