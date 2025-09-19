@@ -545,6 +545,39 @@
     }
   }
 
+  function accumulatePackets(packets, parameterMap, partMap) {
+    packets.forEach(packet => {
+      if (packet && Array.isArray(packet.Parameters)) {
+        packet.Parameters.forEach(param => {
+          const id = param.Id;
+          if (!id || typeof param.Value !== 'number') return;
+          const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
+          if (!parameterMap.has(id)) {
+            parameterMap.set(id, []);
+          }
+          parameterMap.get(id).push({
+            blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
+            value: param.Value
+          });
+        });
+      }
+      if (packet && Array.isArray(packet.Parts)) {
+        packet.Parts.forEach(part => {
+          const id = part.Id;
+          if (!id || typeof part.Opacity !== 'number') return;
+          const blend = typeof part.Blend === 'string' ? part.Blend : 'Overwrite';
+          if (!partMap.has(id)) {
+            partMap.set(id, []);
+          }
+          partMap.get(id).push({
+            blend: blend === 'Add' || blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Overwrite',
+            value: part.Opacity
+          });
+        });
+      }
+    });
+  }
+
   function applyParameterState() {
     if (!live2dModel || !live2dModel.internalModel) return;
     const internal = live2dModel.internalModel;
@@ -576,81 +609,64 @@
     lockedParameterValues.clear();
     lockedPartOpacities.clear();
 
-    const parameterOperations = new Map();
-    const partOperations = new Map();
+    const expressionParameterOps = new Map();
+    const expressionPartOps = new Map();
+    const toggleParameterOps = new Map();
+    const togglePartOps = new Map();
 
-    const queuePackets = packets => {
-      packets.forEach(packet => {
-        if (packet && Array.isArray(packet.Parameters)) {
-          packet.Parameters.forEach(param => {
-            const id = param.Id;
-            if (!id || typeof param.Value !== 'number') return;
-            const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
-            if (!parameterOperations.has(id)) {
-              parameterOperations.set(id, []);
-            }
-            parameterOperations.get(id).push({
-              blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
-              value: param.Value
-            });
-          });
-        }
-        if (packet && Array.isArray(packet.Parts)) {
-          packet.Parts.forEach(part => {
-            const id = part.Id;
-            if (!id || typeof part.Opacity !== 'number') return;
-            const blend = typeof part.Blend === 'string' ? part.Blend : 'Overwrite';
-            if (!partOperations.has(id)) {
-              partOperations.set(id, []);
-            }
-            partOperations.get(id).push({
-              blend: blend === 'Add' || blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Overwrite',
-              value: part.Opacity
-            });
-          });
-        }
-      });
-    };
-
-    queuePackets(currentExpressionPackets);
+    accumulatePackets(currentExpressionPackets, expressionParameterOps, expressionPartOps);
     state.toggles.forEach(id => {
       const packets = activeToggleData.get(id);
       if (packets) {
-        queuePackets(packets);
+        accumulatePackets(packets, toggleParameterOps, togglePartOps);
       }
     });
 
-    parameterOperations.forEach((ops, id) => {
+    const parameterIds = new Set([
+      ...expressionParameterOps.keys(),
+      ...toggleParameterOps.keys()
+    ]);
+
+    parameterIds.forEach(id => {
       const baseValue = baseParameters.has(id) ? baseParameters.get(id) : safeGetParameterValue(core, id);
-      const finalValue = clampParameterValue(id, applyOperations(baseValue, ops), core);
+      let value = baseValue;
+      if (toggleParameterOps.has(id)) {
+        value = clampParameterValue(id, applyOperations(value, toggleParameterOps.get(id)), core);
+      }
+      if (expressionParameterOps.has(id)) {
+        value = clampParameterValue(id, applyOperations(baseValue, expressionParameterOps.get(id)), core);
+      }
       try {
-        core.setParameterValueById(id, finalValue);
-        lockedParameterValues.set(id, finalValue);
+        core.setParameterValueById(id, value);
+        lockedParameterValues.set(id, value);
       } catch (err) {
         /* ignore */
       }
     });
 
     if (typeof core.setPartOpacityById === 'function') {
-      partOperations.forEach((ops, id) => {
+      const partIds = new Set([
+        ...expressionPartOps.keys(),
+        ...togglePartOps.keys()
+      ]);
+      partIds.forEach(id => {
         const baseValue = baseParts.has(id) ? baseParts.get(id) : safeGetPartOpacity(core, id);
-        const finalValue = clampOpacity(applyOperations(baseValue, ops));
+        let value = baseValue;
+        if (togglePartOps.has(id)) {
+          value = clampOpacity(applyOperations(value, togglePartOps.get(id)));
+        }
+        if (expressionPartOps.has(id)) {
+          value = clampOpacity(applyOperations(baseValue, expressionPartOps.get(id)));
+        }
         try {
-          core.setPartOpacityById(id, finalValue);
-          lockedPartOpacities.set(id, finalValue);
+          core.setPartOpacityById(id, value);
+          lockedPartOpacities.set(id, value);
         } catch (err) {
           /* ignore */
         }
       });
     }
 
-    if (typeof internal.saveParameters === 'function') {
-      try {
-        internal.saveParameters();
-      } catch (err) {
-        console.warn('Failed to persist Live2D parameters', err);
-      }
-    }
     refreshModelBounds();
     positionModel();
   }
