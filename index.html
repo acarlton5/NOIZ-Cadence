@@ -357,11 +357,14 @@
   let live2dModel = null;
   let currentModelConfig = null;
   let baseParameters = new Map();
+  let baseParts = new Map();
   let currentExpressionPackets = [];
   const activeToggleData = new Map();
   const expressionCache = new Map();
   const lockedParameterValues = new Map();
+  const lockedPartValues = new Map();
   const lastLockedParameterIds = new Set();
+  const lastLockedPartIds = new Set();
   let parameterTicker = null;
   let modelBounds = null;
   let modelLoadToken = 0;
@@ -395,13 +398,22 @@
   function ensureParameterTicker() {
     if (!app || parameterTicker) return;
     parameterTicker = () => {
-      if (!live2dModel || !live2dModel.internalModel || lockedParameterValues.size === 0) {
+      if (
+        !live2dModel ||
+        !live2dModel.internalModel ||
+        (lockedParameterValues.size === 0 && lockedPartValues.size === 0)
+      ) {
         return;
       }
       const core = live2dModel.internalModel.coreModel;
       lockedParameterValues.forEach((value, id) => {
         core.setParameterValueById(id, value);
       });
+      if (typeof core.setPartOpacityById === 'function') {
+        lockedPartValues.forEach((value, id) => {
+          core.setPartOpacityById(id, value);
+        });
+      }
     };
     app.ticker.add(parameterTicker);
   }
@@ -500,10 +512,17 @@
     const internal = live2dModel.internalModel;
     const core = internal.coreModel;
     baseParameters = new Map();
+    baseParts = new Map();
     const ids = typeof core.getParameterIds === 'function' ? core.getParameterIds() : [];
     ids.forEach(id => {
       baseParameters.set(id, core.getParameterValueById(id));
     });
+    if (typeof core.getPartIds === 'function' && typeof core.getPartOpacityById === 'function') {
+      const partIds = core.getPartIds();
+      partIds.forEach(id => {
+        baseParts.set(id, core.getPartOpacityById(id));
+      });
+    }
     if (typeof internal.saveParameters === 'function') {
       try {
         internal.saveParameters();
@@ -513,21 +532,36 @@
     }
   }
 
-  function collectPacketOperations(targetMap, packets) {
+  function collectPacketOperations(parameterMap, partMap, packets) {
     packets.forEach(packet => {
-      if (!packet || !Array.isArray(packet.Parameters)) return;
-      packet.Parameters.forEach(param => {
-        const id = param.Id;
-        if (!id || typeof param.Value !== 'number') return;
-        const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
-        if (!targetMap.has(id)) {
-          targetMap.set(id, []);
-        }
-        targetMap.get(id).push({
-          blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
-          value: param.Value
+      if (packet && Array.isArray(packet.Parameters)) {
+        packet.Parameters.forEach(param => {
+          const id = param.Id;
+          if (!id || typeof param.Value !== 'number') return;
+          const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
+          if (!parameterMap.has(id)) {
+            parameterMap.set(id, []);
+          }
+          parameterMap.get(id).push({
+            blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
+            value: param.Value
+          });
         });
-      });
+      }
+      if (packet && Array.isArray(packet.Parts)) {
+        packet.Parts.forEach(part => {
+          const id = part.Id;
+          if (!id || typeof part.Opacity !== 'number') return;
+          const blend = typeof part.Blend === 'string' ? part.Blend : 'Overwrite';
+          if (!partMap.has(id)) {
+            partMap.set(id, []);
+          }
+          partMap.get(id).push({
+            blend: blend === 'Add' || blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Overwrite',
+            value: part.Opacity
+          });
+        });
+      }
     });
   }
 
@@ -542,19 +576,48 @@
     }
   }
 
+  function getBasePartOpacity(id, core) {
+    if (baseParts.has(id)) {
+      return baseParts.get(id);
+    }
+    try {
+      return typeof core.getPartOpacityById === 'function' ? core.getPartOpacityById(id) : 1;
+    } catch (err) {
+      return 1;
+    }
+  }
+
+  function clampParameterValue(id, value, core) {
+    try {
+      const min = typeof core.getParameterMinimumValueById === 'function'
+        ? core.getParameterMinimumValueById(id)
+        : Number.NEGATIVE_INFINITY;
+      const max = typeof core.getParameterMaximumValueById === 'function'
+        ? core.getParameterMaximumValueById(id)
+        : Number.POSITIVE_INFINITY;
+      if (Number.isFinite(min) && value < min) return min;
+      if (Number.isFinite(max) && value > max) return max;
+      return value;
+    } catch (err) {
+      return value;
+    }
+  }
+
   function recomputeLockedParameters() {
     lockedParameterValues.clear();
+    lockedPartValues.clear();
     if (!live2dModel || !live2dModel.internalModel) return;
     const core = live2dModel.internalModel.coreModel;
-    const operations = new Map();
-    collectPacketOperations(operations, currentExpressionPackets);
+    const parameterOperations = new Map();
+    const partOperations = new Map();
+    collectPacketOperations(parameterOperations, partOperations, currentExpressionPackets);
     state.toggles.forEach(id => {
       const packets = activeToggleData.get(id);
       if (packets) {
-        collectPacketOperations(operations, packets);
+        collectPacketOperations(parameterOperations, partOperations, packets);
       }
     });
-    operations.forEach((ops, id) => {
+    parameterOperations.forEach((ops, id) => {
       const finalValue = ops.reduce((current, op) => {
         if (op.blend === 'Multiply') {
           return current * op.value;
@@ -564,7 +627,19 @@
         }
         return current + op.value;
       }, getBaseParameterValue(id, core));
-      lockedParameterValues.set(id, finalValue);
+      lockedParameterValues.set(id, clampParameterValue(id, finalValue, core));
+    });
+    partOperations.forEach((ops, id) => {
+      const finalValue = ops.reduce((current, op) => {
+        if (op.blend === 'Multiply') {
+          return current * op.value;
+        }
+        if (op.blend === 'Overwrite') {
+          return op.value;
+        }
+        return current + op.value;
+      }, getBasePartOpacity(id, core));
+      lockedPartValues.set(id, Math.max(0, Math.min(1, finalValue)));
     });
   }
 
@@ -574,14 +649,27 @@
     const internal = live2dModel.internalModel;
     const core = internal.coreModel;
     const nextLockedIds = new Set(lockedParameterValues.keys());
+    const nextLockedPartIds = new Set(lockedPartValues.keys());
     lastLockedParameterIds.forEach(id => {
       if (!nextLockedIds.has(id)) {
         core.setParameterValueById(id, getBaseParameterValue(id, core));
       }
     });
+    if (typeof core.setPartOpacityById === 'function') {
+      lastLockedPartIds.forEach(id => {
+        if (!nextLockedPartIds.has(id)) {
+          core.setPartOpacityById(id, getBasePartOpacity(id, core));
+        }
+      });
+    }
     lockedParameterValues.forEach((value, id) => {
       core.setParameterValueById(id, value);
     });
+    if (typeof core.setPartOpacityById === 'function') {
+      lockedPartValues.forEach((value, id) => {
+        core.setPartOpacityById(id, value);
+      });
+    }
     refreshModelBounds();
     positionModel();
     if (typeof internal.saveParameters === 'function') {
@@ -593,6 +681,22 @@
     }
     lastLockedParameterIds.clear();
     nextLockedIds.forEach(id => lastLockedParameterIds.add(id));
+    lastLockedPartIds.clear();
+    nextLockedPartIds.forEach(id => lastLockedPartIds.add(id));
+    if (typeof internal.update === 'function') {
+      try {
+        internal.update();
+      } catch (err) {
+        console.warn('Failed to force Live2D parameter update', err);
+      }
+    }
+    if (typeof live2dModel.update === 'function') {
+      try {
+        live2dModel.update(0);
+      } catch (err) {
+        console.warn('Failed to sync Live2D drawable state', err);
+      }
+    }
   }
 
   async function fetchJSON(url) {
