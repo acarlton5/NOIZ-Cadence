@@ -360,6 +360,9 @@
   let currentExpressionPackets = [];
   const activeToggleData = new Map();
   const expressionCache = new Map();
+  const lockedParameterValues = new Map();
+  const lastLockedParameterIds = new Set();
+  let parameterTicker = null;
   let modelBounds = null;
   let modelLoadToken = 0;
 
@@ -385,7 +388,22 @@
       powerPreference: 'high-performance'
     });
     stageEl.appendChild(app.view);
+    ensureParameterTicker();
     window.addEventListener('resize', () => positionModel(), { passive: true });
+  }
+
+  function ensureParameterTicker() {
+    if (!app || parameterTicker) return;
+    parameterTicker = () => {
+      if (!live2dModel || !live2dModel.internalModel || lockedParameterValues.size === 0) {
+        return;
+      }
+      const core = live2dModel.internalModel.coreModel;
+      lockedParameterValues.forEach((value, id) => {
+        core.setParameterValueById(id, value);
+      });
+    };
+    app.ticker.add(parameterTicker);
   }
 
   function refreshModelBounds() {
@@ -495,42 +513,74 @@
     }
   }
 
-  function applyParameterState() {
-    if (!live2dModel || !live2dModel.internalModel) return;
-    const internal = live2dModel.internalModel;
-    if (typeof internal.loadParameters === 'function') {
-      try {
-        internal.loadParameters();
-      } catch (err) {
-        console.warn('Failed to restore Live2D parameters', err);
-      }
-    }
-    const core = internal.coreModel;
-    baseParameters.forEach((value, id) => {
-      core.setParameterValueById(id, value);
-    });
-    const applyPackets = packets => {
-      packets.forEach(packet => {
-        if (!packet || !Array.isArray(packet.Parameters)) return;
-        packet.Parameters.forEach(param => {
-          const id = param.Id;
-          if (!id) return;
-          const blend = param.Blend || 'Add';
-          const value = typeof param.Value === 'number' ? param.Value : 0;
-          const current = core.getParameterValueById(id);
-          let next = current;
-          if (blend === 'Add') next = current + value;
-          else if (blend === 'Multiply') next = current * value;
-          else if (blend === 'Overwrite') next = value;
-          else next = current + value;
-          core.setParameterValueById(id, next);
+  function collectPacketOperations(targetMap, packets) {
+    packets.forEach(packet => {
+      if (!packet || !Array.isArray(packet.Parameters)) return;
+      packet.Parameters.forEach(param => {
+        const id = param.Id;
+        if (!id || typeof param.Value !== 'number') return;
+        const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
+        if (!targetMap.has(id)) {
+          targetMap.set(id, []);
+        }
+        targetMap.get(id).push({
+          blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
+          value: param.Value
         });
       });
-    };
-    applyPackets(currentExpressionPackets);
+    });
+  }
+
+  function getBaseParameterValue(id, core) {
+    if (baseParameters.has(id)) {
+      return baseParameters.get(id);
+    }
+    try {
+      return core.getParameterValueById(id);
+    } catch (err) {
+      return 0;
+    }
+  }
+
+  function recomputeLockedParameters() {
+    lockedParameterValues.clear();
+    if (!live2dModel || !live2dModel.internalModel) return;
+    const core = live2dModel.internalModel.coreModel;
+    const operations = new Map();
+    collectPacketOperations(operations, currentExpressionPackets);
     state.toggles.forEach(id => {
       const packets = activeToggleData.get(id);
-      if (packets) applyPackets(packets);
+      if (packets) {
+        collectPacketOperations(operations, packets);
+      }
+    });
+    operations.forEach((ops, id) => {
+      const finalValue = ops.reduce((current, op) => {
+        if (op.blend === 'Multiply') {
+          return current * op.value;
+        }
+        if (op.blend === 'Overwrite') {
+          return op.value;
+        }
+        return current + op.value;
+      }, getBaseParameterValue(id, core));
+      lockedParameterValues.set(id, finalValue);
+    });
+  }
+
+  function applyParameterState() {
+    if (!live2dModel || !live2dModel.internalModel) return;
+    recomputeLockedParameters();
+    const internal = live2dModel.internalModel;
+    const core = internal.coreModel;
+    const nextLockedIds = new Set(lockedParameterValues.keys());
+    lastLockedParameterIds.forEach(id => {
+      if (!nextLockedIds.has(id)) {
+        core.setParameterValueById(id, getBaseParameterValue(id, core));
+      }
+    });
+    lockedParameterValues.forEach((value, id) => {
+      core.setParameterValueById(id, value);
     });
     refreshModelBounds();
     positionModel();
@@ -541,6 +591,8 @@
         console.warn('Failed to persist Live2D parameters', err);
       }
     }
+    lastLockedParameterIds.clear();
+    nextLockedIds.forEach(id => lastLockedParameterIds.add(id));
   }
 
   async function fetchJSON(url) {
@@ -800,6 +852,8 @@
       baseParameters = new Map();
       currentExpressionPackets = [];
       activeToggleData.clear();
+      lockedParameterValues.clear();
+      lastLockedParameterIds.clear();
       state.modelId = modelId;
       state.expressionId = 'neutral';
       state.toggles = new Set();
