@@ -363,6 +363,8 @@
   const expressionCache = new Map();
   const lockedParameterValues = new Map();
   const lockedPartOpacities = new Map();
+  let activeExpressionParameterIds = new Set();
+  let activeExpressionPartIds = new Set();
   let previousParameterIds = new Set();
   let previousPartIds = new Set();
   let parameterTicker = null;
@@ -581,6 +583,56 @@
     });
   }
 
+  function resetActiveExpression() {
+    if (!live2dModel || !live2dModel.internalModel) return;
+    if (
+      currentExpressionPackets.length === 0 &&
+      activeExpressionParameterIds.size === 0 &&
+      activeExpressionPartIds.size === 0
+    ) {
+      return;
+    }
+    const internal = live2dModel.internalModel;
+    const core = internal.coreModel;
+    const clearedParameterIds = new Set(activeExpressionParameterIds);
+    const clearedPartIds = new Set(activeExpressionPartIds);
+    clearedParameterIds.forEach(id => {
+      const baseValue = baseParameters.has(id)
+        ? baseParameters.get(id)
+        : safeGetParameterValue(core, id);
+      try {
+        core.setParameterValueById(id, baseValue);
+      } catch (err) {
+        /* ignore */
+      }
+      lockedParameterValues.delete(id);
+      previousParameterIds.delete(id);
+    });
+    if (typeof core.setPartOpacityById === 'function' && clearedPartIds.size > 0) {
+      clearedPartIds.forEach(id => {
+        const baseValue = baseParts.has(id)
+          ? baseParts.get(id)
+          : safeGetPartOpacity(core, id);
+        try {
+          core.setPartOpacityById(id, baseValue);
+        } catch (err) {
+          /* ignore */
+        }
+        lockedPartOpacities.delete(id);
+        previousPartIds.delete(id);
+      });
+    } else if (clearedPartIds.size > 0) {
+      clearedPartIds.forEach(id => {
+        lockedPartOpacities.delete(id);
+        previousPartIds.delete(id);
+      });
+    }
+    currentExpressionPackets = [];
+    activeExpressionParameterIds.clear();
+    activeExpressionPartIds.clear();
+    applyParameterState();
+  }
+
   function applyParameterState() {
     if (!live2dModel || !live2dModel.internalModel) return;
     const internal = live2dModel.internalModel;
@@ -624,6 +676,9 @@
         accumulatePackets(packets, toggleParameterOps, togglePartOps);
       }
     });
+
+    activeExpressionParameterIds = new Set(expressionParameterOps.keys());
+    activeExpressionPartIds = new Set(expressionPartOps.keys());
 
     const newParameterIds = new Set([
       ...expressionParameterOps.keys(),
@@ -786,8 +841,7 @@
     const previousExpressionId = state.expressionId;
     const previousSelectedId = selectedItemId;
     if (shouldApply) {
-      currentExpressionPackets = [];
-      applyParameterState();
+      resetActiveExpression();
     }
     try {
       const packets = await resolveEntryPackets(entry);
@@ -1030,6 +1084,8 @@
       activeToggleData.clear();
       lockedParameterValues.clear();
       lockedPartOpacities.clear();
+      activeExpressionParameterIds = new Set();
+      activeExpressionPartIds = new Set();
       previousParameterIds = new Set();
       previousPartIds = new Set();
       state.modelId = modelId;
