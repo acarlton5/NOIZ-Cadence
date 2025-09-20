@@ -781,26 +781,54 @@
       || currentModelConfig.expressions.find(item => item.id === 'neutral')
       || currentModelConfig.expressions[0];
     const requestToken = ++expressionLoadToken;
-    const packets = await resolveEntryPackets(entry);
-    if (requestToken !== expressionLoadToken) {
-      return;
-    }
-    currentExpressionPackets = packets;
-    state.expressionId = entry.id;
-    if (!skipSelect) {
-      selectedItemId = entry.id;
-    }
-    if (!skipApply) {
+    const shouldApply = !skipApply && !!live2dModel;
+    const previousPackets = currentExpressionPackets;
+    const previousExpressionId = state.expressionId;
+    const previousSelectedId = selectedItemId;
+    if (shouldApply) {
+      currentExpressionPackets = [];
       applyParameterState();
     }
-    if (!skipRender) {
-      render(search.value);
-    }
-    if (!skipDirty) {
-      updateDirty();
-    }
-    if (!skipNotify) {
-      messageTarget.postMessage({ type: 'expression_changed', modelId: state.modelId, expressionId: state.expressionId }, '*');
+    try {
+      const packets = await resolveEntryPackets(entry);
+      if (requestToken !== expressionLoadToken) {
+        return;
+      }
+      currentExpressionPackets = packets;
+      state.expressionId = entry.id;
+      if (!skipSelect) {
+        selectedItemId = entry.id;
+      }
+      if (shouldApply) {
+        applyParameterState();
+      }
+      if (!skipRender) {
+        render(search.value);
+      }
+      if (!skipDirty) {
+        updateDirty();
+      }
+      if (!skipNotify) {
+        messageTarget.postMessage({ type: 'expression_changed', modelId: state.modelId, expressionId: state.expressionId }, '*');
+      }
+    } catch (err) {
+      if (requestToken === expressionLoadToken) {
+        currentExpressionPackets = previousPackets;
+        state.expressionId = previousExpressionId;
+        if (!skipSelect) {
+          selectedItemId = previousSelectedId;
+        }
+        if (shouldApply) {
+          applyParameterState();
+        }
+        if (!skipRender) {
+          render(search.value);
+        }
+        if (!skipDirty) {
+          updateDirty();
+        }
+      }
+      throw err;
     }
   }
 
