@@ -357,11 +357,18 @@
   let live2dModel = null;
   let currentModelConfig = null;
   let baseParameters = new Map();
+  let baseParts = new Map();
   let currentExpressionPackets = [];
   const activeToggleData = new Map();
   const expressionCache = new Map();
+  const lockedParameterValues = new Map();
+  const lockedPartOpacities = new Map();
+  let activeExpressionParameterIds = new Set();
+  let activeExpressionPartIds = new Set();
+  let parameterTicker = null;
   let modelBounds = null;
   let modelLoadToken = 0;
+  let expressionLoadToken = 0;
 
   function fingerprint(obj) {
     return JSON.stringify(obj);
@@ -385,7 +392,34 @@
       powerPreference: 'high-performance'
     });
     stageEl.appendChild(app.view);
+    ensureParameterTicker();
     window.addEventListener('resize', () => positionModel(), { passive: true });
+  }
+
+  function ensureParameterTicker() {
+    if (!app || parameterTicker) return;
+    parameterTicker = () => {
+      if (!live2dModel || !live2dModel.internalModel) return;
+      if (lockedParameterValues.size === 0 && lockedPartOpacities.size === 0) return;
+      const core = live2dModel.internalModel.coreModel;
+      lockedParameterValues.forEach((value, id) => {
+        try {
+          core.setParameterValueById(id, value);
+        } catch (err) {
+          /* ignore */
+        }
+      });
+      if (typeof core.setPartOpacityById === 'function') {
+        lockedPartOpacities.forEach((value, id) => {
+          try {
+            core.setPartOpacityById(id, value);
+          } catch (err) {
+            /* ignore */
+          }
+        });
+      }
+    };
+    app.ticker.add(parameterTicker);
   }
 
   function refreshModelBounds() {
@@ -482,10 +516,29 @@
     const internal = live2dModel.internalModel;
     const core = internal.coreModel;
     baseParameters = new Map();
-    const ids = typeof core.getParameterIds === 'function' ? core.getParameterIds() : [];
-    ids.forEach(id => {
-      baseParameters.set(id, core.getParameterValueById(id));
+    baseParts = new Map();
+    const parameterIds = typeof core.getParameterIds === 'function' ? core.getParameterIds() : [];
+    parameterIds.forEach(id => {
+      try {
+        baseParameters.set(id, core.getParameterValueById(id));
+      } catch (err) {
+        baseParameters.set(id, 0);
+      }
     });
+    if (typeof core.getPartIds === 'function' && typeof core.getPartOpacityById === 'function') {
+      try {
+        const partIds = core.getPartIds();
+        partIds.forEach(id => {
+          try {
+            baseParts.set(id, core.getPartOpacityById(id));
+          } catch (err) {
+            baseParts.set(id, 1);
+          }
+        });
+      } catch (err) {
+        baseParts = new Map();
+      }
+    }
     if (typeof internal.saveParameters === 'function') {
       try {
         internal.saveParameters();
@@ -495,9 +548,90 @@
     }
   }
 
+  function accumulatePackets(packets, parameterMap, partMap) {
+    packets.forEach(packet => {
+      if (packet && Array.isArray(packet.Parameters)) {
+        packet.Parameters.forEach(param => {
+          const id = param.Id;
+          if (!id || typeof param.Value !== 'number') return;
+          const blend = typeof param.Blend === 'string' ? param.Blend : 'Add';
+          if (!parameterMap.has(id)) {
+            parameterMap.set(id, []);
+          }
+          parameterMap.get(id).push({
+            blend: blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Add',
+            value: param.Value
+          });
+        });
+      }
+      if (packet && Array.isArray(packet.Parts)) {
+        packet.Parts.forEach(part => {
+          const id = part.Id;
+          if (!id || typeof part.Opacity !== 'number') return;
+          const blend = typeof part.Blend === 'string' ? part.Blend : 'Overwrite';
+          if (!partMap.has(id)) {
+            partMap.set(id, []);
+          }
+          partMap.get(id).push({
+            blend: blend === 'Add' || blend === 'Multiply' || blend === 'Overwrite' ? blend : 'Overwrite',
+            value: part.Opacity
+          });
+        });
+      }
+    });
+  }
+
+  function resetActiveExpression() {
+    if (!live2dModel || !live2dModel.internalModel) return;
+    if (
+      currentExpressionPackets.length === 0 &&
+      activeExpressionParameterIds.size === 0 &&
+      activeExpressionPartIds.size === 0
+    ) {
+      return;
+    }
+    const internal = live2dModel.internalModel;
+    const core = internal.coreModel;
+    const clearedParameterIds = new Set(activeExpressionParameterIds);
+    const clearedPartIds = new Set(activeExpressionPartIds);
+    clearedParameterIds.forEach(id => {
+      const baseValue = baseParameters.has(id)
+        ? baseParameters.get(id)
+        : safeGetParameterValue(core, id);
+      try {
+        core.setParameterValueById(id, baseValue);
+      } catch (err) {
+        /* ignore */
+      }
+      lockedParameterValues.delete(id);
+    });
+    if (typeof core.setPartOpacityById === 'function' && clearedPartIds.size > 0) {
+      clearedPartIds.forEach(id => {
+        const baseValue = baseParts.has(id)
+          ? baseParts.get(id)
+          : safeGetPartOpacity(core, id);
+        try {
+          core.setPartOpacityById(id, baseValue);
+        } catch (err) {
+          /* ignore */
+        }
+        lockedPartOpacities.delete(id);
+      });
+    } else if (clearedPartIds.size > 0) {
+      clearedPartIds.forEach(id => {
+        lockedPartOpacities.delete(id);
+      });
+    }
+    currentExpressionPackets = [];
+    activeExpressionParameterIds.clear();
+    activeExpressionPartIds.clear();
+    applyParameterState();
+  }
+
   function applyParameterState() {
     if (!live2dModel || !live2dModel.internalModel) return;
     const internal = live2dModel.internalModel;
+    const core = internal.coreModel;
     if (typeof internal.loadParameters === 'function') {
       try {
         internal.loadParameters();
@@ -505,42 +639,137 @@
         console.warn('Failed to restore Live2D parameters', err);
       }
     }
-    const core = internal.coreModel;
+
     baseParameters.forEach((value, id) => {
-      core.setParameterValueById(id, value);
+      try {
+        core.setParameterValueById(id, value);
+      } catch (err) {
+        /* ignore */
+      }
     });
-    const applyPackets = packets => {
-      packets.forEach(packet => {
-        if (!packet || !Array.isArray(packet.Parameters)) return;
-        packet.Parameters.forEach(param => {
-          const id = param.Id;
-          if (!id) return;
-          const blend = param.Blend || 'Add';
-          const value = typeof param.Value === 'number' ? param.Value : 0;
-          const current = core.getParameterValueById(id);
-          let next = current;
-          if (blend === 'Add') next = current + value;
-          else if (blend === 'Multiply') next = current * value;
-          else if (blend === 'Overwrite') next = value;
-          else next = current + value;
-          core.setParameterValueById(id, next);
-        });
+    if (typeof core.setPartOpacityById === 'function') {
+      baseParts.forEach((value, id) => {
+        try {
+          core.setPartOpacityById(id, value);
+        } catch (err) {
+          /* ignore */
+        }
       });
-    };
-    applyPackets(currentExpressionPackets);
+    }
+
+    lockedParameterValues.clear();
+    lockedPartOpacities.clear();
+
+    const expressionParameterOps = new Map();
+    const expressionPartOps = new Map();
+    const toggleParameterOps = new Map();
+    const togglePartOps = new Map();
+
+    accumulatePackets(currentExpressionPackets, expressionParameterOps, expressionPartOps);
     state.toggles.forEach(id => {
       const packets = activeToggleData.get(id);
-      if (packets) applyPackets(packets);
+      if (packets) {
+        accumulatePackets(packets, toggleParameterOps, togglePartOps);
+      }
     });
+
+    const affectedParameterIds = new Set([
+      ...toggleParameterOps.keys(),
+      ...expressionParameterOps.keys()
+    ]);
+    affectedParameterIds.forEach(id => {
+      const baseValue = baseParameters.has(id) ? baseParameters.get(id) : safeGetParameterValue(core, id);
+      let value = baseValue;
+      if (toggleParameterOps.has(id)) {
+        value = clampParameterValue(id, applyOperations(value, toggleParameterOps.get(id)), core);
+      }
+      if (expressionParameterOps.has(id)) {
+        value = clampParameterValue(id, applyOperations(value, expressionParameterOps.get(id)), core);
+      }
+      try {
+        core.setParameterValueById(id, value);
+        lockedParameterValues.set(id, value);
+      } catch (err) {
+        /* ignore */
+      }
+    });
+
+    if (typeof core.setPartOpacityById === 'function') {
+      const affectedPartIds = new Set([
+        ...togglePartOps.keys(),
+        ...expressionPartOps.keys()
+      ]);
+      affectedPartIds.forEach(id => {
+        const baseValue = baseParts.has(id) ? baseParts.get(id) : safeGetPartOpacity(core, id);
+        let value = baseValue;
+        if (togglePartOps.has(id)) {
+          value = clampOpacity(applyOperations(value, togglePartOps.get(id)));
+        }
+        if (expressionPartOps.has(id)) {
+          value = clampOpacity(applyOperations(value, expressionPartOps.get(id)));
+        }
+        try {
+          core.setPartOpacityById(id, value);
+          lockedPartOpacities.set(id, value);
+        } catch (err) {
+          /* ignore */
+        }
+      });
+    }
+
+    activeExpressionParameterIds = new Set(expressionParameterOps.keys());
+    activeExpressionPartIds = new Set(expressionPartOps.keys());
+
     refreshModelBounds();
     positionModel();
-    if (typeof internal.saveParameters === 'function') {
-      try {
-        internal.saveParameters();
-      } catch (err) {
-        console.warn('Failed to persist Live2D parameters', err);
+  }
+
+  function applyOperations(baseValue, operations) {
+    return operations.reduce((current, op) => {
+      if (op.blend === 'Multiply') {
+        return current * op.value;
       }
+      if (op.blend === 'Overwrite') {
+        return op.value;
+      }
+      return current + op.value;
+    }, baseValue);
+  }
+
+  function safeGetParameterValue(core, id) {
+    try {
+      return core.getParameterValueById(id);
+    } catch (err) {
+      return 0;
     }
+  }
+
+  function safeGetPartOpacity(core, id) {
+    try {
+      return typeof core.getPartOpacityById === 'function' ? core.getPartOpacityById(id) : 1;
+    } catch (err) {
+      return 1;
+    }
+  }
+
+  function clampParameterValue(id, value, core) {
+    try {
+      const min = typeof core.getParameterMinimumValueById === 'function'
+        ? core.getParameterMinimumValueById(id)
+        : Number.NEGATIVE_INFINITY;
+      const max = typeof core.getParameterMaximumValueById === 'function'
+        ? core.getParameterMaximumValueById(id)
+        : Number.POSITIVE_INFINITY;
+      if (Number.isFinite(min) && value < min) return min;
+      if (Number.isFinite(max) && value > max) return max;
+      return value;
+    } catch (err) {
+      return value;
+    }
+  }
+
+  function clampOpacity(value) {
+    return Math.max(0, Math.min(1, value));
   }
 
   async function fetchJSON(url) {
@@ -586,23 +815,54 @@
     const entry = currentModelConfig.expressions.find(item => item.id === expressionId)
       || currentModelConfig.expressions.find(item => item.id === 'neutral')
       || currentModelConfig.expressions[0];
-    const packets = await resolveEntryPackets(entry);
-    currentExpressionPackets = packets;
-    state.expressionId = entry.id;
-    if (!skipSelect) {
-      selectedItemId = entry.id;
+    const requestToken = ++expressionLoadToken;
+    const shouldApply = !skipApply && !!live2dModel;
+    const previousPackets = currentExpressionPackets;
+    const previousExpressionId = state.expressionId;
+    const previousSelectedId = selectedItemId;
+    if (shouldApply) {
+      resetActiveExpression();
     }
-    if (!skipApply) {
-      applyParameterState();
-    }
-    if (!skipRender) {
-      render(search.value);
-    }
-    if (!skipDirty) {
-      updateDirty();
-    }
-    if (!skipNotify) {
-      messageTarget.postMessage({ type: 'expression_changed', modelId: state.modelId, expressionId: state.expressionId }, '*');
+    try {
+      const packets = await resolveEntryPackets(entry);
+      if (requestToken !== expressionLoadToken) {
+        return;
+      }
+      currentExpressionPackets = packets;
+      state.expressionId = entry.id;
+      if (!skipSelect) {
+        selectedItemId = entry.id;
+      }
+      if (shouldApply) {
+        applyParameterState();
+      }
+      if (!skipRender) {
+        render(search.value);
+      }
+      if (!skipDirty) {
+        updateDirty();
+      }
+      if (!skipNotify) {
+        messageTarget.postMessage({ type: 'expression_changed', modelId: state.modelId, expressionId: state.expressionId }, '*');
+      }
+    } catch (err) {
+      if (requestToken === expressionLoadToken) {
+        currentExpressionPackets = previousPackets;
+        state.expressionId = previousExpressionId;
+        if (!skipSelect) {
+          selectedItemId = previousSelectedId;
+        }
+        if (shouldApply) {
+          applyParameterState();
+        }
+        if (!skipRender) {
+          render(search.value);
+        }
+        if (!skipDirty) {
+          updateDirty();
+        }
+      }
+      throw err;
     }
   }
 
@@ -780,6 +1040,7 @@
     if (!config) return;
     const { state: desiredState, skipDirty = false, skipNotify = false } = options;
     const token = ++modelLoadToken;
+    expressionLoadToken++;
     modelSelect.disabled = true;
     ensureStage();
     grid.innerHTML = '<div class="text-center text-secondary py-5">Loading model…</div>';
@@ -798,8 +1059,13 @@
       app.stage.addChild(live2dModel);
       currentModelConfig = config;
       baseParameters = new Map();
+      baseParts = new Map();
       currentExpressionPackets = [];
       activeToggleData.clear();
+      lockedParameterValues.clear();
+      lockedPartOpacities.clear();
+      activeExpressionParameterIds = new Set();
+      activeExpressionPartIds = new Set();
       state.modelId = modelId;
       state.expressionId = 'neutral';
       state.toggles = new Set();
