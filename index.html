@@ -629,12 +629,13 @@
 
     parameterIds.forEach(id => {
       const baseValue = baseParameters.has(id) ? baseParameters.get(id) : safeGetParameterValue(core, id);
-      let value = baseValue;
-      if (toggleParameterOps.has(id)) {
-        value = clampParameterValue(id, applyOperations(value, toggleParameterOps.get(id)), core);
-      }
+      let expressionValue = baseValue;
       if (expressionParameterOps.has(id)) {
-        value = clampParameterValue(id, applyOperations(baseValue, expressionParameterOps.get(id)), core);
+        expressionValue = clampParameterValue(id, applyOperations(baseValue, expressionParameterOps.get(id)), core);
+      }
+      let value = expressionValue;
+      if (toggleParameterOps.has(id)) {
+        value = clampParameterValue(id, applyOperations(expressionValue, toggleParameterOps.get(id)), core);
       }
       try {
         core.setParameterValueById(id, value);
@@ -651,12 +652,13 @@
       ]);
       partIds.forEach(id => {
         const baseValue = baseParts.has(id) ? baseParts.get(id) : safeGetPartOpacity(core, id);
-        let value = baseValue;
-        if (togglePartOps.has(id)) {
-          value = clampOpacity(applyOperations(value, togglePartOps.get(id)));
-        }
+        let expressionValue = baseValue;
         if (expressionPartOps.has(id)) {
-          value = clampOpacity(applyOperations(baseValue, expressionPartOps.get(id)));
+          expressionValue = clampOpacity(applyOperations(baseValue, expressionPartOps.get(id)));
+        }
+        let value = expressionValue;
+        if (togglePartOps.has(id)) {
+          value = clampOpacity(applyOperations(expressionValue, togglePartOps.get(id)));
         }
         try {
           core.setPartOpacityById(id, value);
