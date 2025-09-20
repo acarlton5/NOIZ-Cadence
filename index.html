@@ -366,6 +366,7 @@
   let parameterTicker = null;
   let modelBounds = null;
   let modelLoadToken = 0;
+  let expressionLoadToken = 0;
 
   function fingerprint(obj) {
     return JSON.stringify(obj);
@@ -764,7 +765,11 @@
     const entry = currentModelConfig.expressions.find(item => item.id === expressionId)
       || currentModelConfig.expressions.find(item => item.id === 'neutral')
       || currentModelConfig.expressions[0];
+    const requestToken = ++expressionLoadToken;
     const packets = await resolveEntryPackets(entry);
+    if (requestToken !== expressionLoadToken) {
+      return;
+    }
     currentExpressionPackets = packets;
     state.expressionId = entry.id;
     if (!skipSelect) {
@@ -958,6 +963,7 @@
     if (!config) return;
     const { state: desiredState, skipDirty = false, skipNotify = false } = options;
     const token = ++modelLoadToken;
+    expressionLoadToken++;
     modelSelect.disabled = true;
     ensureStage();
     grid.innerHTML = '<div class="text-center text-secondary py-5">Loading model…</div>';
