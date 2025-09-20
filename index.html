@@ -365,8 +365,6 @@
   const lockedPartOpacities = new Map();
   let activeExpressionParameterIds = new Set();
   let activeExpressionPartIds = new Set();
-  let previousParameterIds = new Set();
-  let previousPartIds = new Set();
   let parameterTicker = null;
   let modelBounds = null;
   let modelLoadToken = 0;
@@ -606,7 +604,6 @@
         /* ignore */
       }
       lockedParameterValues.delete(id);
-      previousParameterIds.delete(id);
     });
     if (typeof core.setPartOpacityById === 'function' && clearedPartIds.size > 0) {
       clearedPartIds.forEach(id => {
@@ -619,12 +616,10 @@
           /* ignore */
         }
         lockedPartOpacities.delete(id);
-        previousPartIds.delete(id);
       });
     } else if (clearedPartIds.size > 0) {
       clearedPartIds.forEach(id => {
         lockedPartOpacities.delete(id);
-        previousPartIds.delete(id);
       });
     }
     currentExpressionPackets = [];
@@ -644,6 +639,7 @@
         console.warn('Failed to restore Live2D parameters', err);
       }
     }
+
     baseParameters.forEach((value, id) => {
       try {
         core.setParameterValueById(id, value);
@@ -677,27 +673,18 @@
       }
     });
 
-    activeExpressionParameterIds = new Set(expressionParameterOps.keys());
-    activeExpressionPartIds = new Set(expressionPartOps.keys());
-
-    const newParameterIds = new Set([
-      ...expressionParameterOps.keys(),
-      ...toggleParameterOps.keys()
+    const affectedParameterIds = new Set([
+      ...toggleParameterOps.keys(),
+      ...expressionParameterOps.keys()
     ]);
-    const parameterIds = new Set([
-      ...previousParameterIds,
-      ...newParameterIds
-    ]);
-
-    parameterIds.forEach(id => {
+    affectedParameterIds.forEach(id => {
       const baseValue = baseParameters.has(id) ? baseParameters.get(id) : safeGetParameterValue(core, id);
-      let expressionValue = baseValue;
-      if (expressionParameterOps.has(id)) {
-        expressionValue = clampParameterValue(id, applyOperations(baseValue, expressionParameterOps.get(id)), core);
-      }
-      let value = expressionValue;
+      let value = baseValue;
       if (toggleParameterOps.has(id)) {
-        value = clampParameterValue(id, applyOperations(expressionValue, toggleParameterOps.get(id)), core);
+        value = clampParameterValue(id, applyOperations(value, toggleParameterOps.get(id)), core);
+      }
+      if (expressionParameterOps.has(id)) {
+        value = clampParameterValue(id, applyOperations(value, expressionParameterOps.get(id)), core);
       }
       try {
         core.setParameterValueById(id, value);
@@ -708,23 +695,18 @@
     });
 
     if (typeof core.setPartOpacityById === 'function') {
-      const newPartIds = new Set([
-        ...expressionPartOps.keys(),
-        ...togglePartOps.keys()
+      const affectedPartIds = new Set([
+        ...togglePartOps.keys(),
+        ...expressionPartOps.keys()
       ]);
-      const partIds = new Set([
-        ...previousPartIds,
-        ...newPartIds
-      ]);
-      partIds.forEach(id => {
+      affectedPartIds.forEach(id => {
         const baseValue = baseParts.has(id) ? baseParts.get(id) : safeGetPartOpacity(core, id);
-        let expressionValue = baseValue;
-        if (expressionPartOps.has(id)) {
-          expressionValue = clampOpacity(applyOperations(baseValue, expressionPartOps.get(id)));
-        }
-        let value = expressionValue;
+        let value = baseValue;
         if (togglePartOps.has(id)) {
-          value = clampOpacity(applyOperations(expressionValue, togglePartOps.get(id)));
+          value = clampOpacity(applyOperations(value, togglePartOps.get(id)));
+        }
+        if (expressionPartOps.has(id)) {
+          value = clampOpacity(applyOperations(value, expressionPartOps.get(id)));
         }
         try {
           core.setPartOpacityById(id, value);
@@ -733,12 +715,10 @@
           /* ignore */
         }
       });
-      previousPartIds = newPartIds;
-    } else {
-      previousPartIds = new Set();
     }
 
-    previousParameterIds = newParameterIds;
+    activeExpressionParameterIds = new Set(expressionParameterOps.keys());
+    activeExpressionPartIds = new Set(expressionPartOps.keys());
 
     refreshModelBounds();
     positionModel();
@@ -1086,8 +1066,6 @@
       lockedPartOpacities.clear();
       activeExpressionParameterIds = new Set();
       activeExpressionPartIds = new Set();
-      previousParameterIds = new Set();
-      previousPartIds = new Set();
       state.modelId = modelId;
       state.expressionId = 'neutral';
       state.toggles = new Set();
